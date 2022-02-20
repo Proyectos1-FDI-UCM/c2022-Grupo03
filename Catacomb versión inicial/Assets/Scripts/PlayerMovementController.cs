@@ -2,8 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_MovementController : MonoBehaviour
+public class PlayerMovementController : MonoBehaviour
 {
+    #region parameters
+
+    #endregion
+
+    #region properties
+
+    #endregion
+
+    #region references
+
+    #endregion
+
+    #region methods
+
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {

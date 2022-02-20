@@ -2,26 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLife_Component : MonoBehaviour
+public class PlayerInputManager : MonoBehaviour
 {
-    #region references
+    #region parameters
 
     #endregion
 
-    #region parameters
-    private int _playerLife;
-    private int _maxLife = 5; //esto luego se puede parametrizar diferente
+    #region properties
+
+    #endregion
+
+    #region references
+
     #endregion
 
     #region methods
 
     #endregion
 
-
     // Start is called before the first frame update
     void Start()
     {
-        _playerLife = _maxLife;
+        
     }
 
     // Update is called once per frame
