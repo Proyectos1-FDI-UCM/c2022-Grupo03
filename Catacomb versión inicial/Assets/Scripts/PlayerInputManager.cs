@@ -18,7 +18,14 @@ public class PlayerInputManager : MonoBehaviour
     #endregion
 
     #region methods
-
+    public float HInput()
+    {
+        return _horizontalInput;
+    }
+    public float VInput()
+    {
+        return _verticalInput;
+    }
     #endregion
 
     // Start is called before the first frame update
