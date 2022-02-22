@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class MovementAnimation : MonoBehaviour
 {
+    #region parameters
+    private float x_scale, y_scale, z_scale;
+    #endregion
+
     #region references
     private PlayerInputManager _myPlayerInput;
     [SerializeField]
-    private Animator _myAnimator; 
+    private Animator _myAnimator;
+    private Transform _myTransform;
     #endregion
 
     #region methods
@@ -17,25 +22,31 @@ public class MovementAnimation : MonoBehaviour
     void Start()
     {
         _myPlayerInput = GetComponent<PlayerInputManager>();
+        _myTransform = transform;
+        x_scale = _myTransform.localScale.x;
+        y_scale = _myTransform.localScale.y;
+        z_scale = _myTransform.localScale.z;
     }
 
     // Update is called once per frame
     void Update()
     {
-       if(_myPlayerInput.HInput() == 0 && _myPlayerInput.VInput() == 0)
-       {
+        if(_myPlayerInput.HInput() == 0 && _myPlayerInput.VInput() == 0)
+        {
             _myAnimator.ResetTrigger("Correr");
             _myAnimator.SetTrigger("NoCorrer");
-       } 
-       else
-       {
-            _myAnimator.ResetTrigger("NoCorrer");
+        } 
+        else if(_myPlayerInput.HInput() < 0) // izq
+        {
+            _myAnimator.ResetTrigger("NoCorrer"); 
+            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
             _myAnimator.SetTrigger("Correr");
-            
-            /*if (_myPlayerInput.HInput() < 0)
-                transform.Rotate(0.0f, 180.0f, 0.0f);
-            else
-                transform.Rotate(0.0f, 0.0f, 0.0f);*/
+        }
+        else // der
+        {
+            _myAnimator.ResetTrigger("NoCorrer");
+            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+            _myAnimator.SetTrigger("Correr");
         }
     }
 }
