@@ -39,6 +39,10 @@ public class PlayerAttackController : MonoBehaviour
 
         if (!_attackOn)
         {
+            // sirve para reiniciar la colisión ya que, si el personaje vuelve a realizar el ataque principal,
+            // pero no se ha movido previamente, no se vuelve a detectar esta colisión
+            _myTransform.position = _myTransform.position + new Vector3(0.000001f, 0, 0);
+
             if (angle.z >= 45 && angle.z < 135)
             {
                 _dmgUp.SetActive(true);
@@ -59,12 +63,12 @@ public class PlayerAttackController : MonoBehaviour
                 _dmgRight.SetActive(true);
                 _lastAttack = _dmgRight;
             }
+
             _attackOn = true;
         }
+
     }
     #endregion
-
-    int i;
 
     // Start is called before the first frame update
     void Start()
