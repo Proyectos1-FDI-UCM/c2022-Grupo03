@@ -2,38 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DirectionArrow : MonoBehaviour
+public class EnemyLifeComponent : MonoBehaviour
 {
     #region parameters
-
+    [SerializeField]
+    private int _maxLife;
     #endregion
 
     #region properties
-
+    private int _currentLife;
     #endregion
 
     #region references
-    Transform _myTransform;
+
     #endregion
 
     #region methods
-    // se llama desde el PlayerInputManager
-    public void PointingDirection(Vector3 targetPoint)
+    public void Damage()
     {
-        Vector3 dir = targetPoint - _myTransform.position;
-        _myTransform.right = dir;
+        _currentLife--;
+        Debug.Log(_currentLife);
+        if (_currentLife <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        GameObject.Destroy(gameObject);
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        _myTransform = transform;
+        _currentLife = _maxLife;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        
     }
 }
