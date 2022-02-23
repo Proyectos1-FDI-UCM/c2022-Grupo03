@@ -45,9 +45,10 @@ public class PlayerInputManager : MonoBehaviour
             _myPlayerAttackController.MainAttack();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && )
+        // eje de input que funciona cuando se pulsa la barra espaciadora
+        if (Input.GetButtonDown("Jump"))
         {
-            
+            Debug.Log("Rodar");
         }
 
         _verticalInput = Input.GetAxis("Vertical");
