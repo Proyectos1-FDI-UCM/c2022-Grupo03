@@ -31,7 +31,7 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
     }
