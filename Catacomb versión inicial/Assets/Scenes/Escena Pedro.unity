@@ -675,7 +675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce37d8c32493cfe44a437431e7382f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dirArrow: {fileID: 34960663}
 --- !u!212 &985106227
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -759,10 +758,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackDuration: 0.2
-  _dmgLeft: {fileID: 614583001}
-  _dmgRight: {fileID: 1754166689}
-  _dmgUp: {fileID: 1976514073}
-  _dmgDown: {fileID: 475134966}
+  _damageZones:
+  - {fileID: 1976514073}
+  - {fileID: 614583001}
+  - {fileID: 475134966}
+  - {fileID: 1754166689}
   _dirArrow: {fileID: 34960663}
 --- !u!50 &985106230
 Rigidbody2D:

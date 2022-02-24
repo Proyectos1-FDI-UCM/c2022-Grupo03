@@ -15,16 +15,9 @@ public class PlayerAttackController : MonoBehaviour
     #endregion
 
     #region references
+    [SerializeField]
+    private GameObject[] _damageZones;
     Transform _myTransform;
-    [SerializeField]
-    GameObject _dmgLeft;
-    [SerializeField]
-    GameObject _dmgRight;
-    [SerializeField]
-    GameObject _dmgUp;
-    [SerializeField]
-    GameObject _dmgDown;
-    Camera _mainCamera;
     [SerializeField]
     GameObject _dirArrow;
     Transform _dirArrowTransform;
@@ -43,26 +36,16 @@ public class PlayerAttackController : MonoBehaviour
             // pero no se ha movido previamente, no se vuelve a detectar esta colisión
             _myTransform.position = _myTransform.position + new Vector3(0.000001f, 0, 0);
 
-            if (angle.z >= 45 && angle.z < 135)
+            // ajustar los ángulos menores que 45º y mayores o iguales que 0º para que su índice sea 3
+            if (angle.z < 45 && angle.z >= 0)
             {
-                _dmgUp.SetActive(true);
-                _lastAttack = _dmgUp;
+                angle.z = angle.z + 360;
             }
-            else if (angle.z >= 135 && angle.z < 225)
-            {
-                _dmgLeft.SetActive(true);
-                _lastAttack = _dmgLeft;
-            }
-            else if (angle.z >= 225 && angle.z < 315)
-            {
-                _dmgDown.SetActive(true);
-                _lastAttack = _dmgDown;
-            }
-            else
-            {
-                _dmgRight.SetActive(true);
-                _lastAttack = _dmgRight;
-            }
+
+            int indice = (int)(angle.z - 45) / 90;
+
+            _lastAttack = _damageZones[indice];
+            _lastAttack.SetActive(true);
 
             _attackOn = true;
         }
@@ -74,7 +57,6 @@ public class PlayerAttackController : MonoBehaviour
     void Start()
     {
         _myTransform = transform;
-        _mainCamera = Camera.main;
         _dirArrowTransform = _dirArrow.transform;
         _attackOn = false;
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
