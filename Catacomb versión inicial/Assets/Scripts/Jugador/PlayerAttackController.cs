@@ -16,7 +16,7 @@ public class PlayerAttackController : MonoBehaviour
 
     #region references
     [SerializeField]
-    private GameObject[] _damageZones;
+    private GameObject _damageZone;
     Transform _myTransform;
     [SerializeField]
     GameObject _dirArrow;
@@ -44,8 +44,29 @@ public class PlayerAttackController : MonoBehaviour
 
             int indice = (int)(angle.z - 45) / 90;
 
-            _lastAttack = _damageZones[indice];
-            _lastAttack.SetActive(true);
+            Quaternion rotation;
+            Vector3 offset;
+            if (indice % 2 == 0)
+            {
+                rotation = Quaternion.identity;
+                offset = new Vector3(0, 1, 0);
+                if (indice == 2)
+                {
+                    offset = -offset;
+                }
+            }
+            else
+            {
+                rotation = Quaternion.Euler(0, 0, 90);
+                offset = new Vector3(1, 0, 0);
+                if (indice == 1)
+                {
+                    offset = -offset;
+                }
+            }
+            Vector3 instPoint = transform.position + offset;
+            
+            _lastAttack = Instantiate(_damageZone, instPoint, rotation);
 
             _attackOn = true;
         }
@@ -73,7 +94,7 @@ public class PlayerAttackController : MonoBehaviour
             if (_elapsedTime > _attackDuration)
             {
                 _attackOn = false;
-                _lastAttack.SetActive(false);
+                GameObject.Destroy(_lastAttack);
                 _elapsedTime = 0;
             }
         }

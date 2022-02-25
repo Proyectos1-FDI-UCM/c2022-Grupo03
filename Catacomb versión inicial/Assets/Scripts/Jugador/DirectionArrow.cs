@@ -39,6 +39,6 @@ public class DirectionArrow : MonoBehaviour
     {
         Vector3 targetPoint = WorldPointWithoutZ(Input.mousePosition);
         Vector3 dir = targetPoint - _myTransform.position;
-        _myTransform.right = dir;
+        _myTransform.right = dir.normalized;
     }
 }
