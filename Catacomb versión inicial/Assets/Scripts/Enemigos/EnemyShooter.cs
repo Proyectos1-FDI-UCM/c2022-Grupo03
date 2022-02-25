@@ -22,7 +22,6 @@ public class EnemyShooter : MonoBehaviour
     {
         EnemyMovement daa = GetComponentInParent<EnemyMovement>();
         Vector3 temp = (daa.target.position - this.transform.position);
-        Debug.Log(playerDir);
     }
 
     // Update is called once per frame
@@ -39,7 +38,5 @@ public class EnemyShooter : MonoBehaviour
             GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity);
             reloading = true;
         }
-        Debug.Log(reloading);
-
     }
 }

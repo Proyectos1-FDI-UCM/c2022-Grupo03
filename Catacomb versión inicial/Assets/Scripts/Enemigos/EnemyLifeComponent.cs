@@ -14,7 +14,6 @@ public class EnemyLifeComponent : MonoBehaviour
     #endregion
 
     #region references
-
     #endregion
 
     #region methods
@@ -32,6 +31,14 @@ public class EnemyLifeComponent : MonoBehaviour
     {
         GameObject.Destroy(gameObject);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<DamageZone>())
+        {
+            Damage();
+        }
+    }
     #endregion
 
     // Start is called before the first frame update
@@ -43,6 +50,5 @@ public class EnemyLifeComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
