@@ -22,6 +22,10 @@ public class PlayerMovementController : MonoBehaviour
     {
         _movementDirection = newMovementDirection;
     }
+    public void Rodar()
+    {
+        _movementDirection = new Vector3(10,0,0);
+    }
     #endregion
 
     // Start is called before the first frame update

@@ -52,7 +52,7 @@ public class MovementAnimation : MonoBehaviour
             _myAnimator.SetTrigger("Correr");
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
         {
             _myAnimator.ResetTrigger("Correr");
             _myAnimator.ResetTrigger("NoCorrer");

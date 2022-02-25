@@ -48,12 +48,14 @@ public class PlayerInputManager : MonoBehaviour
         // eje de input que funciona cuando se pulsa la barra espaciadora
         if (Input.GetButtonDown("Jump"))
         {
-            Debug.Log("Rodar");
+            _myPlayerMovementController.Rodar();
         }
+        else
+        {
+            _verticalInput = Input.GetAxis("Vertical");
+            _horizontalInput = Input.GetAxis("Horizontal");
 
-        _verticalInput = Input.GetAxis("Vertical");
-        _horizontalInput = Input.GetAxis("Horizontal");
-
-        _myPlayerMovementController.SetMovementDirection(new Vector3 (_horizontalInput, _verticalInput, 0));
+            _myPlayerMovementController.SetMovementDirection(new Vector3(_horizontalInput, _verticalInput, 0));
+        }      
     }
 }
