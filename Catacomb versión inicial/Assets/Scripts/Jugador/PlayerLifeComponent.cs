@@ -18,7 +18,18 @@ public class PlayerLifeComponent : MonoBehaviour
     #endregion
 
     #region methods
-
+    public void Damage()
+    {
+        _currentLife--;
+        if (_currentLife <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        GameObject.Destroy(gameObject);
+    }
     #endregion
 
     // Start is called before the first frame update
