@@ -7,13 +7,14 @@ public class PlayerAttackController : MonoBehaviour
     #region parameters
     [SerializeField]
     private float _attackDuration;
+    [SerializeField]
+    private Vector3[] _offsets = { Vector3.up, -Vector3.right, -Vector3.up, Vector3.right };
     #endregion
 
     #region properties
     private float _elapsedTime;
-    private bool _attackOn;
+    private bool _attackOn; // indicar si se ha efectuado el ataque o no
     private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
-    private Vector3[] _offsets = { new Vector3(0, 1, 0), new Vector3(-1, 0, 0), new Vector3(0, -1, 0), new Vector3(1, 0, 0) };
     #endregion
 
     #region references
@@ -24,6 +25,7 @@ public class PlayerAttackController : MonoBehaviour
     GameObject _dirArrow;
     Transform _dirArrowTransform;
     GameObject _lastAttack;
+    PlayerInputManager _myPlayerInputManager;
     PlayerMovementController _myPlayerMovementController;
     #endregion
 
@@ -34,10 +36,6 @@ public class PlayerAttackController : MonoBehaviour
 
         if (!_attackOn)
         {
-            // sirve para reiniciar la colisión ya que, si el personaje vuelve a realizar el ataque principal,
-            // pero no se ha movido previamente, no se vuelve a detectar esta colisión
-            _myTransform.position = _myTransform.position + new Vector3(0.000001f, 0, 0);
-
             // ajustar los ángulos menores que 45º y mayores o iguales que 0º para que su índice sea 3
             if (angle.z < 45 && angle.z >= 0)
             {
@@ -52,8 +50,8 @@ public class PlayerAttackController : MonoBehaviour
             Vector3 instPoint = transform.position + offset;
             _lastAttack = Instantiate(_damageZone, instPoint, rotation);
 
-            // sirve para indicar que se ha realizado el ataque
             _attackOn = true;
+            _myPlayerInputManager.enabled = false;
         }
 
     }
@@ -65,6 +63,7 @@ public class PlayerAttackController : MonoBehaviour
         _myTransform = transform;
         _dirArrowTransform = _dirArrow.transform;
         _attackOn = false;
+        _myPlayerInputManager = GetComponent<PlayerInputManager>();
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
     }
 
@@ -75,11 +74,14 @@ public class PlayerAttackController : MonoBehaviour
         {
             // sincronizar el tiempo que dura el ataque con el tiempo que el jugador no puede moverse
             _elapsedTime += Time.deltaTime;
+            // aunque se desactive el script de input, hay que hacer que deje de moverse
+            // porque si se estaba moviendo antes de desactivarlo se seguirá moviendo después
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             if (_elapsedTime > _attackDuration)
             {
                 _attackOn = false;
                 GameObject.Destroy(_lastAttack);
+                _myPlayerInputManager.enabled = true;
                 _elapsedTime = 0;
             }
         }

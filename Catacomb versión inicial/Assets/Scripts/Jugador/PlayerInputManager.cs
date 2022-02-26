@@ -11,11 +11,13 @@ public class PlayerInputManager : MonoBehaviour
     #region properties
     private float _horizontalInput;
     private float _verticalInput;
+    private float _scrollInput;
     #endregion
 
     #region references
     private PlayerMovementController _myPlayerMovementController;
     private PlayerAttackController _myPlayerAttackController;
+    private PlayerChangeColors _myPlayerChangeColors;
     #endregion
 
     #region methods
@@ -35,6 +37,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerAttackController = GetComponent<PlayerAttackController>();
+        _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
     }
 
     // Update is called once per frame
@@ -56,6 +59,11 @@ public class PlayerInputManager : MonoBehaviour
             _horizontalInput = Input.GetAxis("Horizontal");
 
             _myPlayerMovementController.SetMovementDirection(new Vector3(_horizontalInput, _verticalInput, 0));
-        }      
+        }
+
+        _scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+        Debug.Log(_scrollInput);
+        _myPlayerChangeColors.ChangeColor(_scrollInput);
     }
 }
