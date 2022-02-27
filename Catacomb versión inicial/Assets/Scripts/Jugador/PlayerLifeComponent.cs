@@ -7,6 +7,8 @@ public class PlayerLifeComponent : MonoBehaviour
     #region parameters
     [SerializeField]
     private int _maxLife = 5;
+    [SerializeField]
+    private int _hitDamage = 1; //vida perdida por golpe
     #endregion
 
     #region properties
