@@ -27,7 +27,7 @@ public class EnemyMovement : MonoBehaviour
     #region methods
     private void SetMovementDirection()
     {
-        _movementDirection = (target.transform.position - this.transform.position).normalized;
+        _movementDirection = (target.position - this.transform.position).normalized;
     }
 
     private void SetEscapeDirection()
@@ -39,17 +39,17 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetMovementDirection();
         _myTransform = transform;
         targetObject = GameObject.Find("Player");
         target = targetObject.transform;
+        SetMovementDirection();
     }
 
     // Update is called once per frame
     void Update()
     {
         //SetMovementDirection();
-        Vector3 temp = (target.transform.position - this.transform.position);
+        Vector3 temp = (target.position - this.transform.position);
         if(ranged) _isReloading = GetComponentInChildren<EnemyShooter>().reloading;
         if (temp.x > _range || temp.y > _range)
         {
