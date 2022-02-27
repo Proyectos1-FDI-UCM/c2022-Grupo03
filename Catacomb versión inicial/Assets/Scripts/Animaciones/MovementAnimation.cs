@@ -52,7 +52,7 @@ public class MovementAnimation : MonoBehaviour
             _myAnimator.SetTrigger("Correr");
         }
 
-        if (Input.GetButtonDown("Roll"))
+        if (Input.GetButtonDown("Jump"))
         {
             _myAnimator.ResetTrigger("Correr");
             _myAnimator.ResetTrigger("NoCorrer");

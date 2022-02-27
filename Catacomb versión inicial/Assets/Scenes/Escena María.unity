@@ -390,7 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7576aaf1d5da446842ebb9e83b1205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRotation: 0
   _player: {fileID: 1846781497}
 --- !u!212 &1401983813
 SpriteRenderer:
@@ -673,7 +672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce37d8c32493cfe44a437431e7382f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dirArrow: {fileID: 1401983811}
 --- !u!114 &1846781503
 MonoBehaviour:
   m_ObjectHideFlags: 0

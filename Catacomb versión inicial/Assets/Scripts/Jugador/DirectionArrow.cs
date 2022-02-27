@@ -28,11 +28,6 @@ public class DirectionArrow : MonoBehaviour
         worldPoint.z = 0;
         return worldPoint;
     }
-
-    public void SetDirection(Vector3 newDirection)
-    {
-        _myTransform.right = newDirection.normalized;
-    }
     #endregion
 
     // Start is called before the first frame update
@@ -49,14 +44,9 @@ public class DirectionArrow : MonoBehaviour
         // hacer que la flecha de dirección esté siempre en la posición del jugador
         _myTransform.position = _playerTransform.position;
 
-        // si no hay ningún mando conectado, entonces la flecha de dirección apunta al cursor
-        // if (Input.GetJoystickNames().Length == 0)
-        // {
-            Debug.Log("Controles de teclado");
-            // dirección de la flecha, que indica hacia donde se está apuntando
-            Vector3 targetPoint = WorldPointWithoutZ(Input.mousePosition);
-            Vector3 dir = targetPoint - _playerTransform.position;
-            _myTransform.right = dir.normalized;
-        // }
+        // dirección de la flecha, que indica hacia donde se está apuntando
+        Vector3 targetPoint = WorldPointWithoutZ(Input.mousePosition);
+        Vector3 dir = targetPoint - _playerTransform.position;
+        _myTransform.right = dir.normalized;
     }
 }
