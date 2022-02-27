@@ -17,11 +17,18 @@ public class EnemyShooter : MonoBehaviour
     #region methods
 
     #endregion
+
+    #region properties
+    GameObject target;
+    Transform targetTransform;
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
-        EnemyMovement daa = GetComponentInParent<EnemyMovement>();
-        Vector3 temp = (daa.target.position - this.transform.position);
+        target = GameObject.Find("Player");
+        targetTransform = target.transform;
+        Vector3 temp = (targetTransform.position - this.transform.position);
     }
 
     // Update is called once per frame

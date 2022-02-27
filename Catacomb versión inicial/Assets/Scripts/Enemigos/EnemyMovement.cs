@@ -10,8 +10,6 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private float _range = 5.0f;
     [SerializeField]
-    public Transform target;
-    [SerializeField]
     private bool ranged = false;
     #endregion
 
@@ -22,6 +20,8 @@ public class EnemyMovement : MonoBehaviour
     #region references
     private Transform _myTransform;
     private bool _isReloading;
+    private GameObject targetObject;
+    private Transform target;
     #endregion
 
     #region methods
@@ -41,6 +41,8 @@ public class EnemyMovement : MonoBehaviour
     {
         SetMovementDirection();
         _myTransform = transform;
+        targetObject = GameObject.Find("Player");
+        target = targetObject.transform;
     }
 
     // Update is called once per frame
