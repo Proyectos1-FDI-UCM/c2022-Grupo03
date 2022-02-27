@@ -12,16 +12,16 @@ public class EnemyShooter : MonoBehaviour
     private Quaternion playerDir;
     [SerializeField]
     private GameObject ammo;
-    [SerializeField]
-    private float _shootingDistance = 15;
     #endregion
+
     #region methods
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-
+        EnemyMovement daa = GetComponentInParent<EnemyMovement>();
+        Vector3 temp = (daa.target.position - this.transform.position);
     }
 
     // Update is called once per frame
@@ -35,13 +35,8 @@ public class EnemyShooter : MonoBehaviour
         }
         if (!reloading)
         {
-            Vector3 temp =
-                GetComponentInParent<EnemyMovement>().target.position - GetComponentInParent<Transform>().position;
-            if (temp.magnitude <= _shootingDistance)
-            {
-                GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity);
-                reloading = true;
-            }
+            GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity);
+            reloading = true;
         }
     }
 }
