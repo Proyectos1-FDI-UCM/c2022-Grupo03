@@ -25,12 +25,8 @@ public class PlayerLifeComponent : MonoBehaviour
         _currentLife--;
         if (_currentLife <= 0)
         {
-            Die();
+            GameManager.Instance.OnPlayerDies();
         }
-    }
-    private void Die()
-    {
-        GameObject.Destroy(gameObject);
     }
     #endregion
 

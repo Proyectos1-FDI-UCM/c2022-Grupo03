@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
     #region methods
     public void OnPlayerDies() 
     {
-        player.SetActive(false); //por ahora para esta versión inicial, luego hay que quitar esto
-
+        Destroy(player);
+     
         //añadir más adelante que se resetea el mapa, ya sea llamando a otra función o dentro de esta
     }
 
