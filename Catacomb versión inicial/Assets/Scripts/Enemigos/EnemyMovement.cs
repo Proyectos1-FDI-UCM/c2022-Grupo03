@@ -9,8 +9,7 @@ public class EnemyMovement : MonoBehaviour
     private float _speed = 1.0f;  
     [SerializeField]
     private float _range = 5.0f;
-    [SerializeField]
-    public Transform target;
+    public GameObject target;
     [SerializeField]
     private bool ranged = false;
     #endregion
@@ -41,6 +40,7 @@ public class EnemyMovement : MonoBehaviour
     {
         SetMovementDirection();
         _myTransform = transform;
+        target = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class EnemyMovement : MonoBehaviour
             SetMovementDirection();
             _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
         }
-        else if (_isReloading && (temp.x < _range / 2 || temp.y < _range / 2)) 
+        else if (ranged && _isReloading && (temp.x < _range / 2 || temp.y < _range / 2)) 
         {
             SetEscapeDirection();
             _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);        }

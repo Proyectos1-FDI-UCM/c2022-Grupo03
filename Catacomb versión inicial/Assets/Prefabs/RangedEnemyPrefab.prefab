@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
-  _range: 5
+  _range: 10
   target: {fileID: 0}
   ranged: 1
 --- !u!114 &2998720282529773422
