@@ -12,12 +12,16 @@ public class PlayerInputManager : MonoBehaviour
     private float _horizontalInput;
     private float _verticalInput;
     private float _scrollInput;
+    private float _rightHorizontal;
+    private float _rightVertical;
     #endregion
 
     #region references
     private PlayerMovementController _myPlayerMovementController;
     private PlayerAttackController _myPlayerAttackController;
     private PlayerChangeColors _myPlayerChangeColors;
+    private GameObject _dirArrow;
+    private DirectionArrow _directionArrow;
     #endregion
 
     #region methods
@@ -38,6 +42,8 @@ public class PlayerInputManager : MonoBehaviour
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerAttackController = GetComponent<PlayerAttackController>();
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
+        _dirArrow = GameObject.Find("DirectionArrow");
+        _directionArrow = _dirArrow.GetComponent<DirectionArrow>();
     }
 
     // Update is called once per frame
@@ -49,7 +55,7 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         // eje de input que funciona cuando se pulsa la barra espaciadora
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Roll"))
         {
             _myPlayerMovementController.Rodar();
         }
@@ -62,8 +68,13 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         _scrollInput = Input.GetAxis("Mouse ScrollWheel");
-
-        Debug.Log(_scrollInput);
         _myPlayerChangeColors.ChangeColor(_scrollInput);
+        _rightHorizontal = Input.GetAxis("RightHorizontal");
+        _rightVertical = Input.GetAxis("RightVertical");
+        Vector3 right = new Vector3(_rightHorizontal, _rightVertical, 0);
+        if (right != Vector3.zero)
+        {
+            _directionArrow.SetDirection(right);
+        }
     }
 }
