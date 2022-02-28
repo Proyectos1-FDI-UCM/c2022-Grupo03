@@ -30,13 +30,14 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (input.magnitude < _inputDeadZone)
         {
-            input = Vector3.zero;
+            input= Vector3.zero;
         }
         else
         {
             input = input.normalized * ((input.magnitude - _inputDeadZone) / (1 - _inputDeadZone));
         }
     }
+
     public float HInput()
     {
         return _horizontalInput;
@@ -72,6 +73,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             _myPlayerMovementController.Rodar();
         }
+
         else
         {
             _verticalInput = Input.GetAxis("Vertical");
@@ -82,7 +84,6 @@ public class PlayerInputManager : MonoBehaviour
 
         // cambiar de color
         _scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        Debug.Log(_scrollInput);
         _myPlayerChangeColors.ChangeColor(_scrollInput);
 
         // girar la flecha de dirección con el mando
