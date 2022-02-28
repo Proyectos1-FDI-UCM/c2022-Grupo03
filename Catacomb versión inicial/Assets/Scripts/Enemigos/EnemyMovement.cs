@@ -21,18 +21,18 @@ public class EnemyMovement : MonoBehaviour
     private Transform _myTransform;
     private bool _isReloading;
     private GameObject targetObject;
-    private Transform target;
+    private Transform targetTransform;
     #endregion
 
     #region methods
     private void SetMovementDirection()
     {
-        _movementDirection = (target.position - this.transform.position).normalized;
+        _movementDirection = (targetTransform.position - this.transform.position).normalized;
     }
 
     private void SetEscapeDirection()
     {
-        _movementDirection = (this.transform.position - target.transform.position).normalized;
+        _movementDirection = (this.transform.position - targetTransform.position).normalized;
     }
 
     #endregion
@@ -41,7 +41,7 @@ public class EnemyMovement : MonoBehaviour
     {
         _myTransform = transform;
         targetObject = GameObject.Find("Player");
-        target = targetObject.transform;
+        targetTransform = targetObject.transform;
         SetMovementDirection();
     }
 
@@ -49,16 +49,17 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         //SetMovementDirection();
-        Vector3 temp = (target.position - this.transform.position);
+        Vector3 temp = (targetTransform.position - this.transform.position);
         if(ranged) _isReloading = GetComponentInChildren<EnemyShooter>().reloading;
         if (temp.x > _range || temp.y > _range)
         {
             SetMovementDirection();
             _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
         }
-        else if (_isReloading && (temp.x < _range / 2 || temp.y < _range / 2)) 
+        else if (_isReloading && (temp.x < _range / 2 || temp.y < _range / 2))
         {
             SetEscapeDirection();
-            _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);        }
+            _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
+        }
     }
 }

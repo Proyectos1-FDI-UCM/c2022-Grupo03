@@ -22,7 +22,7 @@ public class PlayerLifeComponent : MonoBehaviour
     #region methods
     public void Damage()
     {
-        _currentLife--;
+        _currentLife -= _hitDamage;
         if (_currentLife <= 0)
         {
             GameManager.Instance.OnPlayerDies();

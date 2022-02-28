@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerInputManager : MonoBehaviour
 {
     #region parameters
-
+    [SerializeField]
+    private float _inputDeadZone;
     #endregion
 
     #region properties
@@ -25,6 +26,17 @@ public class PlayerInputManager : MonoBehaviour
     #endregion
 
     #region methods
+    private void DeadZone(ref Vector3 input)
+    {
+        if (input.magnitude < _inputDeadZone)
+        {
+            input = Vector3.zero;
+        }
+        else
+        {
+            input = input.normalized * ((input.magnitude - _inputDeadZone) / (1 - _inputDeadZone));
+        }
+    }
     public float HInput()
     {
         return _horizontalInput;
@@ -49,12 +61,13 @@ public class PlayerInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // ataque principal
         if (Input.GetButtonDown("Fire1"))
         {
             _myPlayerAttackController.MainAttack();
         }
 
-        // eje de input que funciona cuando se pulsa la barra espaciadora
+        // rodar
         if (Input.GetButtonDown("Roll"))
         {
             _myPlayerMovementController.Rodar();
@@ -63,16 +76,21 @@ public class PlayerInputManager : MonoBehaviour
         {
             _verticalInput = Input.GetAxis("Vertical");
             _horizontalInput = Input.GetAxis("Horizontal");
-
-            _myPlayerMovementController.SetMovementDirection(new Vector3(_horizontalInput, _verticalInput, 0));
+            Vector3 movementInput = new Vector3(_horizontalInput, _verticalInput, 0);
+            _myPlayerMovementController.SetMovementDirection(movementInput);
         }
 
+        // cambiar de color
         _scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        Debug.Log(_scrollInput);
         _myPlayerChangeColors.ChangeColor(_scrollInput);
+
+        // girar la flecha de dirección con el mando
         _rightHorizontal = Input.GetAxis("RightHorizontal");
         _rightVertical = Input.GetAxis("RightVertical");
         Vector3 right = new Vector3(_rightHorizontal, _rightVertical, 0);
-        if (right != Vector3.zero)
+        DeadZone(ref right);
+        if (right.magnitude != 0)
         {
             _directionArrow.SetDirection(right);
         }

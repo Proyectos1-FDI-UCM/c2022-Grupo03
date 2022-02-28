@@ -36,8 +36,12 @@ public class PlayerAttackController : MonoBehaviour
 
         if (!_attackOn)
         {
+            if (angle.y == 180)
+            {
+                angle.z = angle.y;
+            }
             // ajustar los ángulos menores que 45º y mayores o iguales que 0º para que su índice sea 3
-            if (angle.z < 45 && angle.z >= 0)
+            else if (angle.z < 45 && angle.z >= 0)
             {
                 angle.z = angle.z + 360;
             }

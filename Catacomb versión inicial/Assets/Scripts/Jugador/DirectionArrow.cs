@@ -31,7 +31,8 @@ public class DirectionArrow : MonoBehaviour
 
     public void SetDirection(Vector3 newDirection)
     {
-        _myTransform.right = newDirection;
+        float angle = Mathf.Atan2(newDirection.y, newDirection.x) * Mathf.Rad2Deg;
+        _myTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
     #endregion
 
