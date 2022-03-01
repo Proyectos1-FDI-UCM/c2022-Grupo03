@@ -32,22 +32,27 @@ public class PlayerChangeColors : MonoBehaviour
 
     public void ChangeColor(float variation)
     {
-        if (variation > 0)
+        if (variation > 0f)
         {
-            _currentColor++;
+            if (_currentColor >= colors.Rosa)
+            {
+                _currentColor = 0;
+            }
+            else
+            {
+                _currentColor++;
+            }
         }
-        else if (variation < 0)
+        else if (variation < 0f)
         {
-            _currentColor--;
-        }
-
-        if (_currentColor < 0)
-        {
-            _currentColor = colors.Rosa;
-        }
-        else if (_currentColor > colors.Rosa)
-        {
-            _currentColor = 0;
+            if (_currentColor <= 0)
+            {
+                _currentColor = colors.Rosa;
+            }
+            else
+            {
+                _currentColor--;
+            }
         }
         Debug.Log(_currentColor);
     }

@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7576aaf1d5da446842ebb9e83b1205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 772204308}
+  _durationUntilCheck: 2
 --- !u!212 &577278118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce37d8c32493cfe44a437431e7382f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputDeadZone: 0.5
+  _inputDeadZone: 0.19
 --- !u!114 &772204314
 MonoBehaviour:
   m_ObjectHideFlags: 0

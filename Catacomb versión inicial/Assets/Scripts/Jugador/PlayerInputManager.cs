@@ -83,8 +83,11 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         // cambiar de color
-        _scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        _myPlayerChangeColors.ChangeColor(_scrollInput);
+        _scrollInput = Input.GetAxisRaw("Mouse ScrollWheel");
+        if (_scrollInput != 0)
+        {
+            _myPlayerChangeColors.ChangeColor(_scrollInput);
+        }
 
         // girar la flecha de dirección con el mando
         _rightHorizontal = Input.GetAxis("RightHorizontal");
