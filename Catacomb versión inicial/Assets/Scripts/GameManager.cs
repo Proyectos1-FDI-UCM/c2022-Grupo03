@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     #region references
     private GameObject _player;
+    private DeathAnimation _myDeathAnimation;
     #endregion
 
     #region properties
@@ -20,12 +21,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region methods
-    public void OnPlayerDies() 
+    public void Death()
     {
         Destroy(_player);
-     
-        //añadir más adelante que se resetea el mapa, ya sea llamando a otra función o dentro de esta
     }
+    
 
     private void Awake()
     {
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _player = GameObject.Find("Player");
+        _myDeathAnimation = GetComponent<DeathAnimation>();
     }
 
     // Update is called once per frame

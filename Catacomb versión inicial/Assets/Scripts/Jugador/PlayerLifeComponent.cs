@@ -16,7 +16,7 @@ public class PlayerLifeComponent : MonoBehaviour
     #endregion
 
     #region references
-
+    private DeathAnimation _deathAnimation;
     #endregion
 
     #region methods
@@ -25,7 +25,7 @@ public class PlayerLifeComponent : MonoBehaviour
         _currentLife -= _hitDamage;
         if (_currentLife <= 0)
         {
-            GameManager.Instance.OnPlayerDies();
+            _deathAnimation.DeathAni();
         }
         Debug.Log(_currentLife);
     }
@@ -35,6 +35,7 @@ public class PlayerLifeComponent : MonoBehaviour
     void Start()
     {
         _currentLife = _maxLife;
+        _deathAnimation = GetComponent<DeathAnimation>();
     }
 
     // Update is called once per frame

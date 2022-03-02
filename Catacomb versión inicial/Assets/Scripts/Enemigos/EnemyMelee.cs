@@ -59,7 +59,6 @@ public class EnemyMelee : MonoBehaviour
     void Update()
     {
         diferenciax = Math.Abs(transform.position.x) - Math.Abs(player.transform.position.x);
-        Debug.Log(diferenciax);
         if (diferenciax < 0 && transform.position.x < 0 && player.transform.position.x < 0)
         {
             _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);

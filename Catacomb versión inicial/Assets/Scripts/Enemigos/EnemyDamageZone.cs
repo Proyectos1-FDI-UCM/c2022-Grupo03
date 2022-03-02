@@ -8,6 +8,7 @@ public class EnemyDamageZone : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // duck typing
+        
         PlayerLifeComponent _playerLifeComponent = collider.GetComponent<PlayerLifeComponent>();
         EnemyDamageZone _enemyDamageZone = collider.GetComponent<EnemyDamageZone>();
         if (_playerLifeComponent != null && _enemyDamageZone == null)
