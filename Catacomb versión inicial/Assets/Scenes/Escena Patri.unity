@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7576aaf1d5da446842ebb9e83b1205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1703909059}
+  _durationUntilCheck: 0
 --- !u!212 &1201944997
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -714,6 +714,8 @@ GameObject:
   - component: {fileID: 1622558628}
   - component: {fileID: 1622558630}
   - component: {fileID: 1622558629}
+  - component: {fileID: 1622558631}
+  - component: {fileID: 1622558632}
   m_Layer: 0
   m_Name: Square  (con collider)
   m_TagString: Untagged
@@ -812,6 +814,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1622558631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622558627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630ce631bb12046448108a59ca11ffce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &1622558632
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622558627}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &1703909059
 GameObject:
   m_ObjectHideFlags: 0

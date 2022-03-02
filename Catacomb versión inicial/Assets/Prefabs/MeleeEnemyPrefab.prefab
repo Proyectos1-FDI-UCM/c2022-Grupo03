@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4946740501492387810}
   - component: {fileID: -3331865565756292055}
   - component: {fileID: 2700984357758982118}
+  - component: {fileID: 8141592983438796468}
   m_Layer: 0
   m_Name: MeleeEnemyPrefab
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDuration: 2
   _duration: 0.5
-  _enemyAttackZone: {fileID: 0}
+  _enemyAttackZone: {fileID: 76967132065110462, guid: 2c6dc55f871d359418f0adbf958fb3cd, type: 3}
 --- !u!114 &2700984357758982118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,3 +162,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
+  _distance: 1.5
+--- !u!114 &8141592983438796468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4946740501492387801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630ce631bb12046448108a59ca11ffce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
