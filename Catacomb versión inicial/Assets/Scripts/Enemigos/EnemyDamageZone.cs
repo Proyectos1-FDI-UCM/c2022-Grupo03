@@ -9,7 +9,8 @@ public class EnemyDamageZone : MonoBehaviour
     {
         // duck typing
         PlayerLifeComponent _playerLifeComponent = collider.GetComponent<PlayerLifeComponent>();
-        if (_playerLifeComponent != null)
+        EnemyDamageZone _enemyDamageZone = collider.GetComponent<EnemyDamageZone>();
+        if (_playerLifeComponent != null && _enemyDamageZone == null)
         {
             _playerLifeComponent.Damage();
         }

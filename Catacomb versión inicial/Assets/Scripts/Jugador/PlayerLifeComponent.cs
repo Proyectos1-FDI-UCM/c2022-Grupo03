@@ -27,6 +27,7 @@ public class PlayerLifeComponent : MonoBehaviour
         {
             GameManager.Instance.OnPlayerDies();
         }
+        Debug.Log(_currentLife);
     }
     #endregion
 
