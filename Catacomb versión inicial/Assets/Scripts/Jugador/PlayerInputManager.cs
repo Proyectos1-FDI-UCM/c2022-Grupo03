@@ -23,7 +23,6 @@ public class PlayerInputManager : MonoBehaviour
     private PlayerChangeColors _myPlayerChangeColors;
     private GameObject _dirArrow;
     private DirectionArrow _directionArrow;
-    private LightRay _lightRay;
     #endregion
 
     #region methods
@@ -48,6 +47,22 @@ public class PlayerInputManager : MonoBehaviour
     {
         return _verticalInput;
     }
+
+    private void PressNumber(int colorIndex, KeyCode key)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            _myPlayerChangeColors.SetCurrentColor(colorIndex);
+        }
+    }
+
+    private void ColorsController(int value, KeyCode key)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            _myPlayerChangeColors.ChangeColor(value);
+        }
+    }
     #endregion
 
     // Start is called before the first frame update
@@ -58,7 +73,6 @@ public class PlayerInputManager : MonoBehaviour
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _dirArrow = GameObject.Find("DirectionArrow");
         _directionArrow = _dirArrow.GetComponent<DirectionArrow>();
-        _lightRay = GetComponent<LightRay>();
     }
 
     // Update is called once per frame
@@ -69,10 +83,14 @@ public class PlayerInputManager : MonoBehaviour
         {
             _myPlayerAttackController.MainAttack();
         }
-
-        if(Input.GetButtonDown("Fire2"))
+        // rayo de luz
+        else if (Input.GetButtonDown("Fire2"))
         {
-            // _lightRay.Invoke("Shoot", 2f);
+            _myPlayerAttackController.Shoot();
+        }
+        // ataque giratorio
+        else if (Input.GetButtonDown("Fire3"))
+        {
             _myPlayerAttackController.SpintAttack();
         }
 
@@ -82,6 +100,7 @@ public class PlayerInputManager : MonoBehaviour
             _myPlayerMovementController.Rodar();
         }
 
+        // movimiento
         else
         {
             _verticalInput = Input.GetAxis("Vertical");
@@ -91,11 +110,21 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         // cambiar de color
-        _scrollInput = Input.GetAxisRaw("Mouse ScrollWheel");
+        // rueda del ratón
+        _scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (_scrollInput != 0)
         {
             _myPlayerChangeColors.ChangeColor(_scrollInput);
         }
+        // mando
+        ColorsController(1, KeyCode.Joystick1Button5);
+        ColorsController(-1, KeyCode.Joystick1Button4);
+        // números del teclado
+        PressNumber(0, KeyCode.Alpha1);
+        PressNumber(1, KeyCode.Alpha2);
+        PressNumber(2, KeyCode.Alpha3);
+        PressNumber(3, KeyCode.Alpha4);
+        PressNumber(4, KeyCode.Alpha5);
 
         // girar la flecha de dirección con el mando
         _rightHorizontal = Input.GetAxis("RightHorizontal");

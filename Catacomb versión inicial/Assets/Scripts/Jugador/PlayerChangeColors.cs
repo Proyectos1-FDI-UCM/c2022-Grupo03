@@ -15,7 +15,6 @@ public class PlayerChangeColors : MonoBehaviour
     #region properties
     private enum colors { Rojo, Amarillo, Verde, Azul, Rosa };
     private colors _currentColor;
-    private int _currentIndex;
     #endregion
 
     #region methods
@@ -25,9 +24,21 @@ public class PlayerChangeColors : MonoBehaviour
         return indice;
     }
 
+    private colors IndexToColor(int indice)
+    {
+        colors col = (colors)indice;
+        return col;
+    }
     public int GetCurrentColorIndex()
     {
         return ColorToIndex(_currentColor);
+    }
+
+    // métodos para cambiar de color
+    public void SetCurrentColor(int indice)
+    {
+        _currentColor = IndexToColor(indice);
+        Debug.Log(_currentColor);
     }
 
     public void ChangeColor(float variation)

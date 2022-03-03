@@ -8,32 +8,41 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField]
     private float _attackDuration;
     [SerializeField]
-    private Vector3[] _offsets = { Vector3.up, -Vector3.right, -Vector3.up, Vector3.right };
+    private float _rayLength;
     [SerializeField]
-    private float _spinDuration;
+    private float _rayCooldown;
+    [SerializeField]
+    private float _rayPreparationTime;
+    [SerializeField]
+    private float _spinCooldown;
+    [SerializeField]
+    private Vector3[] _offsets = { Vector3.up, -Vector3.right, -Vector3.up, Vector3.right };
     #endregion
 
     #region properties
-    private float _elapsedTime;
-    private bool _attackOn; // indicar si se ha efectuado el ataque o no
+    private string[] _enemyColors = { "Red", "Yellow", "Green", "Blue", "Pink" };
     private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
+    GameObject _lastAttack;
     GameObject[] _attacks = new GameObject[4];
-    private bool _attackMade;
-    private float _elapsedTime2;
+    public bool _attackRunning; // indicar si se ha efectuado el ataque o no
+    public bool _rayMade;
+    public bool _spinMade;
+    public bool _rayWaiting;
+    public float _elapsedTime;  // mientras se está realizando/preparando el ataque
+    public float _elapsedTimeBis;   // para los cooldowns
+    private Vector3 _dir;
     #endregion
 
     #region references
-    [SerializeField]
-    private GameObject _damageZone;
-    [SerializeField]
-    private GameObject _smallDamazeZone;
     Transform _myTransform;
+    [SerializeField]
+    private GameObject[] _damageZones;
     [SerializeField]
     GameObject _dirArrow;
     Transform _dirArrowTransform;
-    GameObject _lastAttack;
     PlayerInputManager _myPlayerInputManager;
     PlayerMovementController _myPlayerMovementController;
+    PlayerChangeColors _myPlayerChangeColors;
     #endregion
 
     #region methods
@@ -41,7 +50,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         Vector3 angle = _dirArrowTransform.rotation.eulerAngles;
 
-        if (!_attackOn)
+        if (!_attackRunning)
         {
             if (angle.y == 180)
             {
@@ -59,9 +68,9 @@ public class PlayerAttackController : MonoBehaviour
             Vector3 offset = _offsets[indice];
 
             Vector3 instPoint = _myTransform.position + offset;
-            _lastAttack = Instantiate(_damageZone, instPoint, rotation);
+            _lastAttack = Instantiate(_damageZones[0], instPoint, rotation);
 
-            _attackOn = true;
+            _attackRunning = true;
             _myPlayerInputManager.enabled = false;
         }
 
@@ -69,22 +78,54 @@ public class PlayerAttackController : MonoBehaviour
 
     public void SpintAttack()
     {
-        if (!_attackOn && !_attackMade)
+        if (!_attackRunning && !_spinMade)
         {
             for (int i = 0; i < _attacks.Length; i++)
             {
-                if (i % 2 == 0)
-                {
-                    _attacks[i] = Instantiate(_damageZone, _myTransform.position + _offsets[i], Quaternion.identity);
-                }
-                else
-                {
-                    _attacks[i] = Instantiate(_smallDamazeZone, _myTransform.position + _offsets[i], Quaternion.identity);
-                }
+                _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], Quaternion.identity);
             }
-            _attackOn = true;
-            _attackMade = true;
+            _attackRunning = true;
+            _spinMade = true;
             _myPlayerInputManager.enabled = false;
+        }
+    }
+
+    public void Shoot()
+    {
+        if (!_rayMade)
+        {
+            _rayWaiting = true;
+            _dir = _dirArrowTransform.right;
+            _myPlayerInputManager.enabled = false;
+        }
+    }
+
+    private void LightRay(Vector3 dir)
+    {
+        Debug.DrawRay(_myTransform.position, _dir.normalized * _rayLength, Color.red, 2f);  // debug del raycast
+        RaycastHit2D hitInfo;
+        hitInfo = Physics2D.Raycast(_myTransform.position, _dirArrowTransform.right, _rayLength);
+        if (hitInfo)
+        {
+            int indice = _myPlayerChangeColors.GetCurrentColorIndex();
+            if (hitInfo.collider.GetComponent(_enemyColors[indice]) != null)
+            {
+                hitInfo.collider.GetComponent<EnemyLifeComponent>().Damage();
+            }
+        }
+        _rayMade = true;
+    }
+
+    private void Cooldown(float duration, ref bool abilityMade)
+    {
+        if (abilityMade)
+        {
+            _elapsedTimeBis += Time.deltaTime;
+            if (_elapsedTimeBis > duration)
+            {
+                abilityMade = false;
+                _elapsedTimeBis = 0;
+            }
         }
     }
     #endregion
@@ -94,16 +135,19 @@ public class PlayerAttackController : MonoBehaviour
     {
         _myTransform = transform;
         _dirArrowTransform = _dirArrow.transform;
-        _attackOn = false;
+        _attackRunning = false;
+        _rayMade = false;
+        _spinMade = false;
+        _rayWaiting = false;
         _myPlayerInputManager = GetComponent<PlayerInputManager>();
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
-        _attackMade = false;
+        _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_attackOn)
+        if (_attackRunning)
         {
             // sincronizar el tiempo que dura el ataque con el tiempo que el jugador no puede moverse
             _elapsedTime += Time.deltaTime;
@@ -112,26 +156,32 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             if (_elapsedTime > _attackDuration)
             {
-                _attackOn = false;
                 GameObject.Destroy(_lastAttack);
                 for (int i = 0; i < _attacks.Length; i++)
                 {
                     GameObject.Destroy(_attacks[i]);
                 }
+                _attackRunning = false;
                 _myPlayerInputManager.enabled = true;
                 _elapsedTime = 0;
             }
         }
 
-        if (_attackMade)
+        Cooldown(_rayCooldown, ref _rayMade);
+        Cooldown(_spinCooldown, ref _spinMade);
+
+        if (_rayWaiting)
         {
-            _elapsedTime2 += Time.deltaTime;
-            // el tiempo de espera del giro tiene que ser superior a la duración del ataque
-            if (_elapsedTime2 > _spinDuration)
+            _myPlayerMovementController.SetMovementDirection(Vector3.zero);
+            _elapsedTime += Time.deltaTime;
+            if (_elapsedTime > _rayPreparationTime)
             {
-                _attackMade = false;
-                _elapsedTime2 = 0;
+                _rayWaiting = false;
+                LightRay(_dir);
+                _myPlayerInputManager.enabled = true;
+                _elapsedTime = 0;
             }
         }
+        // el tiempo de espera del giro tiene que ser superior a la duración del ataque
     }
 }

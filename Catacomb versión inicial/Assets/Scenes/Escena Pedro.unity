@@ -317,7 +317,6 @@ GameObject:
   - component: {fileID: 772204314}
   - component: {fileID: 772204313}
   - component: {fileID: 772204312}
-  - component: {fileID: 772204311}
   - component: {fileID: 772204310}
   - component: {fileID: 772204309}
   - component: {fileID: 772204318}
@@ -341,15 +340,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7356c08a54e24c3428c8095cb9b6db9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDuration: 10
+  _attackDuration: 3
+  _rayLength: 10
+  _rayCooldown: 5
+  _rayPreparationTime: 2
+  _spinCooldown: 6
   _offsets:
   - {x: 0, y: 1, z: 0}
   - {x: -1, y: 0, z: 0}
   - {x: 0, y: -1, z: 0}
   - {x: 1, y: 0, z: 0}
-  _spinDuration: 20
-  _damageZone: {fileID: 6653043378017638796, guid: cb3dfaf72e3f02940b6d0c111a7eacc1, type: 3}
-  _smallDamazeZone: {fileID: 3927458185145662951, guid: 20e941c422dc0db48bd9949d26c3c7da, type: 3}
+  _damageZones:
+  - {fileID: 6653043378017638796, guid: cb3dfaf72e3f02940b6d0c111a7eacc1, type: 3}
+  - {fileID: 3927458185145662951, guid: 20e941c422dc0db48bd9949d26c3c7da, type: 3}
   _dirArrow: {fileID: 577278116}
 --- !u!114 &772204310
 MonoBehaviour:
@@ -361,18 +364,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2db9a7d09de0324ba959fe8d002c48f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &772204311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 772204308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e140a13f59fa94347889cd46a1bc51f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &772204312
