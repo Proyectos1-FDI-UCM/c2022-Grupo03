@@ -9,17 +9,24 @@ public class PlayerAttackController : MonoBehaviour
     private float _attackDuration;
     [SerializeField]
     private Vector3[] _offsets = { Vector3.up, -Vector3.right, -Vector3.up, Vector3.right };
+    [SerializeField]
+    private float _spinDuration;
     #endregion
 
     #region properties
     private float _elapsedTime;
     private bool _attackOn; // indicar si se ha efectuado el ataque o no
     private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
+    GameObject[] _attacks = new GameObject[4];
+    private bool _attackMade;
+    private float _elapsedTime2;
     #endregion
 
     #region references
     [SerializeField]
     private GameObject _damageZone;
+    [SerializeField]
+    private GameObject _smallDamazeZone;
     Transform _myTransform;
     [SerializeField]
     GameObject _dirArrow;
@@ -51,13 +58,34 @@ public class PlayerAttackController : MonoBehaviour
             Quaternion rotation = _rotations[indice % 2];
             Vector3 offset = _offsets[indice];
 
-            Vector3 instPoint = transform.position + offset;
+            Vector3 instPoint = _myTransform.position + offset;
             _lastAttack = Instantiate(_damageZone, instPoint, rotation);
 
             _attackOn = true;
             _myPlayerInputManager.enabled = false;
         }
 
+    }
+
+    public void SpintAttack()
+    {
+        if (!_attackOn && !_attackMade)
+        {
+            for (int i = 0; i < _attacks.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    _attacks[i] = Instantiate(_damageZone, _myTransform.position + _offsets[i], Quaternion.identity);
+                }
+                else
+                {
+                    _attacks[i] = Instantiate(_smallDamazeZone, _myTransform.position + _offsets[i], Quaternion.identity);
+                }
+            }
+            _attackOn = true;
+            _attackMade = true;
+            _myPlayerInputManager.enabled = false;
+        }
     }
     #endregion
 
@@ -69,6 +97,7 @@ public class PlayerAttackController : MonoBehaviour
         _attackOn = false;
         _myPlayerInputManager = GetComponent<PlayerInputManager>();
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
+        _attackMade = false;
     }
 
     // Update is called once per frame
@@ -85,8 +114,23 @@ public class PlayerAttackController : MonoBehaviour
             {
                 _attackOn = false;
                 GameObject.Destroy(_lastAttack);
+                for (int i = 0; i < _attacks.Length; i++)
+                {
+                    GameObject.Destroy(_attacks[i]);
+                }
                 _myPlayerInputManager.enabled = true;
                 _elapsedTime = 0;
+            }
+        }
+
+        if (_attackMade)
+        {
+            _elapsedTime2 += Time.deltaTime;
+            // el tiempo de espera del giro tiene que ser superior a la duración del ataque
+            if (_elapsedTime2 > _spinDuration)
+            {
+                _attackMade = false;
+                _elapsedTime2 = 0;
             }
         }
     }

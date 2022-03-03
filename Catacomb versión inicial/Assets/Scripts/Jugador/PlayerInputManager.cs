@@ -23,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
     private PlayerChangeColors _myPlayerChangeColors;
     private GameObject _dirArrow;
     private DirectionArrow _directionArrow;
+    private LightRay _lightRay;
     #endregion
 
     #region methods
@@ -57,6 +58,7 @@ public class PlayerInputManager : MonoBehaviour
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _dirArrow = GameObject.Find("DirectionArrow");
         _directionArrow = _dirArrow.GetComponent<DirectionArrow>();
+        _lightRay = GetComponent<LightRay>();
     }
 
     // Update is called once per frame
@@ -66,6 +68,12 @@ public class PlayerInputManager : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             _myPlayerAttackController.MainAttack();
+        }
+
+        if(Input.GetButtonDown("Fire2"))
+        {
+            // _lightRay.Invoke("Shoot", 2f);
+            _myPlayerAttackController.SpintAttack();
         }
 
         // rodar
