@@ -17,6 +17,12 @@ public class EnemyMelee : MonoBehaviour
     private float _duration = 1f;
     private Vector3 offset = new Vector3(1f,0f,0f);
     private float x_scale, y_scale, z_scale;
+    [SerializeField]
+    private int _damage;
+    #endregion
+
+    #region properties
+    private int _dañoTotal;
     #endregion
 
     #region references
@@ -25,6 +31,7 @@ public class EnemyMelee : MonoBehaviour
     [SerializeField]
     private GameObject _enemyAttackZone;
     private GameObject _enemyAttack;
+    private Red _myRedComponent;
     #endregion
 
     #region methods
@@ -42,6 +49,10 @@ public class EnemyMelee : MonoBehaviour
     {
         return ataca;
     }
+    public int dañoAtaque()
+    {
+        return _dañoTotal;
+    }
     #endregion
 
     // Start is called before the first frame update
@@ -52,7 +63,12 @@ public class EnemyMelee : MonoBehaviour
         y_scale = _myTransform.localScale.y;
         z_scale = _myTransform.localScale.z;
         player = GameObject.Find("Player");
-        
+        _myRedComponent = GetComponent<Red>();
+        _dañoTotal = _damage;
+        if (_myRedComponent != null)
+        {
+            _dañoTotal += _myRedComponent.IncreasedDamage();
+        }
     }
 
     // Update is called once per frame

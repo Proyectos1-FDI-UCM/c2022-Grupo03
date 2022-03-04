@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class EnemyDamageZone : MonoBehaviour
 {
+    #region parameters
+    #endregion
+
+    #region references
+    private GameObject _enemyMelee;
+    private EnemyMelee _enemyMeleeComponent;
+    #endregion
+
     #region methods
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // duck typing
         
         PlayerLifeComponent _playerLifeComponent = collider.GetComponent<PlayerLifeComponent>();
-        EnemyDamageZone _enemyDamageZone = collider.GetComponent<EnemyDamageZone>();
-        if (_playerLifeComponent != null && _enemyDamageZone == null)
+        if (_playerLifeComponent != null)
         {
-            _playerLifeComponent.Damage();
+            _playerLifeComponent.Damage(_enemyMeleeComponent.dañoAtaque());
         }
+
     }
 
     #endregion
@@ -23,7 +31,8 @@ public class EnemyDamageZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _enemyMelee = GameObject.Find("MeleeEnemyPrefab");
+        _enemyMeleeComponent = _enemyMelee.GetComponent<EnemyMelee>();
     }
 
     // Update is called once per frame

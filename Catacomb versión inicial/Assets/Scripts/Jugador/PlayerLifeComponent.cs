@@ -20,15 +20,26 @@ public class PlayerLifeComponent : MonoBehaviour
     #endregion
 
     #region methods
-    public void Damage()
+    public void Damage(int damage)
     {
-        _currentLife -= _hitDamage;
+        _currentLife -= damage;
         if (_currentLife <= 0)
         {
             _deathAnimation.DeathAni();
         }
         Debug.Log(_currentLife);
     }
+    /*
+    public void DamageRed(int damage)
+    {
+        _currentLife -= damage;
+        if (_currentLife <= 0)
+        {
+            _deathAnimation.DeathAni();
+        }
+        Debug.Log(_currentLife);
+    }
+    */
     #endregion
 
     // Start is called before the first frame update

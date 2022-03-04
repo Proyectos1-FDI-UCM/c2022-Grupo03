@@ -140,7 +140,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9612d422046ce84390756626d4926a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 1
+  _maxLife: 3
+--- !u!114 &283424325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283424316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab90eca0a1ff6ca449a52e075f93a4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _increasedDamage: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,12 +402,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackDuration: 2
+  _rayLength: 0
+  _rayCooldown: 0
+  _rayPreparationTime: 0
+  _spinCooldown: 0
   _offsets:
   - {x: 0, y: 1, z: 0}
   - {x: -1, y: 0, z: 0}
   - {x: 0, y: -1, z: 0}
   - {x: 1, y: 0, z: 0}
-  _damageZone: {fileID: 6653043378017638796, guid: cb3dfaf72e3f02940b6d0c111a7eacc1, type: 3}
+  _damageZones:
+  - {fileID: 6653043378017638796, guid: cb3dfaf72e3f02940b6d0c111a7eacc1, type: 3}
+  - {fileID: 3927458185145662951, guid: 20e941c422dc0db48bd9949d26c3c7da, type: 3}
   _dirArrow: {fileID: 625609417}
 --- !u!114 &835942147
 MonoBehaviour:
@@ -446,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce37d8c32493cfe44a437431e7382f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputDeadZone: 0
+  _inputDeadZone: 1.9
 --- !u!114 &835942151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e617c1457134e45b620ef8b6b2da6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 1
+  _maxLife: 10
   _hitDamage: 1
 --- !u!1001 &884575229
 PrefabInstance:
@@ -613,8 +632,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -3331865565756292055, guid: fd4792e87ed04c447aaa22c654dedb09, type: 3}
+      propertyPath: _damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3331865565756292055, guid: fd4792e87ed04c447aaa22c654dedb09, type: 3}
+      propertyPath: _duration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -3331865565756292055, guid: fd4792e87ed04c447aaa22c654dedb09, type: 3}
       propertyPath: _attackDuration
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -3331865565756292055, guid: fd4792e87ed04c447aaa22c654dedb09, type: 3}
       propertyPath: _enemyAttackZone
