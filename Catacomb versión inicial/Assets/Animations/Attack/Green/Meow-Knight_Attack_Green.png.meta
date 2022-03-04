@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: be6e2223eebc8b444b0a33956d477ea7
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2191233086323024724
+    second: Meow-Knight_Attack_Green_0
+  - first:
+      213: -8569345345650373194
+    second: Meow-Knight_Attack_Green_1
+  - first:
+      213: 710904735002855311
+    second: Meow-Knight_Attack_Green_2
+  - first:
+      213: 8936580577787118388
+    second: Meow-Knight_Attack_Green_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -89,7 +101,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Meow-Knight_Attack_Green_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 109
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 453ed52e1e2d86e10800000000000000
+      internalID: 2191233086323024724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Meow-Knight_Attack_Green_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 67
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bdccda7fc1931980800000000000000
+      internalID: -8569345345650373194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Meow-Knight_Attack_Green_2
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 25
+        width: 31
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f870df60714add900800000000000000
+      internalID: 710904735002855311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Meow-Knight_Attack_Green_3
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 0
+        width: 35
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43308adffac150c70800000000000000
+      internalID: 8936580577787118388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

@@ -43,11 +43,14 @@ public class PlayerAttackController : MonoBehaviour
     PlayerInputManager _myPlayerInputManager;
     PlayerMovementController _myPlayerMovementController;
     PlayerChangeColors _myPlayerChangeColors;
+    private AttackAnimation _myAttackAnimation;
     #endregion
 
     #region methods
     public void MainAttack()
     {
+        _myAttackAnimation.AttackAni(); 
+
         Vector3 angle = _dirArrowTransform.rotation.eulerAngles;
 
         if (!_attackRunning)
@@ -142,6 +145,7 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerInputManager = GetComponent<PlayerInputManager>();
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
+        _myAttackAnimation = GetComponent<AttackAnimation>();
     }
 
     // Update is called once per frame

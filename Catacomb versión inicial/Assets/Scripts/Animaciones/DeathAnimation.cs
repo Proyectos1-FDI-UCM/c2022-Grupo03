@@ -17,7 +17,6 @@ public class DeathAnimation : MonoBehaviour
         _myAnimator.ResetTrigger("NoCorrer");
         _myAnimator.SetTrigger("Death");
         muriendo = true;
-        
     }
     #endregion
 
