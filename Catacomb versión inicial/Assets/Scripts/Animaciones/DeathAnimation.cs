@@ -6,6 +6,9 @@ public class DeathAnimation : MonoBehaviour
 {
     #region parameters
     private bool muriendo = false;
+    private float _elapsedTime;
+    [SerializeField]
+    private int tiempoMuerte = 1000;
     #endregion
 
     #region methods
@@ -13,7 +16,8 @@ public class DeathAnimation : MonoBehaviour
     {
         _myAnimator.ResetTrigger("NoCorrer");
         _myAnimator.SetTrigger("Death");
-        GameManager.Instance.Death();
+        muriendo = true;
+        
     }
     #endregion
 
@@ -32,6 +36,10 @@ public class DeathAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        _elapsedTime += Time.deltaTime;
+        if (!muriendo)
+            _elapsedTime = 0;
+        if(muriendo && _elapsedTime > tiempoMuerte)
+            GameManager.Instance.Death();
     }
 }

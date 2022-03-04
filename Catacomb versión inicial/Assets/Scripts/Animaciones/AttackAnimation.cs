@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class AttackAnimation : MonoBehaviour
 {
+    #region references
+    [SerializeField]
+    private Animator _myAnimator;
+    private Transform _myTransform;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
