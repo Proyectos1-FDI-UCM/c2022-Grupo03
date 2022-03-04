@@ -24,12 +24,12 @@ public class PlayerAttackController : MonoBehaviour
     private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
     GameObject _lastAttack;
     GameObject[] _attacks = new GameObject[4];
-    public bool _attackRunning; // indicar si se ha efectuado el ataque o no
-    public bool _rayMade;
-    public bool _spinMade;
-    public bool _rayWaiting;
-    public float _elapsedTime;  // mientras se está realizando/preparando el ataque
-    public float _elapsedTimeBis;   // para los cooldowns
+    private bool _attackRunning; // indicar si se ha efectuado el ataque o no
+    private bool _rayMade;
+    private bool _spinMade;
+    private bool _rayWaiting;
+    private float _elapsedTime;  // mientras se está realizando/preparando el ataque
+    private float _elapsedTimeBis;   // para los cooldowns
     private Vector3 _dir;
     #endregion
 

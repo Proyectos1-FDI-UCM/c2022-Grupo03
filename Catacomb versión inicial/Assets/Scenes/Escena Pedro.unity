@@ -320,7 +320,6 @@ GameObject:
   - component: {fileID: 772204310}
   - component: {fileID: 772204309}
   - component: {fileID: 772204318}
-  - component: {fileID: 772204319}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -503,21 +502,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxLife: 5
   _hitDamage: 1
---- !u!114 &772204319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 772204308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61fa6f3c911221048b3ccf54bfbdd494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _length: 10
-  _cooldown: 5
-  _dirArrow: {fileID: 577278116}
 --- !u!1 &1693904716
 GameObject:
   m_ObjectHideFlags: 0
