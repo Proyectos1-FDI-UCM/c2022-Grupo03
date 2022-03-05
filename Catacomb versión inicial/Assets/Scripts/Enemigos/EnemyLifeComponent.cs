@@ -11,9 +11,15 @@ public class EnemyLifeComponent : MonoBehaviour
 
     #region properties
     private int _currentLife;
+    private bool _isBlue = false; //si un enemigo es azul se pone a true
+    private float _elapsedTime = 0; //contador 
+    [SerializeField]
+    private float _desiredTimeToRecovery=5;  //determina cada cuanto tiempo recuperan vida los enemigo azules
     #endregion
 
     #region references
+    private Pink _myPinkComponent;
+    private Blue _myBlueComponent;
     #endregion
 
     #region methods
@@ -44,11 +50,29 @@ public class EnemyLifeComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _myPinkComponent = GetComponent<Pink>();
+        _myBlueComponent = GetComponent<Blue>();
+        if (_myPinkComponent != null)
+        {
+            _maxLife += _myPinkComponent.IncreasedLife();
+        }
+        if(_myBlueComponent!= null)
+        {
+            _isBlue = true;
+        }
+
         _currentLife = _maxLife;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        _elapsedTime += Time.deltaTime;
+        if(_isBlue && _elapsedTime>=_desiredTimeToRecovery && _currentLife<_maxLife) //se ha puesto de forma que no pueda recuperar vida si ya la tiene al maximo
+        {
+            _currentLife += _myBlueComponent.RecoveryPoints();
+            _elapsedTime = 0;
+        }
     }
 }

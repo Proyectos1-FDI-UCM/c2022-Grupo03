@@ -5,7 +5,8 @@ using UnityEngine;
 public class Green : MonoBehaviour
 {
     #region parameters
-
+    [SerializeField]
+    private int _increasedSpeed = 1;
     #endregion
 
     #region properties
@@ -17,7 +18,10 @@ public class Green : MonoBehaviour
     #endregion
 
     #region methods
-
+    public int IncreasedSpeed()
+    {
+        return _increasedSpeed;
+    }
     #endregion
 
     // Start is called before the first frame update

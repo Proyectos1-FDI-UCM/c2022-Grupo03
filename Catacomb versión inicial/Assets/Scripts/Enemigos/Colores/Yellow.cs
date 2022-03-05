@@ -5,7 +5,8 @@ using UnityEngine;
 public class Yellow : MonoBehaviour
 {
     #region parameters
-
+    [SerializeField]
+    private int _increasedRange;
     #endregion
 
     #region properties
@@ -17,7 +18,10 @@ public class Yellow : MonoBehaviour
     #endregion
 
     #region methods
-
+    public int IncreasedRange()
+    {
+        return _increasedRange;
+    }
     #endregion
 
     // Start is called before the first frame update

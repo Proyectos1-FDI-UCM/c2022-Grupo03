@@ -64,11 +64,11 @@ public class EnemyMelee : MonoBehaviour
         z_scale = _myTransform.localScale.z;
         player = GameObject.Find("Player");
         _myRedComponent = GetComponent<Red>();
-        _dañoTotal = _damage;
         if (_myRedComponent != null)
         {
             _dañoTotal += _myRedComponent.IncreasedDamage();
         }
+        _dañoTotal = _damage;
     }
 
     // Update is called once per frame

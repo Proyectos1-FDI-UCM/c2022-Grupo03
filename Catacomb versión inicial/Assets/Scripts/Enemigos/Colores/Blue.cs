@@ -5,7 +5,8 @@ using UnityEngine;
 public class Blue : MonoBehaviour
 {
     #region parameteres
-
+    [SerializeField]
+    private int _recoveryPoints=1;
     #endregion
 
     #region properties
@@ -17,7 +18,10 @@ public class Blue : MonoBehaviour
     #endregion
 
     #region methods
-
+    public int RecoveryPoints()
+    {
+        return _recoveryPoints;
+    }
     #endregion
 
     // Start is called before the first frame update

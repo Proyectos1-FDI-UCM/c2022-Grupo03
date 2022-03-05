@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pink : MonoBehaviour
 {
     #region parameters
-
+    private int _increasedLife=2;
     #endregion
 
     #region properties
@@ -17,7 +17,10 @@ public class Pink : MonoBehaviour
     #endregion
 
     #region methods
-
+    public int IncreasedLife()
+    {
+        return _increasedLife;
+    }
     #endregion
 
     // Start is called before the first frame update

@@ -20,7 +20,8 @@ public class GeneralEnemyMovement : MonoBehaviour
     private bool _isReloading;
     private GameObject targetObject;
     private Transform targetTransform;
-    EnemyMelee _meleeEnemy;
+    private EnemyMelee _meleeEnemy;
+    private Green _myGreenComponent;
     #endregion
 
     #region methods
@@ -38,6 +39,11 @@ public class GeneralEnemyMovement : MonoBehaviour
         targetObject = GameObject.Find("Player");
         targetTransform = targetObject.transform;
         SetMovementDirection();
+        _myGreenComponent = GetComponent<Green>();
+        if (_myGreenComponent != null)
+        {
+            _speed += _myGreenComponent.IncreasedSpeed();
+        }
     }
 
     // Update is called once per frame
