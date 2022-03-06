@@ -23,9 +23,10 @@ public class PlayerLifeComponent : MonoBehaviour
     public void Damage(int damage)
     {
         _currentLife -= damage;
+        _deathAnimation.DamageAni(); //animación cuando recibe daño
         if (_currentLife <= 0)
         {
-            _deathAnimation.DeathAni();
+            _deathAnimation.DeathAni(); //animación de la muerte
         }
         Debug.Log(_currentLife);
     }

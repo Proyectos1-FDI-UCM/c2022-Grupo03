@@ -18,6 +18,12 @@ public class DeathAnimation : MonoBehaviour
         _myAnimator.SetTrigger("Death");
         muriendo = true;
     }
+    public void DamageAni()
+    {
+        _myAnimator.ResetTrigger("NoCorrer");
+        _myAnimator.ResetTrigger("Correr");
+        _myAnimator.SetTrigger("Damage");
+    }
     #endregion
 
     #region references
