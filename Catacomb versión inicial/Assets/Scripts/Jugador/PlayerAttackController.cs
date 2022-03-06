@@ -76,7 +76,6 @@ public class PlayerAttackController : MonoBehaviour
             _attackRunning = true;
             _myPlayerInputManager.enabled = false;
         }
-
     }
 
     public void SpintAttack()
@@ -103,11 +102,11 @@ public class PlayerAttackController : MonoBehaviour
         }
     }
 
-    private void LightRay(Vector3 dir)
+    private void LightRay()
     {
         Debug.DrawRay(_myTransform.position, _dir.normalized * _rayLength, Color.red, 2f);  // debug del raycast
         RaycastHit2D hitInfo;
-        hitInfo = Physics2D.Raycast(_myTransform.position, _dirArrowTransform.right, _rayLength);
+        hitInfo = Physics2D.Raycast(_myTransform.position, _dir.normalized, _rayLength);
         if (hitInfo)
         {
             int indice = _myPlayerChangeColors.GetCurrentColorIndex();
@@ -181,7 +180,7 @@ public class PlayerAttackController : MonoBehaviour
             if (_elapsedTime > _rayPreparationTime)
             {
                 _rayWaiting = false;
-                LightRay(_dir);
+                LightRay();
                 _myPlayerInputManager.enabled = true;
                 _elapsedTime = 0;
             }
