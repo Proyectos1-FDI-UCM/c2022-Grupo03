@@ -7,8 +7,6 @@ public class PlayerLifeComponent : MonoBehaviour
     #region parameters
     [SerializeField]
     private int _maxLife = 5;
-    [SerializeField]
-    private int _hitDamage = 1; //vida perdida por golpe
     #endregion
 
     #region properties
@@ -29,6 +27,16 @@ public class PlayerLifeComponent : MonoBehaviour
             _deathAnimation.DeathAni(); //animación de la muerte
         }
         Debug.Log(_currentLife);
+    }
+    public bool Heal()
+    {
+        Debug.Log("Curado!");
+        if (_currentLife < _maxLife)
+        {
+            _currentLife++;
+            return true;
+        }
+        return false;
     }
     /*
     public void DamageRed(int damage)

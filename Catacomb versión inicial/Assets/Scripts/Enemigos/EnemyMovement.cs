@@ -82,8 +82,6 @@ public class EnemyMovement : MonoBehaviour
             else if (rightRay.distance > leftRay.distance) _movementDirection = right.normalized;
             else if (leftRay.distance == 0) _movementDirection = left.normalized;
             else if (rightRay.distance == 0) _movementDirection = right.normalized;
-            Debug.Log("Distancia l: " + leftRay.distance);
-            Debug.Log("Distancia r: " + rightRay.distance);
         }
         _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
     }

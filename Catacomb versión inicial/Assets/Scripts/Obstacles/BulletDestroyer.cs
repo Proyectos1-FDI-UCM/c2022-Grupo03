@@ -10,12 +10,10 @@ public class BulletDestroyer : MonoBehaviour
     #region methods
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.GetComponent<ProjectileMovement>()!=null)
-        {
-            
-            Destroy(collision.gameObject);
-            _myRigidBody.velocity = Vector3.zero;
-        }
+
+        Debug.Log("bala");
+        _myRigidBody.velocity = Vector3.zero;
+        Destroy(this.gameObject);
     }
     #endregion
     // Start is called before the first frame update

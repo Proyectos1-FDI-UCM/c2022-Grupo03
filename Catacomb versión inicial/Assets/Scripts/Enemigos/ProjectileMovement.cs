@@ -7,8 +7,6 @@ public class ProjectileMovement : MonoBehaviour
     #region parameters
     [SerializeField]
     private float _projectileSpeed = 5.0f;
-    private float lifespan = 8.0f;
-    private float _elapsedTime = 0;
     private int damage = 1;
     #endregion
     #region references
@@ -39,14 +37,6 @@ public class ProjectileMovement : MonoBehaviour
             _myTransform.up = temp;
             hitbox = GetComponent<Rigidbody2D>();
             hitbox.velocity = (_myTransform.up * _projectileSpeed);
-        }
-    }
-    private void Update()
-    {
-        _elapsedTime += Time.deltaTime;
-        if (_elapsedTime > lifespan)
-        {
-            Destroy(this.gameObject);
         }
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8890617556646615507}
   - component: {fileID: 8890617556646615504}
   - component: {fileID: -1942826840998187703}
+  - component: {fileID: 3813763303331328885}
   - component: {fileID: 7399440527659434884}
   - component: {fileID: -4076453579766922942}
   m_Layer: 7
@@ -98,6 +99,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileSpeed: 8
+--- !u!114 &3813763303331328885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8890617556646615505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630ce631bb12046448108a59ca11ffce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &7399440527659434884
 Rigidbody2D:
   serializedVersion: 4
