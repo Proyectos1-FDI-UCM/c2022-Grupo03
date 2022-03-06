@@ -106,10 +106,10 @@ TextureImporter:
       name: attack up fran p_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 163
-        width: 25
-        height: 27
+        x: 0
+        y: 158
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,10 +127,10 @@ TextureImporter:
       name: attack up fran p_1
       rect:
         serializedVersion: 2
-        x: 4
-        y: 121
-        width: 25
-        height: 27
+        x: 0
+        y: 116
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: attack up fran p_2
       rect:
         serializedVersion: 2
-        x: 4
-        y: 79
-        width: 25
-        height: 27
+        x: 0
+        y: 74
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +169,10 @@ TextureImporter:
       name: attack up fran p_3
       rect:
         serializedVersion: 2
-        x: 5
-        y: 32
-        width: 25
-        height: 27
+        x: 0
+        y: 27
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
