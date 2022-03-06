@@ -8,7 +8,6 @@ public class EnemyDamageZone : MonoBehaviour
     #endregion
 
     #region references
-    private GameObject _enemyMelee;
     private EnemyMelee _enemyMeleeComponent;
     #endregion
 
@@ -31,8 +30,7 @@ public class EnemyDamageZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _enemyMelee = GameObject.Find("MeleeEnemyPrefab");
-        _enemyMeleeComponent = _enemyMelee.GetComponent<EnemyMelee>();
+        _enemyMeleeComponent = GetComponentInParent<EnemyMelee>();
     }
 
     // Update is called once per frame

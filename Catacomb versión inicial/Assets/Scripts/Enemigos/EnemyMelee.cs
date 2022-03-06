@@ -42,7 +42,7 @@ public class EnemyMelee : MonoBehaviour
             Quaternion rotation = _myTransform.rotation;
             
             Vector3 instPoint = transform.position + offset;
-            _enemyAttack = Instantiate(_enemyAttackZone, instPoint, rotation);
+            _enemyAttack = Instantiate(_enemyAttackZone, instPoint, rotation, _myTransform);
         }
     }
     public bool atacando()
@@ -74,6 +74,7 @@ public class EnemyMelee : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //para ver hacia donde mira el enemigo y hacia que lado se instancia la zona de ataque
         diferenciax = Math.Abs(transform.position.x) - Math.Abs(player.transform.position.x);
         if (diferenciax < 0 && transform.position.x < 0 && player.transform.position.x < 0)
         {
@@ -104,7 +105,8 @@ public class EnemyMelee : MonoBehaviour
             _elapsedTime = 0;
         }
         else if (_elapsedTime > _duration)
-        {
+        { 
+            //cuando termina de atacar destruye la zona de ataque
             GameObject.Destroy(_enemyAttack);
             ataca = false;
         }        
