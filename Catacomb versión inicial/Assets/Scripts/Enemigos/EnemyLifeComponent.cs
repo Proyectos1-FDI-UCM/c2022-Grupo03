@@ -42,7 +42,9 @@ public class EnemyLifeComponent : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<DamageZone>())
         {
-            Damage();
+            int rnd = Random.Range(1, 6); //TIENE UN 20% DE POSIBILIDADES DE SER INMUNE AL ATAQUE
+            if(rnd!=1) Damage();
+
         }
     }
     #endregion
@@ -74,5 +76,6 @@ public class EnemyLifeComponent : MonoBehaviour
             _currentLife += _myBlueComponent.RecoveryPoints();
             _elapsedTime = 0;
         }
+        
     }
 }

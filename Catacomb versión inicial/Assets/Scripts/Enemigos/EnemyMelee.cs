@@ -10,6 +10,7 @@ public class EnemyMelee : MonoBehaviour
     private float diferenciax;
     //private float diferenciay;
     private bool ataca = false;
+    private bool yellow = false; //booleano para ver si es amarillo
     private float _elapsedTime;
     [SerializeField]
     private float _attackDuration = 2f;
@@ -30,8 +31,12 @@ public class EnemyMelee : MonoBehaviour
     GameObject player;
     [SerializeField]
     private GameObject _enemyAttackZone;
+    [SerializeField]
+    private GameObject _enemyAttackZoneYellow;
+
     private GameObject _enemyAttack;
     private Red _myRedComponent;
+    private Yellow _myYellowComponent;
     #endregion
 
     #region methods
@@ -42,7 +47,15 @@ public class EnemyMelee : MonoBehaviour
             Quaternion rotation = _myTransform.rotation;
             
             Vector3 instPoint = transform.position + offset;
-            _enemyAttack = Instantiate(_enemyAttackZone, instPoint, rotation, _myTransform);
+            if(!yellow)
+            {
+                _enemyAttack = Instantiate(_enemyAttackZone, instPoint, rotation, _myTransform);
+            }
+            else
+            {
+                _enemyAttack = Instantiate(_enemyAttackZoneYellow, instPoint, rotation, _myTransform);
+            }
+           
         }
     }
     public bool atacando()
@@ -64,9 +77,14 @@ public class EnemyMelee : MonoBehaviour
         z_scale = _myTransform.localScale.z;
         player = GameObject.Find("Player");
         _myRedComponent = GetComponent<Red>();
+        _myYellowComponent = GetComponent<Yellow>();
         if (_myRedComponent != null)
         {
             _dañoTotal += _myRedComponent.IncreasedDamage();
+        }
+        if(_myYellowComponent!=null)
+        {
+            yellow = true;
         }
         _dañoTotal = _damage;
     }

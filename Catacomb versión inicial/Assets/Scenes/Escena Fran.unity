@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxLife: 3
+  _desiredTimeToRecovery: 5
 --- !u!114 &283424325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341b0eb0f555cbf4fa2743c4e88a71a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tiempoMuerte: 1000
   _myAnimator: {fileID: 835942152}
 --- !u!114 &835942149
 MonoBehaviour:

@@ -28,7 +28,8 @@ public class EnemyMovement : MonoBehaviour
     private RaycastHit2D leftRay;
     private RaycastHit2D rightRay;
     private int offset;
-
+    private Green _myGreenComponent;
+    private Yellow _myYellowComponent;
     #endregion
 
     #region methods
@@ -53,6 +54,15 @@ public class EnemyMovement : MonoBehaviour
         offset = 45;
         RaycastHit2D hitinfo  = Physics2D.Raycast(this.transform.position, _movementDirection);
         layers = 1 << 8 | 1 << 3;
+        _myGreenComponent = GetComponent<Green>();
+        if (_myGreenComponent != null)
+        {
+            _speed += _myGreenComponent.IncreasedSpeed();
+        }
+        if(_myYellowComponent != null)
+        {
+            offset = _myYellowComponent.IncreasedRange();
+        }
     }
 
     // Update is called once per frame
