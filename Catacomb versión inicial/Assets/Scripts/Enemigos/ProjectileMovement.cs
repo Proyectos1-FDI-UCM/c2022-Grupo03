@@ -7,12 +7,14 @@ public class ProjectileMovement : MonoBehaviour
     #region parameters
     [SerializeField]
     private float _projectileSpeed = 5.0f;
-    private int damage = 1;
+    
     #endregion
+
     #region references
     private GameObject target;
     private Transform _myTransform;
-    Rigidbody2D hitbox;
+    private Rigidbody2D hitbox;
+    private EnemyShooter _myEnemyShooter;
     #endregion
 
     #region methods
@@ -21,7 +23,7 @@ public class ProjectileMovement : MonoBehaviour
         PlayerLifeComponent _playerLifeComponent = collision.gameObject.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
         {
-            _playerLifeComponent.Damage(damage);
+            _playerLifeComponent.Damage(_myEnemyShooter.dañoAtaque());
         }
         Destroy(this.gameObject);
     }
@@ -30,6 +32,7 @@ public class ProjectileMovement : MonoBehaviour
     void Start()
     {
         target = GameObject.Find("Player");
+        _myEnemyShooter = GetComponentInParent<EnemyShooter>();
         if (target != null)
         {
             _myTransform = transform;
@@ -38,5 +41,6 @@ public class ProjectileMovement : MonoBehaviour
             hitbox = GetComponent<Rigidbody2D>();
             hitbox.velocity = (_myTransform.up * _projectileSpeed);
         }
+        
     }
 }

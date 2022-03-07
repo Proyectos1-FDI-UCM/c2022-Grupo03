@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour
 {
+    #region references
+    private Red _myRedComponent;
+    private Transform _myTransform;
+    #endregion
+
     #region parameters
     [SerializeField]
     private float _fireRate = 3.0f;
@@ -12,10 +17,15 @@ public class EnemyShooter : MonoBehaviour
     private Quaternion playerDir;
     [SerializeField]
     private GameObject ammo;
+    [SerializeField]
+    private int damage = 1;
     #endregion
 
     #region methods
-
+    public int dañoAtaque()
+    {
+        return damage;
+    }
     #endregion
 
     #region properties
@@ -26,9 +36,15 @@ public class EnemyShooter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _myTransform = transform;
         target = GameObject.Find("Player");
+        _myRedComponent = GetComponent<Red>();
         targetTransform = target.transform;
         Vector3 temp = (targetTransform.position - this.transform.position);
+        if (_myRedComponent != null)
+        {
+            damage += _myRedComponent.IncreasedDamage();
+        }
     }
 
     // Update is called once per frame
@@ -42,7 +58,7 @@ public class EnemyShooter : MonoBehaviour
         }
         if (!reloading)
         {
-            GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity);
+            GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity, _myTransform); //se instancia como hijo
             reloading = true;
         }
     }
