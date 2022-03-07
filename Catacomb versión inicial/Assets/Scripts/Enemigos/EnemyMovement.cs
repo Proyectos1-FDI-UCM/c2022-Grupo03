@@ -86,12 +86,15 @@ public class EnemyMovement : MonoBehaviour
             Vector3 right = Quaternion.Euler(0, 0, -offset) * _playerDirection;
             Debug.DrawRay(transform.position, left.normalized * 100.0f, Color.green, 1.0f);
             Debug.DrawRay(transform.position, right.normalized * 100.0f, Color.yellow, 1.0f);
-            leftRay = Physics2D.Raycast(this.transform.position, left.normalized, 100.0f);
-            rightRay = Physics2D.Raycast(this.transform.position, right.normalized, 100.0f);
-            if (leftRay.distance > rightRay.distance) _movementDirection = left.normalized;
-            else if (rightRay.distance > leftRay.distance) _movementDirection = right.normalized;
-            else if (leftRay.distance == 0) _movementDirection = left.normalized;
+            leftRay = Physics2D.Raycast(this.transform.position, left.normalized, 100.0f, layers);
+            rightRay = Physics2D.Raycast(this.transform.position, right.normalized, 100.0f, layers);
+            Debug.Log(leftRay.distance);
+            Debug.Log(rightRay.distance);
+            if (leftRay.distance == 0) _movementDirection = left.normalized;
             else if (rightRay.distance == 0) _movementDirection = right.normalized;
+            else if (leftRay.distance > rightRay.distance) _movementDirection = left.normalized;
+            else if (rightRay.distance > leftRay.distance) _movementDirection = right.normalized;
+            
         }
         _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
     }
