@@ -61,7 +61,7 @@ public class EnemyMovement : MonoBehaviour
         }
         if(_myYellowComponent != null)
         {
-            offset = _myYellowComponent.IncreasedRange();
+            _range = _myYellowComponent.IncreasedRange();
         }
     }
 
