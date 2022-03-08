@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     private GameObject _player;
     private DeathAnimation _deathAnimation;
     private UI_Manager _myUIManager;
+    private PlayerInputManager _playerInputManager;
     #endregion
 
     #region properties
@@ -38,12 +40,14 @@ public class GameManager : MonoBehaviour
         if (lifePoints <= 0)
         {
             muriendo = _deathAnimation.DeathAni(); // animación de la muerte
+            _playerInputManager.enabled = false;
         }
     }
 
     private void OnPlayerDefeat()   // se llama cuando el jugador pierde
     {
-        _player.SetActive(false);
+        SceneManager.LoadScene(0);
+        // _player.SetActive(false);
     }
 
     public void OnPlayerChangeColor(string color)
@@ -64,6 +68,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        _myUIManager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
         
     }
     #endregion
@@ -72,18 +77,22 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _player = GameObject.Find("Player");
-        _deathAnimation = GetComponent<DeathAnimation>();
+        _deathAnimation = _player.GetComponent<DeathAnimation>();
+        _playerInputManager = _player.GetComponent<PlayerInputManager>();
         muriendo = false;
-        _myUIManager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
+        _elapsedTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _elapsedTime += Time.deltaTime;
-        if (!muriendo)
-            _elapsedTime = 0;
+        if (muriendo)
+        {
+            _elapsedTime += Time.deltaTime;
+        }
         if (muriendo && _elapsedTime > tiempoMuerte)
+        {
             OnPlayerDefeat();
+        }
     }
 }

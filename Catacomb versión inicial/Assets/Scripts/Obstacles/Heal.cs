@@ -18,12 +18,15 @@ public class Heal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<PlayerLifeComponent>().Heal())
+        // se comprueba si lo que está situado en la curación es el personaje y luego, si tiene menos de la vida máxima
+        PlayerLifeComponent playerLifeComponent = other.GetComponent<PlayerLifeComponent>();
+        if (playerLifeComponent != null && playerLifeComponent.Heal())
         {
             GameObject.Destroy(gameObject);
         }
     }
 
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerLifeComponent>().Heal())
@@ -32,4 +35,5 @@ public class Heal : MonoBehaviour
             Debug.Log(collision.gameObject.GetComponent<PlayerLifeComponent>().Heal());
         }
     }
+    */
 }

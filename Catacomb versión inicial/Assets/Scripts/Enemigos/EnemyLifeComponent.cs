@@ -7,14 +7,14 @@ public class EnemyLifeComponent : MonoBehaviour
     #region parameters
     [SerializeField]
     private int _maxLife;
+    [SerializeField]
+    private float _desiredTimeToRecovery=5;  //determina cada cuanto tiempo recuperan vida los enemigo azules
     #endregion
 
     #region properties
     private int _currentLife;
     private bool _isBlue = false; //si un enemigo es azul se pone a true
     private float _elapsedTime = 0; //contador 
-    [SerializeField]
-    private float _desiredTimeToRecovery=5;  //determina cada cuanto tiempo recuperan vida los enemigo azules
     #endregion
 
     #region references

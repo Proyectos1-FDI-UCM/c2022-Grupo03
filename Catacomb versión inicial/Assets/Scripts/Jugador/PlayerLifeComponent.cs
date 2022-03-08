@@ -20,7 +20,10 @@ public class PlayerLifeComponent : MonoBehaviour
     #region methods
     public void Damage(int damage)
     {
-        _currentLife -= damage;
+        if (_currentLife > 0)
+        {
+            _currentLife -= damage;
+        }
         _deathAnimation.DamageAni(); //animación cuando recibe daño
         GameManager.Instance.OnPlayerDamage(_currentLife);
     }
@@ -31,6 +34,7 @@ public class PlayerLifeComponent : MonoBehaviour
         if (_currentLife < _maxLife)
         {
             _currentLife++;
+            GameManager.Instance.OnPlayerDamage(_currentLife);
             return true;
         }
         return false;

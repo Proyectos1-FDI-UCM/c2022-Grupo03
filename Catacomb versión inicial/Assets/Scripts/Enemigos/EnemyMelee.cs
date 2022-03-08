@@ -5,7 +5,6 @@ using System;
 
 public class EnemyMelee : MonoBehaviour
 {
-
     #region parameters
     private float diferenciax;
     //private float diferenciay;

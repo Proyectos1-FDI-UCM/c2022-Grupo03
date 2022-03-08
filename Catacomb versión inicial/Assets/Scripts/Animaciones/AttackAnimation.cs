@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class AttackAnimation : MonoBehaviour
 {
-    #region references
+    #region parameters
     [SerializeField]
     private Animator _myAnimator;
-    private Transform _myTransform;
-    private PlayerChangeColors _myChangeColors;
     #endregion
 
     #region properties
     private string[] _enemyColors = { "Red", "Yellow", "Green", "Blue", "Pink" };
+    #endregion
+
+    #region references
+    private Transform _myTransform;
+    private PlayerChangeColors _myChangeColors;
     #endregion
 
     #region methods

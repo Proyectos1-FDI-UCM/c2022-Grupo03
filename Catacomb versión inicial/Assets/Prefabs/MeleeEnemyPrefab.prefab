@@ -16,8 +16,6 @@ GameObject:
   - component: {fileID: 8141592983438796468}
   - component: {fileID: 4353317654945663765}
   - component: {fileID: 5132429131697678106}
-  - component: {fileID: -7745204292622701182}
-  - component: {fileID: 2500768521906401758}
   m_Layer: 0
   m_Name: MeleeEnemyPrefab
   m_TagString: Untagged
@@ -195,29 +193,3 @@ MonoBehaviour:
   _speed: 1
   _range: 5
   ranged: 0
---- !u!114 &-7745204292622701182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946740501492387801}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d396c02d7785cc84f9f9cfe57516c6d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _increasedRange: 0
---- !u!114 &2500768521906401758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946740501492387801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 759358db223d9be4285174092674df20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _increasedSpeed: 1

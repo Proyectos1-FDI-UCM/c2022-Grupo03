@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class CameraMovementController : MonoBehaviour
 {
-
-    [SerializeField]
-    private Transform target;
+    #region parameters
     [SerializeField]
     float smoothSpeed = 0.2f;
+    #endregion
+
+    #region references
+    [SerializeField]
+    private Transform target;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
