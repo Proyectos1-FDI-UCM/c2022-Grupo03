@@ -29,7 +29,7 @@ public class AttackAnimation : MonoBehaviour
             _myAnimator.ResetTrigger("NoCorrer");
             _myAnimator.ResetTrigger("Correr");
             if (n == 0) //arriba
-                _myAnimator.SetTrigger("UpAttack");
+                _myAnimator.SetTrigger("UpAttackRed");
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
@@ -48,7 +48,7 @@ public class AttackAnimation : MonoBehaviour
             _myAnimator.ResetTrigger("NoCorrer");
             _myAnimator.ResetTrigger("Correr");
             if (n == 0) //arriba
-                _myAnimator.SetTrigger("UpAttack");
+                _myAnimator.SetTrigger("UpAttackYellow");
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
@@ -68,7 +68,7 @@ public class AttackAnimation : MonoBehaviour
             _myAnimator.ResetTrigger("NoCorrer");
             _myAnimator.ResetTrigger("Correr");
             if (n == 0) //arriba
-                _myAnimator.SetTrigger("UpAttack");
+                _myAnimator.SetTrigger("UpAttackGreen");
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
@@ -87,7 +87,7 @@ public class AttackAnimation : MonoBehaviour
             _myAnimator.ResetTrigger("NoCorrer");
             _myAnimator.ResetTrigger("Correr");
             if (n == 0) //arriba
-                _myAnimator.SetTrigger("UpAttack");
+                _myAnimator.SetTrigger("UpAttackBlue");
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
@@ -106,7 +106,7 @@ public class AttackAnimation : MonoBehaviour
             _myAnimator.ResetTrigger("NoCorrer");
             _myAnimator.ResetTrigger("Correr");
             if (n == 0) //arriba
-                _myAnimator.SetTrigger("UpAttack");
+                _myAnimator.SetTrigger("UpAttackPink");
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
