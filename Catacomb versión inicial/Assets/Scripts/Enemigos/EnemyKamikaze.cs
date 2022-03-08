@@ -42,10 +42,7 @@ public class EnemyKamikaze : MonoBehaviour
     {
         if (exploto)
         {
-            if (_myEnemyDetectionZone.HaExplotado())
-            {
-
-            }
+            Destroy(gameObject);
         }
     }
 }
