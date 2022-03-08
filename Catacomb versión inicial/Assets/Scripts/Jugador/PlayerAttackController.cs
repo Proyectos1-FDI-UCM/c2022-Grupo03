@@ -28,7 +28,7 @@ public class PlayerAttackController : MonoBehaviour
     private bool _rayMade;
     private bool _spinMade;
     private bool _rayWaiting;
-    public float _elapsedTime;  // mientras se está realizando/preparando el ataque
+    private float _elapsedTime;  // mientras se está realizando/preparando el ataque
     private float _elapsedTimeSpin;
     private float _elapsedTimeRay;
     private Vector3 _dir;

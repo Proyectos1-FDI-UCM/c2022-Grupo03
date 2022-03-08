@@ -40,11 +40,11 @@ public class UI_Manager : MonoBehaviour
     }
     public void UpdateSpinCooldown(int newTime)
     {
-        _spinCooldownText.text = newTime.ToString();
+        _spinCooldownText.text = "Spin: " + newTime;
     }
     public void UpdateRayCooldown(int newTime)
     {
-        _rayCooldownText.text = newTime.ToString();
+        _rayCooldownText.text = "Ray: " + newTime;
     }
 
     private void Awake()
