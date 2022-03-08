@@ -95,22 +95,22 @@ public class EnemyMelee : MonoBehaviour
         diferenciax = Math.Abs(transform.position.x) - Math.Abs(player.transform.position.x);
         if (diferenciax < 0 && transform.position.x < 0 && player.transform.position.x < 0)
         {
-            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
             offset = new Vector3(-1f, 0f, 0f);
         }
         else if (diferenciax > 0 && transform.position.x < 0 && player.transform.position.x < 0)
         {
-            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
             offset = new Vector3(1f, 0f, 0f);
         }
         else if (diferenciax < 0 && transform.position.x > 0 && player.transform.position.x > 0)
         {
-            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
             offset = new Vector3(1f, 0f, 0f);
         }
         else if (diferenciax > 0 && transform.position.x > 0 && player.transform.position.x > 0)
         {
-            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
             offset = new Vector3(-1f, 0f, 0f);
         }
 

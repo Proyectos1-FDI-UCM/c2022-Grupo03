@@ -49,9 +49,7 @@ public class PlayerAttackController : MonoBehaviour
 
     #region methods
     public void MainAttack()
-    {
-        _myAttackAnimation.AttackAni(); 
-
+    { 
         Vector3 angle = _dirArrowTransform.rotation.eulerAngles;
 
         if (!_attackRunning)
@@ -76,7 +74,9 @@ public class PlayerAttackController : MonoBehaviour
 
             _attackRunning = true;
             _myPlayerInputManager.enabled = false;
-        }
+
+            _myAttackAnimation.AttackAni(indice);
+        } 
     }
 
     public void SpintAttack()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private bool ranged = false;
     private int layers;
+    private float diferenciax;
+    private float x_scale, y_scale, z_scale;
     #endregion
 
     #region properties
@@ -64,11 +67,33 @@ public class EnemyMovement : MonoBehaviour
         {
             _range = _myYellowComponent.IncreasedRange();
         }
+
+        x_scale = _myTransform.localScale.x;
+        y_scale = _myTransform.localScale.y;
+        z_scale = _myTransform.localScale.z;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        diferenciax = Math.Abs(transform.position.x) - Math.Abs(targetObject.transform.position.x);
+        if (diferenciax < 0 && transform.position.x < 0 && targetObject.transform.position.x < 0)
+        {
+            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+        }
+        else if (diferenciax > 0 && transform.position.x < 0 && targetObject.transform.position.x < 0)
+        {
+            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+        }
+        else if (diferenciax < 0 && transform.position.x > 0 && targetObject.transform.position.x > 0)
+        {
+            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+        }
+        else if (diferenciax > 0 && transform.position.x > 0 && targetObject.transform.position.x > 0)
+        {
+            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+        }
+
         //SetMovementDirection();
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection *  100.0f, Color.red, 1.0f);

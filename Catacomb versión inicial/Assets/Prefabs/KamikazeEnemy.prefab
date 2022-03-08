@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3040358799164061841}
   - component: {fileID: -1177795745549451051}
   - component: {fileID: 35701771861282360}
+  - component: {fileID: 4809512824101640218}
   m_Layer: 0
   m_Name: KamikazeEnemy
   m_TagString: Untagged
@@ -77,8 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -697763020151794088, guid: 0277f84e235d54b4599718488c069e1b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -189,3 +190,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191176945ab994a4c8667e75df4319df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &4809512824101640218
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389944748203844093}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d243ac6a789c5ba4fb94afc173d984a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
