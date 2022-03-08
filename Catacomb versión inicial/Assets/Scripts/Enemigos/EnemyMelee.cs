@@ -61,7 +61,7 @@ public class EnemyMelee : MonoBehaviour
     {
         return ataca;
     }
-    public int dañoAtaque()
+    public int DañoAtaque()
     {
         return _dañoTotal;
     }

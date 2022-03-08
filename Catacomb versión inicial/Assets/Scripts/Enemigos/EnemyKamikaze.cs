@@ -9,6 +9,10 @@ public class EnemyKamikaze : MonoBehaviour
     private Vector3 instPoint;
     #endregion
 
+    #region properties
+    private int _damage = 1;
+    #endregion
+
     #region references
     Transform _myTransform;
     [SerializeField]
@@ -22,6 +26,11 @@ public class EnemyKamikaze : MonoBehaviour
     public void Explosion()
     {
         exploto = true;
+    }
+
+    public int DañoAtaque()
+    {
+        return _damage;
     }
     #endregion
 

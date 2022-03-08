@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyDamageZone : MonoBehaviour
 {
     #region parameters
+    private bool _kamikaze = false;
     #endregion
 
     #region references
     private EnemyMelee _enemyMeleeComponent;
+    private EnemyKamikaze _enemyKamikaze;
     #endregion
 
     #region methods
@@ -19,7 +21,10 @@ public class EnemyDamageZone : MonoBehaviour
         PlayerLifeComponent _playerLifeComponent = collider.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
         {
-            _playerLifeComponent.Damage(_enemyMeleeComponent.dañoAtaque());
+            if(_kamikaze)
+                _playerLifeComponent.Damage(_enemyKamikaze.DañoAtaque());
+            else
+                _playerLifeComponent.Damage(_enemyMeleeComponent.DañoAtaque());
         }
 
     }
@@ -31,6 +36,9 @@ public class EnemyDamageZone : MonoBehaviour
     void Start()
     {
         _enemyMeleeComponent = GetComponentInParent<EnemyMelee>();
+        _enemyKamikaze = GetComponentInParent<EnemyKamikaze>();
+        if (_enemyKamikaze != null)
+            _kamikaze = true;
     }
 
     // Update is called once per frame
