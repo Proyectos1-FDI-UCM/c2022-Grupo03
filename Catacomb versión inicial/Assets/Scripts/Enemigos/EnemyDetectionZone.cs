@@ -9,6 +9,8 @@ public class EnemyDetectionZone : MonoBehaviour
     Transform _myTransform;
     [SerializeField]
     private GameObject _enemyAttackZone;
+    [SerializeField]
+    private GameObject _enemyAttackZoneYellow;
     private GameObject _enemyExplosion;
     private EnemyKamikaze _enemyKamikaze;
     private bool explota = false;

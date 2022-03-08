@@ -20,6 +20,7 @@ public class EnemyKamikaze : MonoBehaviour
     private GameObject _enemyZone;
     private bool exploto = false;
     private EnemyDetectionZone _myEnemyDetectionZone;
+    private Red _myRedComponent;
     #endregion
 
     #region methods
@@ -43,7 +44,10 @@ public class EnemyKamikaze : MonoBehaviour
         rotation = _myTransform.rotation;
         instPoint = transform.position;
         _enemyZone = Instantiate(_enemyDetectionZone, instPoint, rotation, _myTransform);
-
+        if (_myRedComponent != null)
+        {
+            _damage += _myRedComponent.IncreasedDamage();
+        }
     }
 
     // Update is called once per frame

@@ -1100,6 +1100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyMelee: {fileID: 4946740501492387801, guid: fd4792e87ed04c447aaa22c654dedb09, type: 3}
   _enemyRanged: {fileID: 4946740501492387801, guid: 7bef0aeae12505549a633d11f6c7e660, type: 3}
+  _enemyKamikaze: {fileID: 8389944748203844093, guid: ff7ad330ba27c0a449c2721f8a6ab4c3, type: 3}
 --- !u!4 &1162379550
 Transform:
   m_ObjectHideFlags: 0

@@ -123,3 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAttackZone: {fileID: 76967132065110462, guid: 2c6dc55f871d359418f0adbf958fb3cd, type: 3}
+  _enemyAttackZoneYellow: {fileID: 2866304816395943830, guid: 0b798594cecb6e64cb6d49b765d283d6, type: 3}

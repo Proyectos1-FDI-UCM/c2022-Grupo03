@@ -38,17 +38,12 @@ public class EnemyLifeComponent : MonoBehaviour
         GameObject.Destroy(gameObject);
     }
 
-    public void Kamikaze()
-    {
-        _currentLife = 0;
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<DamageZone>())
         {
-            int rnd = Random.Range(1, 6); //TIENE UN 20% DE POSIBILIDADES DE SER INMUNE AL ATAQUE
-            if(rnd!=1) Damage();
+            int rnd = Random.Range(1, 6); //TIENE UN 20% DE POSIBILIDADES DE SER INMUNE AL ATAQUE SI ES AZUL
+            if(_isBlue && rnd!=1) Damage();
 
         }
     }

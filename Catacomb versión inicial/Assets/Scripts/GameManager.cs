@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private DeathAnimation _deathAnimation;
     private UI_Manager _myUIManager;
     private PlayerInputManager _playerInputManager;
+    private PlayerMovementController _playerMovement;
     #endregion
 
     #region properties
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
         {
             muriendo = _deathAnimation.DeathAni(); // animación de la muerte
             _playerInputManager.enabled = false;
+            _playerMovement.SetMovementDirection(new Vector3 (0, 0, 0));
         }
     }
 
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour
         _player = GameObject.Find("Player");
         _deathAnimation = _player.GetComponent<DeathAnimation>();
         _playerInputManager = _player.GetComponent<PlayerInputManager>();
+        _playerMovement = _player.GetComponent<PlayerMovementController>();
         muriendo = false;
         _elapsedTime = 0;
     }
