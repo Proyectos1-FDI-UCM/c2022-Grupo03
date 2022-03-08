@@ -26,16 +26,21 @@ public class EnemyLifeComponent : MonoBehaviour
     public void Damage()
     {
         _currentLife--;
-        Debug.Log(_currentLife);
+        //Debug.Log(_currentLife);
         if (_currentLife <= 0)
         {
             Die();
         }
     }
 
-    private void Die()
+    public void Die()
     {
         GameObject.Destroy(gameObject);
+    }
+
+    public void Kamikaze()
+    {
+        _currentLife = 0;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
