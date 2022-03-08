@@ -18,7 +18,7 @@ public class EnemyMelee : MonoBehaviour
     private Vector3 offset = new Vector3(1f,0f,0f);
     private float x_scale, y_scale, z_scale;
     [SerializeField]
-    private int _damage;
+    private int _damage = 1;
     #endregion
 
     #region properties

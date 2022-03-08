@@ -99,7 +99,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDuration: 2
   _duration: 0.5
-  _damage: 0
+  _damage: 1
   _enemyAttackZone: {fileID: 76967132065110462, guid: 2c6dc55f871d359418f0adbf958fb3cd, type: 3}
   _enemyAttackZoneYellow: {fileID: 2866304816395943830, guid: 0b798594cecb6e64cb6d49b765d283d6, type: 3}
 --- !u!114 &4353317654945663765
