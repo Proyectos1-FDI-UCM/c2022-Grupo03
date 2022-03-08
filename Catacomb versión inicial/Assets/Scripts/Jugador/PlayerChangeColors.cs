@@ -38,7 +38,7 @@ public class PlayerChangeColors : MonoBehaviour
     public void SetCurrentColor(int indice)
     {
         _currentColor = IndexToColor(indice);
-        Debug.Log(_currentColor);
+        GameManager.Instance.OnPlayerChangeColor(ColorToString(_currentColor));
     }
 
     public void ChangeColor(float variation)
@@ -65,7 +65,31 @@ public class PlayerChangeColors : MonoBehaviour
                 _currentColor--;
             }
         }
-        Debug.Log(_currentColor);
+        GameManager.Instance.OnPlayerChangeColor(ColorToString(_currentColor));
+    }
+
+    private string ColorToString(colors col)
+    {
+        string colString = "";
+        switch (col)
+        {
+            case colors.Rojo:
+                colString = "Rojo";
+                break;
+            case colors.Amarillo:
+                colString = "Amarillo";
+                break;
+            case colors.Azul:
+                colString = "Azul";
+                break;
+            case colors.Verde:
+                colString = "Verde";
+                break;
+            case colors.Rosa:
+                colString = "Rosa";
+                break;
+        }
+        return colString;
     }
     #endregion
 
@@ -73,6 +97,7 @@ public class PlayerChangeColors : MonoBehaviour
     void Start()
     {
         _currentColor = 0;
+        GameManager.Instance.OnPlayerChangeColor(ColorToString(_currentColor));
     }
 
     // Update is called once per frame

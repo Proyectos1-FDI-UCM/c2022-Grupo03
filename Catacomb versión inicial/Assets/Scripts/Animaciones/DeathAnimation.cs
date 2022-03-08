@@ -5,18 +5,18 @@ using UnityEngine;
 public class DeathAnimation : MonoBehaviour
 {
     #region parameters
-    private bool muriendo = false;
+    // private bool muriendo = false;
     private float _elapsedTime;
     [SerializeField]
     private int tiempoMuerte = 1000;
     #endregion
 
     #region methods
-    public void DeathAni()
+    public bool DeathAni()
     {
         _myAnimator.ResetTrigger("NoCorrer");
         _myAnimator.SetTrigger("Death");
-        muriendo = true;
+        return true;
     }
     public void DamageAni()
     {
@@ -41,10 +41,12 @@ public class DeathAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         _elapsedTime += Time.deltaTime;
         if (!muriendo)
             _elapsedTime = 0;
         if(muriendo && _elapsedTime > tiempoMuerte)
             GameManager.Instance.Death();
+        */
     }
 }

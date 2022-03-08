@@ -22,12 +22,9 @@ public class PlayerLifeComponent : MonoBehaviour
     {
         _currentLife -= damage;
         _deathAnimation.DamageAni(); //animación cuando recibe daño
-        if (_currentLife <= 0)
-        {
-            _deathAnimation.DeathAni(); //animación de la muerte
-        }
-        Debug.Log(_currentLife);
+        GameManager.Instance.OnPlayerDamage(_currentLife);
     }
+
     public bool Heal()
     {
         Debug.Log("Curado!");
@@ -55,6 +52,7 @@ public class PlayerLifeComponent : MonoBehaviour
     void Start()
     {
         _currentLife = _maxLife;
+        GameManager.Instance.OnPlayerDamage(_currentLife);
         _deathAnimation = GetComponent<DeathAnimation>();
     }
 

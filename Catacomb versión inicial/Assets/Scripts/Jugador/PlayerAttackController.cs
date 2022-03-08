@@ -28,8 +28,9 @@ public class PlayerAttackController : MonoBehaviour
     private bool _rayMade;
     private bool _spinMade;
     private bool _rayWaiting;
-    private float _elapsedTime;  // mientras se está realizando/preparando el ataque
-    private float _elapsedTimeBis;   // para los cooldowns
+    public float _elapsedTime;  // mientras se está realizando/preparando el ataque
+    private float _elapsedTimeSpin;
+    private float _elapsedTimeRay;
     private Vector3 _dir;
     #endregion
 
@@ -118,15 +119,15 @@ public class PlayerAttackController : MonoBehaviour
         _rayMade = true;
     }
 
-    private void Cooldown(float duration, ref bool abilityMade)
+    private void Cooldown(float duration, ref bool abilityMade, ref float elapsedTime)
     {
         if (abilityMade)
         {
-            _elapsedTimeBis += Time.deltaTime;
-            if (_elapsedTimeBis > duration)
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > duration)
             {
                 abilityMade = false;
-                _elapsedTimeBis = 0;
+                elapsedTime = 0;
             }
         }
     }
@@ -145,6 +146,9 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _myAttackAnimation = GetComponent<AttackAnimation>();
+
+        GameManager.Instance.OnRayCooldown(0);
+        GameManager.Instance.OnSpinCooldown(0);
     }
 
     // Update is called once per frame
@@ -170,8 +174,16 @@ public class PlayerAttackController : MonoBehaviour
             }
         }
 
-        Cooldown(_rayCooldown, ref _rayMade);
-        Cooldown(_spinCooldown, ref _spinMade);
+        Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay);
+        if (_rayMade)
+        {
+            GameManager.Instance.OnRayCooldown(_rayCooldown - _elapsedTimeRay);
+        }
+        Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin);
+        if (_spinMade)
+        {
+            GameManager.Instance.OnSpinCooldown(_spinCooldown - _elapsedTimeSpin);
+        }
 
         if (_rayWaiting)
         {
