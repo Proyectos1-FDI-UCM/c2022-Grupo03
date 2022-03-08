@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2120415086346939999}
   - component: {fileID: 3040358799164061841}
   - component: {fileID: -1177795745549451051}
+  - component: {fileID: 35701771861282360}
   m_Layer: 0
   m_Name: KamikazeEnemy
   m_TagString: Untagged
@@ -176,3 +177,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxLife: 1
   _desiredTimeToRecovery: 5
+--- !u!114 &35701771861282360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389944748203844093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191176945ab994a4c8667e75df4319df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
