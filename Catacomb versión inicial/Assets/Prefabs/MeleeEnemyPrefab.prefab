@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4946740501492387813}
   - component: {fileID: 4946740501492387810}
   - component: {fileID: -3331865565756292055}
-  - component: {fileID: 8141592983438796468}
   - component: {fileID: 4353317654945663765}
   - component: {fileID: 5132429131697678106}
   m_Layer: 0
@@ -152,18 +151,6 @@ MonoBehaviour:
   _damage: 0
   _enemyAttackZone: {fileID: 76967132065110462, guid: 2c6dc55f871d359418f0adbf958fb3cd, type: 3}
   _enemyAttackZoneYellow: {fileID: 2866304816395943830, guid: 0b798594cecb6e64cb6d49b765d283d6, type: 3}
---- !u!114 &8141592983438796468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946740501492387801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630ce631bb12046448108a59ca11ffce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4353317654945663765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9612d422046ce84390756626d4926a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 0
+  _maxLife: 1
   _desiredTimeToRecovery: 5
 --- !u!114 &5132429131697678106
 MonoBehaviour:
