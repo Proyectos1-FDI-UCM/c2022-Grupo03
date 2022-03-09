@@ -29,10 +29,10 @@ public class UI_Manager : MonoBehaviour
     #endregion
 
     #region methods
-    public void UpdatePlayerLife(int newLife)
-    {
-        _playerLifeText.text = "Life: " + newLife;
-    }
+    //public void UpdatePlayerLife(int newLife)
+    //{
+    //    _playerLifeText.text = "Life: " + newLife;
+    //}
 
     public void UpdateCurrentColor(string newColor)
     {
@@ -52,7 +52,7 @@ public class UI_Manager : MonoBehaviour
         _currentColorText = _currentColorObject.GetComponent<Text>();
         _spinCooldownText = _spinCooldownObject.GetComponent<Text>();
         _rayCooldownText = _rayCooldownObject.GetComponent<Text>();
-        _playerLifeText = _playerLifeObject.GetComponent<Text>();
+        //_playerLifeText = _playerLifeObject.GetComponent<Text>();
     }
     #endregion
 

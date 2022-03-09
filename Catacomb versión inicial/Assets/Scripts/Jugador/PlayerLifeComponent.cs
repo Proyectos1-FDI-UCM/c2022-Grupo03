@@ -15,6 +15,8 @@ public class PlayerLifeComponent : MonoBehaviour
 
     #region references
     private DeathAnimation _deathAnimation;
+    [SerializeField]
+    private HpBarScript healthBar;
     #endregion
 
     #region methods
@@ -26,6 +28,7 @@ public class PlayerLifeComponent : MonoBehaviour
         }
         _deathAnimation.DamageAni(); //animación cuando recibe daño
         GameManager.Instance.OnPlayerDamage(_currentLife);
+        healthBar.SetHealth(_currentLife);
     }
 
     public bool Heal()
@@ -35,6 +38,7 @@ public class PlayerLifeComponent : MonoBehaviour
         {
             _currentLife++;
             GameManager.Instance.OnPlayerDamage(_currentLife);
+            healthBar.SetHealth(_currentLife);
             return true;
         }
         return false;
@@ -58,6 +62,8 @@ public class PlayerLifeComponent : MonoBehaviour
         _currentLife = _maxLife;
         GameManager.Instance.OnPlayerDamage(_currentLife);
         _deathAnimation = GetComponent<DeathAnimation>();
+        healthBar.SetMaxHealth(_maxLife);
+        healthBar.SetHealth(_maxLife);
     }
 
     // Update is called once per frame

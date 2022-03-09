@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     #region methods
     public void OnPlayerDamage(int lifePoints)
     {
-        _myUIManager.UpdatePlayerLife(lifePoints);
+        //_myUIManager.UpdatePlayerLife(lifePoints);
         if (lifePoints <= 0)
         {
             muriendo = _deathAnimation.DeathAni(); // animación de la muerte
