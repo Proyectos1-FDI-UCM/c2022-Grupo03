@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         _playerMovement = _player.GetComponent<PlayerMovementController>();
         muriendo = false;
         _elapsedTime = 0;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
