@@ -2,41 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyInitializer : MonoBehaviour
+public class EnemyColor : MonoBehaviour
 {
     #region references
     private SpriteRenderer _enemyRenderer;
     #endregion
+
     #region properties
-    private int _randomEnemy;
+    private int _randomColor;
     Color[] colourArray = { Color.red, Color.yellow, Color.green, Color.magenta, Color.blue };
     #endregion
+
     // Start is called before the first frame update
     void Start()
     {
         _enemyRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        _randomEnemy = Random.Range(0, 5);
-        if (_randomEnemy == 0)
+        _randomColor = Random.Range(0, 5);
+        switch (_randomColor)
         {
-            this.gameObject.AddComponent<Red>();
+            case 0:
+                gameObject.AddComponent<Red>();
+                break;
+            case 1:
+                gameObject.AddComponent<Yellow>();
+                break;
+            case 2:
+                gameObject.AddComponent<Green>();
+                break;
+            case 3:
+                gameObject.AddComponent<Pink>();
+                break;
+            case 4:
+                gameObject.AddComponent<Blue>();
+                break;
         }
-        else if (_randomEnemy == 1)
-        {
-            this.gameObject.AddComponent<Yellow>();
-        }
-        else if (_randomEnemy == 2)
-        {
-            this.gameObject.AddComponent<Green>();
-        }
-        else if (_randomEnemy == 3)
-        {
-            this.gameObject.AddComponent<Pink>();
-        }
-        else if (_randomEnemy == 4)
-        {
-            this.gameObject.AddComponent<Blue>();
-        }
-        _enemyRenderer.color = colourArray[_randomEnemy];
+        _enemyRenderer.color = colourArray[_randomColor];
     }
 
     // Update is called once per frame

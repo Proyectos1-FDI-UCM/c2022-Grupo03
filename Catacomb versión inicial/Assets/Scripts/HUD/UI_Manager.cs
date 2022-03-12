@@ -15,9 +15,6 @@ public class UI_Manager : MonoBehaviour
 
     #region references
     [SerializeField]
-    GameObject _playerLifeObject;
-    Text _playerLifeText;
-    [SerializeField]
     GameObject _currentColorObject;
     Text _currentColorText;
     [SerializeField]
@@ -26,14 +23,12 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     GameObject _rayCooldownObject;
     Text _rayCooldownText;
+    [SerializeField]
+    GameObject _enemiesLeftObject;
+    Text _enemiesLeftText;
     #endregion
 
     #region methods
-    //public void UpdatePlayerLife(int newLife)
-    //{
-    //    _playerLifeText.text = "Life: " + newLife;
-    //}
-
     public void UpdateCurrentColor(string newColor)
     {
         _currentColorText.text = newColor;
@@ -46,19 +41,23 @@ public class UI_Manager : MonoBehaviour
     {
         _rayCooldownText.text = "Ray: " + newTime;
     }
-
+    public void UpdateEnemiesLeft(int numEnemies)
+    {
+        _enemiesLeftText.text = "Enemies: " + numEnemies;
+    }
     private void Awake()
     {
         _currentColorText = _currentColorObject.GetComponent<Text>();
         _spinCooldownText = _spinCooldownObject.GetComponent<Text>();
         _rayCooldownText = _rayCooldownObject.GetComponent<Text>();
-        //_playerLifeText = _playerLifeObject.GetComponent<Text>();
+        _enemiesLeftText = _enemiesLeftObject.GetComponent<Text>();
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame

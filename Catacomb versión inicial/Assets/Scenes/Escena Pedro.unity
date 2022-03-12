@@ -495,7 +495,6 @@ MonoBehaviour:
   - {x: -1, y: 0, z: 0}
   - {x: 0, y: -1, z: 0}
   - {x: 1, y: 0, z: 0}
-  _elapsedTime: 0
   _damageZones:
   - {fileID: 6653043378017638796, guid: cb3dfaf72e3f02940b6d0c111a7eacc1, type: 3}
   - {fileID: 3927458185145662951, guid: 20e941c422dc0db48bd9949d26c3c7da, type: 3}
@@ -661,6 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxLife: 5
+  healthBar: {fileID: 0}
 --- !u!1 &1119114348
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 1119114351}
   - component: {fileID: 1119114350}
   m_Layer: 5
-  m_Name: PlayerLife
+  m_Name: EnemiesLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1300,7 +1300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1544fdba52f154997bbd82b594ff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerLifeObject: {fileID: 1119114348}
   _currentColorObject: {fileID: 116605504}
   _spinCooldownObject: {fileID: 1469373943}
   _rayCooldownObject: {fileID: 1508631327}
+  _enemiesLeftObject: {fileID: 1119114348}

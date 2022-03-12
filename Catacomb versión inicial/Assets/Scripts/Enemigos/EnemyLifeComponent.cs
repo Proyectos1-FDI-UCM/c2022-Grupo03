@@ -35,6 +35,7 @@ public class EnemyLifeComponent : MonoBehaviour
 
     public void Die()
     {
+        GameManager.Instance.OnEnemyDies(this);
         GameObject.Destroy(gameObject);
     }
 
@@ -52,6 +53,7 @@ public class EnemyLifeComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.RegisterEnemy(this);
         _myPinkComponent = GetComponent<Pink>();
         _myBlueComponent = GetComponent<Blue>();
         if (_myPinkComponent != null)

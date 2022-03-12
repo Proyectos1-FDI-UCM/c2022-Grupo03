@@ -7,11 +7,11 @@ public class GameManager : MonoBehaviour
 {
     #region parameters
     [SerializeField]
-    private int tiempoMuerte = 1000;
+    private int _tiempoMuerte = 1000;
     #endregion
 
     #region properties
-    private bool muriendo;
+    private bool _muriendo;
     private float _elapsedTime;
     #endregion
 
@@ -32,24 +32,45 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+    List<EnemyLifeComponent> _listOfEnemies;
     #endregion
 
     #region methods
+    public int NumRandom(int minInclusive, int maxInclusive)
+    {
+        return Random.Range(minInclusive, maxInclusive + 1);
+    }
+
+    public void OnEnemyDies(EnemyLifeComponent enemy)
+    {
+        if (_listOfEnemies.Contains(enemy))
+        {
+            _listOfEnemies.Remove(enemy);
+            _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
+        }
+    }
+
+    public void RegisterEnemy(EnemyLifeComponent enemy)
+    {
+        if (!_listOfEnemies.Contains(enemy))
+        {
+            _listOfEnemies.Add(enemy);
+            _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
+        }
+    }
+
     public void OnPlayerDamage(int lifePoints)
     {
-        //_myUIManager.UpdatePlayerLife(lifePoints);
         if (lifePoints <= 0)
         {
-            muriendo = _deathAnimation.DeathAni(); // animación de la muerte
+            _muriendo = _deathAnimation.DeathAni(); // animación de la muerte
             _playerInputManager.enabled = false;
-            _playerMovement.SetMovementDirection(new Vector3 (0, 0, 0));
         }
     }
 
     private void OnPlayerDefeat()   // se llama cuando el jugador pierde
     {
         SceneManager.LoadScene(0);
-        // _player.SetActive(false);
     }
 
     public void OnPlayerChangeColor(string color)
@@ -70,6 +91,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        _listOfEnemies = new List<EnemyLifeComponent>();
         _myUIManager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
         
     }
@@ -82,7 +104,7 @@ public class GameManager : MonoBehaviour
         _deathAnimation = _player.GetComponent<DeathAnimation>();
         _playerInputManager = _player.GetComponent<PlayerInputManager>();
         _playerMovement = _player.GetComponent<PlayerMovementController>();
-        muriendo = false;
+        _muriendo = false;
         _elapsedTime = 0;
         Cursor.visible = false;
     }
@@ -90,13 +112,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (muriendo)
+        if (_muriendo)
         {
             _elapsedTime += Time.deltaTime;
-        }
-        if (muriendo && _elapsedTime > tiempoMuerte)
-        {
-            OnPlayerDefeat();
+            _playerMovement.SetMovementDirection(Vector3.zero);
+            if (_elapsedTime > _tiempoMuerte)
+            {
+                OnPlayerDefeat();
+            }
         }
     }
 }
