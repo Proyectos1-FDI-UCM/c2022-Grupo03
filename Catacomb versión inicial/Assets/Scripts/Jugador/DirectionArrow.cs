@@ -15,6 +15,7 @@ public class DirectionArrow : MonoBehaviour
     [SerializeField]
     private float _durationUntilCheck;
     // cuanto tiempo tiene que pasar sin que haya input para que se comprueba si hay un mando conectado o no
+    Color[] _colorsArray = { Color.red, Color.yellow, Color.green, Color.blue, Color.magenta };
     #endregion
 
     #region references
@@ -22,6 +23,8 @@ public class DirectionArrow : MonoBehaviour
     Transform _playerTransform;
     Camera _mainCamera;
     Transform _myTransform;
+    PlayerChangeColors _myPlayerChangeColors;
+    SpriteRenderer _dirRenderer;
     #endregion
 
     #region methods
@@ -48,6 +51,8 @@ public class DirectionArrow : MonoBehaviour
     {
         _player = GameObject.Find("Player");
         _playerTransform = _player.transform;
+        _myPlayerChangeColors = _player.GetComponent<PlayerChangeColors>();
+        _dirRenderer = GetComponentInChildren<SpriteRenderer>();
         _mainCamera = Camera.main;
         _myTransform = transform;
         _controllerConnected = false;
@@ -59,6 +64,7 @@ public class DirectionArrow : MonoBehaviour
     {
         // hacer que la flecha de dirección esté siempre en la posición del jugador
         _myTransform.position = _playerTransform.position;
+        _dirRenderer.color = _colorsArray[_myPlayerChangeColors.GetCurrentColorIndex()];
 
         if (!_controllerConnected)
         {

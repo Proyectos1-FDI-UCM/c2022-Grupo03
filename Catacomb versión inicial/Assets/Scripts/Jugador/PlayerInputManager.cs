@@ -63,6 +63,7 @@ public class PlayerInputManager : MonoBehaviour
             _myPlayerChangeColors.ChangeColor(value);
         }
     }
+
     #endregion
 
     // Start is called before the first frame update
@@ -78,6 +79,10 @@ public class PlayerInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.PauseMenu();
+        }
         // ataque principal
         if (Input.GetButtonDown("Fire1"))
         {

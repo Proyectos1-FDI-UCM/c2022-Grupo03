@@ -33,7 +33,6 @@ public class PlayerLifeComponent : MonoBehaviour
 
     public bool Heal()
     {
-        Debug.Log("Curado!");
         if (_currentLife < _maxLife)
         {
             _currentLife++;

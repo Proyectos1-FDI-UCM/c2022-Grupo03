@@ -32,18 +32,19 @@ public class PlayerAttackController : MonoBehaviour
     private float _elapsedTimeSpin;
     private float _elapsedTimeRay;
     private Vector3 _dir;
+    private LayerMask _myLayerMask;
     #endregion
 
     #region references
-    Transform _myTransform;
+    private Transform _myTransform;
     [SerializeField]
     private GameObject[] _damageZones;
     [SerializeField]
-    GameObject _dirArrow;
-    Transform _dirArrowTransform;
-    PlayerInputManager _myPlayerInputManager;
-    PlayerMovementController _myPlayerMovementController;
-    PlayerChangeColors _myPlayerChangeColors;
+    private GameObject _dirArrow;
+    private Transform _dirArrowTransform;
+    private PlayerInputManager _myPlayerInputManager;
+    private PlayerMovementController _myPlayerMovementController;
+    private PlayerChangeColors _myPlayerChangeColors;
     private AttackAnimation _myAttackAnimation;
     #endregion
 
@@ -106,14 +107,15 @@ public class PlayerAttackController : MonoBehaviour
     private void LightRay()
     {
         Debug.DrawRay(_myTransform.position, _dir.normalized * _rayLength, Color.red, 2f);  // debug del raycast
-        RaycastHit2D hitInfo;
-        hitInfo = Physics2D.Raycast(_myTransform.position, _dir.normalized, _rayLength);
-        if (hitInfo)
+        RaycastHit2D[] hitInfo;
+        hitInfo = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _myLayerMask);
+        int indice = _myPlayerChangeColors.GetCurrentColorIndex();
+        foreach (RaycastHit2D hit in hitInfo)
         {
-            int indice = _myPlayerChangeColors.GetCurrentColorIndex();
-            if (hitInfo.collider.GetComponent(_enemyColors[indice]) != null)
+            if (hit.collider.GetComponent(_enemyColors[indice]) != null)
             {
-                hitInfo.collider.GetComponent<EnemyLifeComponent>().Damage();
+                Debug.Log("dentro del if");
+                hit.collider.GetComponent<EnemyLifeComponent>().Damage();
             }
         }
         _rayMade = true;
@@ -146,6 +148,7 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _myAttackAnimation = GetComponent<AttackAnimation>();
+        _myLayerMask = LayerMask.GetMask("Enemy");
 
         GameManager.Instance.OnRayCooldown(0);
         GameManager.Instance.OnSpinCooldown(0);

@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private UI_Manager _myUIManager;
     private PlayerInputManager _playerInputManager;
     private PlayerMovementController _playerMovement;
+    private DirectionArrow _directionArrow;
     #endregion
 
     #region properties
@@ -70,7 +71,8 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerDefeat()   // se llama cuando el jugador pierde
     {
-        SceneManager.LoadScene(0);
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.name);
     }
 
     public void OnPlayerChangeColor(string color)
@@ -88,25 +90,40 @@ public class GameManager : MonoBehaviour
         _myUIManager.UpdateRayCooldown((int)time);
     }
 
+    int i = 0;
+    public void PauseMenu()
+    {
+        _myUIManager.PauseMenu();
+        if (i % 2 == 0)
+        {
+            _directionArrow.enabled = false;
+        }
+        else
+        {
+            _directionArrow.enabled = true;
+        }
+        i++;
+    }
+
     private void Awake()
     {
         _instance = this;
         _listOfEnemies = new List<EnemyLifeComponent>();
         _myUIManager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
-        
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
         _player = GameObject.Find("Player");
         _deathAnimation = _player.GetComponent<DeathAnimation>();
         _playerInputManager = _player.GetComponent<PlayerInputManager>();
         _playerMovement = _player.GetComponent<PlayerMovementController>();
         _muriendo = false;
         _elapsedTime = 0;
-        Cursor.visible = false;
+        _directionArrow = GameObject.Find("DirectionArrow").GetComponent<DirectionArrow>();
     }
 
     // Update is called once per frame

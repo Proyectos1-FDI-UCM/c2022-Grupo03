@@ -26,7 +26,6 @@ public class EnemyLifeComponent : MonoBehaviour
     public void Damage()
     {
         _currentLife--;
-        //Debug.Log(_currentLife);
         if (_currentLife <= 0)
         {
             Die();

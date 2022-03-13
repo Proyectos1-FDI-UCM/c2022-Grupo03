@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class UI_Manager : MonoBehaviour
     #endregion
 
     #region properties
-
+    bool _gameIsPaused;
     #endregion
 
     #region references
@@ -26,6 +27,8 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     GameObject _enemiesLeftObject;
     Text _enemiesLeftText;
+    [SerializeField]
+    GameObject _pauseMenu;
     #endregion
 
     #region methods
@@ -45,6 +48,39 @@ public class UI_Manager : MonoBehaviour
     {
         _enemiesLeftText.text = "Enemies: " + numEnemies;
     }
+    public void PauseMenu()
+    {
+        if (_gameIsPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+
+    public void Resume()
+    {
+        _pauseMenu.SetActive(false);
+        Cursor.visible = false;
+        Time.timeScale = 1f;
+        _gameIsPaused = false;
+    }
+
+    private void Pause()
+    {
+        _pauseMenu.SetActive(true);
+        Cursor.visible = true;
+        Time.timeScale = 0f;
+        _gameIsPaused = true;
+    }
+
+    public void BackToTitle()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
     private void Awake()
     {
         _currentColorText = _currentColorObject.GetComponent<Text>();
@@ -57,7 +93,7 @@ public class UI_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _gameIsPaused = false;
     }
 
     // Update is called once per frame

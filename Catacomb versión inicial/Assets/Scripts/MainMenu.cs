@@ -1,23 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class BulletDestroyer : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
-    #region references
-    private Rigidbody2D _myRigidBody;
+    #region parameters
+
     #endregion
+
+    #region properties
+
+    #endregion
+
+    #region references
+
+    #endregion
+
     #region methods
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void StartMatch()
     {
-        _myRigidBody.velocity = Vector3.zero;
-        Destroy(this.gameObject);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
     #endregion
+
     // Start is called before the first frame update
     void Start()
     {
-        _myRigidBody = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
