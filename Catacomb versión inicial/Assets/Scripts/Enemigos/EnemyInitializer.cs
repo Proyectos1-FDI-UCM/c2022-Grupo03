@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyColor : MonoBehaviour
+public class EnemyInitializer : MonoBehaviour
 {
     #region references
     private SpriteRenderer _enemyRenderer;
@@ -17,7 +17,7 @@ public class EnemyColor : MonoBehaviour
     void Start()
     {
         _enemyRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        _randomColor = Random.Range(0, 5);
+        _randomColor = GameManager.Instance.NumRandom(0, 4);
         switch (_randomColor)
         {
             case 0:
