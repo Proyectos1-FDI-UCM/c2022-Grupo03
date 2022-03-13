@@ -32,7 +32,6 @@ public class PlayerAttackController : MonoBehaviour
     private float _elapsedTimeSpin;
     private float _elapsedTimeRay;
     private Vector3 _dir;
-    private LayerMask _myLayerMask;
     #endregion
 
     #region references
@@ -46,6 +45,7 @@ public class PlayerAttackController : MonoBehaviour
     private PlayerMovementController _myPlayerMovementController;
     private PlayerChangeColors _myPlayerChangeColors;
     private AttackAnimation _myAttackAnimation;
+    private LayerMask _myLayerMask;
     #endregion
 
     #region methods
@@ -107,10 +107,11 @@ public class PlayerAttackController : MonoBehaviour
     private void LightRay()
     {
         Debug.DrawRay(_myTransform.position, _dir.normalized * _rayLength, Color.red, 2f);  // debug del raycast
-        RaycastHit2D[] hitInfo;
-        hitInfo = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _myLayerMask);
+        // hacer que el raycast golpee a todos los enemigos que encuentra a su paso
+        RaycastHit2D[] hitInfos;
+        hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _myLayerMask);
         int indice = _myPlayerChangeColors.GetCurrentColorIndex();
-        foreach (RaycastHit2D hit in hitInfo)
+        foreach (RaycastHit2D hit in hitInfos)
         {
             if (hit.collider.GetComponent(_enemyColors[indice]) != null)
             {
@@ -157,9 +158,9 @@ public class PlayerAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // sincronizar el tiempo que dura el ataque con el tiempo que el jugador no puede moverse
         if (_attackRunning)
         {
-            // sincronizar el tiempo que dura el ataque con el tiempo que el jugador no puede moverse
             _elapsedTime += Time.deltaTime;
             // aunque se desactive el script de input, hay que hacer que deje de moverse
             // porque si se estaba moviendo antes de desactivarlo se seguirá moviendo después
@@ -182,6 +183,7 @@ public class PlayerAttackController : MonoBehaviour
         {
             GameManager.Instance.OnRayCooldown(_rayCooldown - _elapsedTimeRay);
         }
+        // el tiempo de espera del giro tiene que ser superior a la duración del ataque
         Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin);
         if (_spinMade)
         {
@@ -200,6 +202,5 @@ public class PlayerAttackController : MonoBehaviour
                 _elapsedTime = 0;
             }
         }
-        // el tiempo de espera del giro tiene que ser superior a la duración del ataque
     }
 }

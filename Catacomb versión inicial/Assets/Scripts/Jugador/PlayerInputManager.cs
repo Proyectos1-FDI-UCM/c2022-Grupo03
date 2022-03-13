@@ -79,10 +79,12 @@ public class PlayerInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // menú de pausa
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameManager.Instance.PauseMenu();
         }
+
         // ataque principal
         if (Input.GetButtonDown("Fire1"))
         {
@@ -104,7 +106,6 @@ public class PlayerInputManager : MonoBehaviour
         {
             _myPlayerMovementController.Rodar();
         }
-
         // movimiento
         else
         {

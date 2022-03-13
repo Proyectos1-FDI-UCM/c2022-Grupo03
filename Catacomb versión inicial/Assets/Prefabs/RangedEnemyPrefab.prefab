@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2998720282529773422}
   - component: {fileID: 4946740501492387813}
   - component: {fileID: 4946740501492387810}
-  - component: {fileID: -6087022113021356305}
   - component: {fileID: -6133078511305712532}
+  - component: {fileID: 2720407607059498014}
   m_Layer: 6
   m_Name: RangedEnemyPrefab
   m_TagString: Untagged
@@ -165,18 +165,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-6087022113021356305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946740501492387801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 191176945ab994a4c8667e75df4319df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &-6133078511305712532
 Animator:
   serializedVersion: 3
@@ -196,6 +184,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2720407607059498014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4946740501492387801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a557fd2f6cf91784388f916496c2c17c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6003541021696681613
 GameObject:
   m_ObjectHideFlags: 0

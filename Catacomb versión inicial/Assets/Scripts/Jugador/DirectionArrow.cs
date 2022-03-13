@@ -19,12 +19,13 @@ public class DirectionArrow : MonoBehaviour
     #endregion
 
     #region references
+    Transform _myTransform;
+    SpriteRenderer _myRenderer; 
+    // el color de la flecha de dir cambia conforme cambia el color de la espada
     GameObject _player;
     Transform _playerTransform;
-    Camera _mainCamera;
-    Transform _myTransform;
     PlayerChangeColors _myPlayerChangeColors;
-    SpriteRenderer _dirRenderer;
+    Camera _mainCamera;
     #endregion
 
     #region methods
@@ -36,6 +37,7 @@ public class DirectionArrow : MonoBehaviour
         return worldPoint;
     }
 
+    // rotación de la flecha de dirección en caso de utilizar mando
     public void SetDirection(Vector3 newDirection)
     {
         if (_controllerConnected)
@@ -49,12 +51,12 @@ public class DirectionArrow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _myTransform = transform;
+        _myRenderer = GetComponentInChildren<SpriteRenderer>();
         _player = GameObject.Find("Player");
         _playerTransform = _player.transform;
         _myPlayerChangeColors = _player.GetComponent<PlayerChangeColors>();
-        _dirRenderer = GetComponentInChildren<SpriteRenderer>();
         _mainCamera = Camera.main;
-        _myTransform = transform;
         _controllerConnected = false;
         _check = false;
     }
@@ -64,8 +66,10 @@ public class DirectionArrow : MonoBehaviour
     {
         // hacer que la flecha de dirección esté siempre en la posición del jugador
         _myTransform.position = _playerTransform.position;
-        _dirRenderer.color = _colorsArray[_myPlayerChangeColors.GetCurrentColorIndex()];
 
+        _myRenderer.color = _colorsArray[_myPlayerChangeColors.GetCurrentColorIndex()];
+
+        // rotación de la flecha de dirección en caso de utilizar teclado y ratón
         if (!_controllerConnected)
         {
             // dirección de la flecha, que indica hacia donde se está apuntando

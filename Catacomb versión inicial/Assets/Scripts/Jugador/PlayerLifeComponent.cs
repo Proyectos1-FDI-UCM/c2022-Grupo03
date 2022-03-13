@@ -36,30 +36,17 @@ public class PlayerLifeComponent : MonoBehaviour
         if (_currentLife < _maxLife)
         {
             _currentLife++;
-            GameManager.Instance.OnPlayerDamage(_currentLife);
             healthBar.SetHealth(_currentLife);
             return true;
         }
         return false;
     }
-    /*
-    public void DamageRed(int damage)
-    {
-        _currentLife -= damage;
-        if (_currentLife <= 0)
-        {
-            _deathAnimation.DeathAni();
-        }
-        Debug.Log(_currentLife);
-    }
-    */
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         _currentLife = _maxLife;
-        GameManager.Instance.OnPlayerDamage(_currentLife);
         _deathAnimation = GetComponent<DeathAnimation>();
         healthBar.SetMaxHealth(_maxLife);
         healthBar.SetHealth(_maxLife);

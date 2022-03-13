@@ -8,7 +8,7 @@ public class EnemyLifeComponent : MonoBehaviour
     [SerializeField]
     private int _maxLife;
     [SerializeField]
-    private float _desiredTimeToRecovery=5;  //determina cada cuanto tiempo recuperan vida los enemigo azules
+    private float _desiredTimeToRecovery = 5;  //determina cada cuanto tiempo recuperan vida los enemigo azules
     #endregion
 
     #region properties
@@ -42,9 +42,9 @@ public class EnemyLifeComponent : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<DamageZone>())
         {
-            int rnd = Random.Range(1, 6); //TIENE UN 20% DE POSIBILIDADES DE SER INMUNE AL ATAQUE SI ES AZUL
-            if(_isBlue && rnd!=1) Damage();
-
+            int rnd = Random.Range(1, 6);
+            // TIENE UN 20% DE POSIBILIDADES DE SER INMUNE AL ATAQUE SI ES AZUL
+            if (_isBlue && rnd != 1) Damage();
         }
     }
     #endregion
@@ -63,20 +63,18 @@ public class EnemyLifeComponent : MonoBehaviour
         {
             _isBlue = true;
         }
-
         _currentLife = _maxLife;
-
     }
 
     // Update is called once per frame
     void Update()
     {
         _elapsedTime += Time.deltaTime;
-        if(_isBlue && _elapsedTime>=_desiredTimeToRecovery && _currentLife<_maxLife) //se ha puesto de forma que no pueda recuperar vida si ya la tiene al maximo
+        // se ha puesto de forma que no pueda recuperar vida si ya la tiene al máximo
+        if (_isBlue && _elapsedTime >= _desiredTimeToRecovery && _currentLife < _maxLife)
         {
             _currentLife += _myBlueComponent.RecoveryPoints();
             _elapsedTime = 0;
         }
-        
     }
 }

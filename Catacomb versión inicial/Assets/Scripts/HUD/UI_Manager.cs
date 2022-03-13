@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class UI_Manager : MonoBehaviour
     #endregion
 
     #region properties
-    bool _gameIsPaused;
+
     #endregion
 
     #region references
@@ -32,6 +31,7 @@ public class UI_Manager : MonoBehaviour
     #endregion
 
     #region methods
+    // HUD del juego
     public void UpdateCurrentColor(string newColor)
     {
         _currentColorText.text = newColor;
@@ -48,37 +48,19 @@ public class UI_Manager : MonoBehaviour
     {
         _enemiesLeftText.text = "Enemies: " + numEnemies;
     }
-    public void PauseMenu()
-    {
-        if (_gameIsPaused)
-        {
-            Resume();
-        }
-        else
-        {
-            Pause();
-        }
-    }
 
+    // menú de pausa
+    public void SetPauseMenu(bool enabled)
+    {
+        _pauseMenu.SetActive(enabled);
+    }
     public void Resume()
     {
-        _pauseMenu.SetActive(false);
-        Cursor.visible = false;
-        Time.timeScale = 1f;
-        _gameIsPaused = false;
+        GameManager.Instance.Resume();
     }
-
-    private void Pause()
-    {
-        _pauseMenu.SetActive(true);
-        Cursor.visible = true;
-        Time.timeScale = 0f;
-        _gameIsPaused = true;
-    }
-
     public void BackToTitle()
     {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        GameManager.Instance.BackToTitle();
     }
 
     private void Awake()
@@ -93,7 +75,7 @@ public class UI_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gameIsPaused = false;
+
     }
 
     // Update is called once per frame

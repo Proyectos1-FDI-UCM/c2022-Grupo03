@@ -29,6 +29,7 @@ public class PlayerChangeColors : MonoBehaviour
         colors col = (colors)indice;
         return col;
     }
+
     public int GetCurrentColorIndex()
     {
         return ColorToIndex(_currentColor);
@@ -70,6 +71,7 @@ public class PlayerChangeColors : MonoBehaviour
 
     private string ColorToString(colors col)
     {
+        // inicialización de colString
         string colString = "";
         switch (col)
         {

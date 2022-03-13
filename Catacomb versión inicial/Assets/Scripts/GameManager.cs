@@ -13,20 +13,21 @@ public class GameManager : MonoBehaviour
     #region properties
     private bool _muriendo;
     private float _elapsedTime;
+    bool _gameIsPaused;
     #endregion
 
     #region references
     private GameObject _player;
-    private DeathAnimation _deathAnimation;
     private UI_Manager _myUIManager;
     private PlayerInputManager _playerInputManager;
-    private PlayerMovementController _playerMovement;
+    private DeathAnimation _playerDeathAnimation;
+    private PlayerMovementController _playerMovementController;
     private DirectionArrow _directionArrow;
     #endregion
 
     #region properties
     static private GameManager _instance;
-    static public GameManager Instance // Accesor a la instancia del game manager 
+    static public GameManager Instance // accesor a la instancia del game manager 
     {
         get
         {
@@ -37,72 +38,99 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region methods
+    // generador de números aleatorios
     public int NumRandom(int minInclusive, int maxInclusive)
     {
         return Random.Range(minInclusive, maxInclusive + 1);
     }
 
+    // actualiza la lista de enemigos cuando muere un enemigo
     public void OnEnemyDies(EnemyLifeComponent enemy)
     {
         if (_listOfEnemies.Contains(enemy))
         {
             _listOfEnemies.Remove(enemy);
-            _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
         }
     }
 
+    // actualiza la lista de enemigos cuando aparece un nuevo enemigo
     public void RegisterEnemy(EnemyLifeComponent enemy)
     {
         if (!_listOfEnemies.Contains(enemy))
         {
             _listOfEnemies.Add(enemy);
-            _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
         }
     }
 
+    // se llama cuando el personaje sufre daño
     public void OnPlayerDamage(int lifePoints)
     {
         if (lifePoints <= 0)
         {
-            _muriendo = _deathAnimation.DeathAni(); // animación de la muerte
+            _muriendo = _playerDeathAnimation.DeathAni(); // animación de la muerte
             _playerInputManager.enabled = false;
         }
     }
 
-    private void OnPlayerDefeat()   // se llama cuando el jugador pierde
+    // se llama cuando el jugador pierde
+    // se reinicia el nivel
+    private void OnPlayerDefeat()
     {
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(activeScene.name);
     }
 
+    // actualiza en el HUD el color de la espada
     public void OnPlayerChangeColor(string color)
     {
         _myUIManager.UpdateCurrentColor(color);
     }
 
+    // actualiza el tiempo de espera del ataque giratorio
     public void OnSpinCooldown(float time)
     {
         _myUIManager.UpdateSpinCooldown((int)time);
     }
 
+    // actualiza el tiempo de espera del rayo de luz
     public void OnRayCooldown(float time)
     {
         _myUIManager.UpdateRayCooldown((int)time);
     }
 
-    int i = 0;
+    // menú de pausa
     public void PauseMenu()
     {
-        _myUIManager.PauseMenu();
-        if (i % 2 == 0)
+        if (_gameIsPaused)
         {
-            _directionArrow.enabled = false;
+            Resume();
         }
         else
         {
-            _directionArrow.enabled = true;
+            Pause();
         }
-        i++;
+    }
+    public void Resume()
+    {
+        _directionArrow.enabled = true; // se puede mover la flecha de dir
+        _myUIManager.SetPauseMenu(false);   // desaparece el menú de pausa
+        Cursor.visible = false; // desaparece el cursor
+        Time.timeScale = 1f;    // el tiempo se reanuda
+        _gameIsPaused = false;
+    }
+
+    private void Pause()
+    {
+        _directionArrow.enabled = false;    // no se puede mover la flecha de dir
+        _myUIManager.SetPauseMenu(true);    // aparece el menú de pausa
+        Cursor.visible = true;  // aparece el cursor
+        Time.timeScale = 0f;    // el tiempo se para
+        _gameIsPaused = true;
+    }
+
+    public void BackToTitle()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
     private void Awake()
@@ -116,14 +144,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
+        _gameIsPaused = false;
         Cursor.visible = false;
         _player = GameObject.Find("Player");
-        _deathAnimation = _player.GetComponent<DeathAnimation>();
         _playerInputManager = _player.GetComponent<PlayerInputManager>();
-        _playerMovement = _player.GetComponent<PlayerMovementController>();
+        _playerMovementController = _player.GetComponent<PlayerMovementController>();
+        _playerDeathAnimation = _player.GetComponent<DeathAnimation>();
+        _directionArrow = GameObject.Find("DirectionArrow").GetComponent<DirectionArrow>();
         _muriendo = false;
         _elapsedTime = 0;
-        _directionArrow = GameObject.Find("DirectionArrow").GetComponent<DirectionArrow>();
     }
 
     // Update is called once per frame
@@ -132,11 +162,14 @@ public class GameManager : MonoBehaviour
         if (_muriendo)
         {
             _elapsedTime += Time.deltaTime;
-            _playerMovement.SetMovementDirection(Vector3.zero);
+            _playerMovementController.SetMovementDirection(Vector3.zero);
             if (_elapsedTime > _tiempoMuerte)
             {
                 OnPlayerDefeat();
             }
         }
+
+        // actualiza el HUD con los enemigos restantes
+        _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
     }
 }
