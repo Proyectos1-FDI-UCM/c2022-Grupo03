@@ -107,10 +107,12 @@ public class DirectionArrow : MonoBehaviour
                 if (string.IsNullOrEmpty(_joysticks[i]))
                 {
                     _controllerConnected = false;
+                    Cursor.visible = true;
                 }
                 else
                 {
                     _controllerConnected = true;
+                    Cursor.visible = false;
                 }
             }
             _check=false;

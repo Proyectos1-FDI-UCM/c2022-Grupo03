@@ -50,6 +50,10 @@ public class UI_Manager : MonoBehaviour
     }
 
     // menú de pausa
+    private void PauseMenu()
+    {
+        GameManager.Instance.PauseMenu();
+    }
     public void SetPauseMenu(bool enabled)
     {
         _pauseMenu.SetActive(enabled);
@@ -81,6 +85,9 @@ public class UI_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseMenu();
+        }
     }
 }

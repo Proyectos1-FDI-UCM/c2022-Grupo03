@@ -112,19 +112,19 @@ public class GameManager : MonoBehaviour
     }
     public void Resume()
     {
-        _directionArrow.enabled = true; // se puede mover la flecha de dir
         _myUIManager.SetPauseMenu(false);   // desaparece el menú de pausa
-        Cursor.visible = false; // desaparece el cursor
         Time.timeScale = 1f;    // el tiempo se reanuda
+        _directionArrow.enabled = true; // se puede mover la flecha de dir
+        _playerInputManager.enabled = true; // el jugador sí puede recibir input
         _gameIsPaused = false;
     }
 
     private void Pause()
     {
-        _directionArrow.enabled = false;    // no se puede mover la flecha de dir
         _myUIManager.SetPauseMenu(true);    // aparece el menú de pausa
-        Cursor.visible = true;  // aparece el cursor
         Time.timeScale = 0f;    // el tiempo se para
+        _directionArrow.enabled = false;    // no se puede mover la flecha de dir
+        _playerInputManager.enabled = false;    // el jugador no puede recibir input
         _gameIsPaused = true;
     }
 
@@ -146,7 +146,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         _gameIsPaused = false;
-        Cursor.visible = false;
         _player = GameObject.Find("Player");
         _playerInputManager = _player.GetComponent<PlayerInputManager>();
         _playerMovementController = _player.GetComponent<PlayerMovementController>();
@@ -161,8 +160,8 @@ public class GameManager : MonoBehaviour
     {
         if (_muriendo)
         {
-            _elapsedTime += Time.deltaTime;
             _playerMovementController.SetMovementDirection(Vector3.zero);
+            _elapsedTime += Time.deltaTime;
             if (_elapsedTime > _tiempoMuerte)
             {
                 OnPlayerDefeat();

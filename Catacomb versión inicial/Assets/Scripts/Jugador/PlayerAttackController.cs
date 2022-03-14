@@ -28,7 +28,7 @@ public class PlayerAttackController : MonoBehaviour
     private bool _rayMade;
     private bool _spinMade;
     private bool _rayWaiting;
-    private float _elapsedTime;  // mientras se está realizando/preparando el ataque
+    // private float _elapsedTime;  // mientras se está realizando/preparando el ataque
     private float _elapsedTimeSpin;
     private float _elapsedTimeRay;
     private Vector3 _dir;
@@ -46,6 +46,8 @@ public class PlayerAttackController : MonoBehaviour
     private PlayerChangeColors _myPlayerChangeColors;
     private AttackAnimation _myAttackAnimation;
     private LayerMask _myLayerMask;
+    private delegate void UpdateCooldown(float cooldown);
+    private LineRenderer _myLineRenderer;
     #endregion
 
     #region methods
@@ -77,7 +79,7 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerInputManager.enabled = false;
 
             _myAttackAnimation.AttackAni(indice);
-        } 
+        }
     }
 
     public void SpintAttack()
@@ -106,7 +108,13 @@ public class PlayerAttackController : MonoBehaviour
 
     private void LightRay()
     {
-        Debug.DrawRay(_myTransform.position, _dir.normalized * _rayLength, Color.red, 2f);  // debug del raycast
+        _myPlayerInputManager.enabled = true;
+
+        _myLineRenderer.positionCount = 2;
+        _myLineRenderer.SetPosition(0, _myTransform.position);
+        _myLineRenderer.SetPosition(1, _myTransform.position + _dir.normalized * _rayLength);
+        // debug del raycast
+        Debug.DrawLine(_myTransform.position, _myTransform.position + _dir.normalized * _rayLength, Color.red, 2f);
         // hacer que el raycast golpee a todos los enemigos que encuentra a su paso
         RaycastHit2D[] hitInfos;
         hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _myLayerMask);
@@ -119,20 +127,37 @@ public class PlayerAttackController : MonoBehaviour
                 hit.collider.GetComponent<EnemyLifeComponent>().Damage();
             }
         }
+        Invoke(nameof(DisappearRay), 0.5f);
         _rayMade = true;
     }
 
-    private void Cooldown(float duration, ref bool abilityMade, ref float elapsedTime)
+    private void DisappearRay()
+    {
+        _myLineRenderer.positionCount = 0;
+    }
+
+    private void Cooldown(float duration, ref bool abilityMade, ref float elapsedTime, UpdateCooldown upCd)
     {
         if (abilityMade)
         {
             elapsedTime += Time.deltaTime;
+            upCd(duration - elapsedTime);
             if (elapsedTime > duration)
             {
                 abilityMade = false;
                 elapsedTime = 0;
             }
         }
+    }
+
+    private void DestroyDmgZone()
+    {
+        GameObject.Destroy(_lastAttack);
+        for (int i = 0; i < _attacks.Length; i++)
+        {
+            GameObject.Destroy(_attacks[i]);
+        }
+        _myPlayerInputManager.enabled = true;
     }
     #endregion
 
@@ -150,6 +175,7 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _myAttackAnimation = GetComponent<AttackAnimation>();
         _myLayerMask = LayerMask.GetMask("Enemy");
+        _myLineRenderer = GetComponent<LineRenderer>();
 
         GameManager.Instance.OnRayCooldown(0);
         GameManager.Instance.OnSpinCooldown(0);
@@ -158,13 +184,17 @@ public class PlayerAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // duración del ataque principal y giratorio
         // sincronizar el tiempo que dura el ataque con el tiempo que el jugador no puede moverse
         if (_attackRunning)
         {
-            _elapsedTime += Time.deltaTime;
             // aunque se desactive el script de input, hay que hacer que deje de moverse
             // porque si se estaba moviendo antes de desactivarlo se seguirá moviendo después
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
+            _attackRunning = false;
+            Invoke(nameof(DestroyDmgZone), _attackDuration);
+            /*
+            _elapsedTime += Time.deltaTime;
             if (_elapsedTime > _attackDuration)
             {
                 GameObject.Destroy(_lastAttack);
@@ -176,23 +206,16 @@ public class PlayerAttackController : MonoBehaviour
                 _myPlayerInputManager.enabled = true;
                 _elapsedTime = 0;
             }
+            */
         }
 
-        Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay);
-        if (_rayMade)
-        {
-            GameManager.Instance.OnRayCooldown(_rayCooldown - _elapsedTimeRay);
-        }
-        // el tiempo de espera del giro tiene que ser superior a la duración del ataque
-        Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin);
-        if (_spinMade)
-        {
-            GameManager.Instance.OnSpinCooldown(_spinCooldown - _elapsedTimeSpin);
-        }
-
+        // tiempo de espera hasta que el rayo se lanza
         if (_rayWaiting)
         {
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
+            _rayWaiting = false;
+            Invoke(nameof(LightRay), _rayPreparationTime);
+            /*
             _elapsedTime += Time.deltaTime;
             if (_elapsedTime > _rayPreparationTime)
             {
@@ -201,6 +224,23 @@ public class PlayerAttackController : MonoBehaviour
                 _myPlayerInputManager.enabled = true;
                 _elapsedTime = 0;
             }
+            */
         }
+
+        // tiempos de espera de las habilidades
+        Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay, GameManager.Instance.OnRayCooldown);
+        // el tiempo de espera del giro tiene que ser superior a la duración del ataque
+        Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin, GameManager.Instance.OnSpinCooldown);
+
+        /*
+        if (_rayMade)
+        {
+            GameManager.Instance.OnRayCooldown(_rayCooldown - _elapsedTimeRay);
+        }
+        else if (_spinMade)
+        {
+            GameManager.Instance.OnSpinCooldown(_spinCooldown - _elapsedTimeSpin);
+        }
+        */
     }
 }
