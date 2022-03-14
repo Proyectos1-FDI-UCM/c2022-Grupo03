@@ -30,7 +30,10 @@ public class EnemyMovement : MonoBehaviour
     private RaycastHit2D hit;
     private RaycastHit2D leftRay;
     private RaycastHit2D rightRay;
+    private RaycastHit2D[] hitArray;
+    private Collider2D[] tooClose;
     private int offset;
+    private float distanceMultiplier;
     private Green _myGreenComponent;
     private Yellow _myYellowComponent;
     #endregion
@@ -56,8 +59,8 @@ public class EnemyMovement : MonoBehaviour
         targetTransform = targetObject.transform;
         SetPlayerDirection();
         offset = 45;
-        RaycastHit2D hitinfo  = Physics2D.Raycast(this.transform.position, _movementDirection);
-        layers = 1 << 8 | 1 << 3;
+        distanceMultiplier = 1;
+        layers = 1 << 8 | 1 << 3 | 1 << 6;
         _myGreenComponent = GetComponent<Green>();
         if (_myGreenComponent != null)
         {
@@ -97,7 +100,8 @@ public class EnemyMovement : MonoBehaviour
         //SetMovementDirection();
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection *  100.0f, Color.red, 1.0f);
-        hit = Physics2D.Raycast(transform.position, temp.normalized, 100.0f, layers);
+        hit = FirstTargetHit();
+        Debug.Log(this.gameObject.name + " " + hit.collider);
         SetPlayerDirection();
         if (hit.collider == targetObject.GetComponent<Collider2D>())
         {
@@ -120,17 +124,39 @@ public class EnemyMovement : MonoBehaviour
             else if (rightRay.distance == 0) _movementDirection = right.normalized;
             else if (leftRay.distance > rightRay.distance) _movementDirection = left.normalized;
             else if (rightRay.distance > leftRay.distance) _movementDirection = right.normalized;
-            
+            _movementDirection += SocialDistancing();
+
         }
         _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
     }
 
+    private RaycastHit2D FirstTargetHit()
+    {
+        Vector3 temp = (targetTransform.position - transform.position);
+        Debug.DrawRay(transform.position, _playerDirection * 100.0f, Color.red, 1.0f);
+        hitArray = Physics2D.RaycastAll(transform.position, temp.normalized, 100.0f, layers);
+        int i = 0;
+        while (hitArray[i].collider == this.gameObject.GetComponent<Collider2D>()) i++;
+        return hitArray[i];
+    }
 
+    private Vector3 SocialDistancing()
+    {
+        Vector3 movement = new Vector3(0,0,0);
+        tooClose = Physics2D.OverlapCircleAll(transform.position, 4, 1 << 6);
+        if (tooClose.Length > 5)
+        {
+            for (int i = 0; i < tooClose.Length; i++)
+            {
+                movement += -(tooClose[i].transform.position - transform.position);
+                if (tooClose[i].transform.position.magnitude - transform.position.magnitude < 2) distanceMultiplier = 0.8f;
+                else if (tooClose[i].transform.position.magnitude - transform.position.magnitude < 3) distanceMultiplier = 0.5f;
+                else if (tooClose[i].transform.position.magnitude - transform.position.magnitude < 4) distanceMultiplier = 0.3f;
+                Debug.Log(distanceMultiplier);
+                movement += -(tooClose[i].transform.position - transform.position) * distanceMultiplier;
+            }
+        }
+        return movement.normalized;
+    }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    Vector3 direc = new Vector3(0, 0, -90);
-    //    _movementDirection += direc;
-    //    Debug.Log("moving");
-    //}
 }
