@@ -15,19 +15,24 @@ public class UI_Manager : MonoBehaviour
 
     #region references
     [SerializeField]
-    GameObject _currentColorObject;
-    Text _currentColorText;
+    private GameObject _currentColorObject;
+    private Text _currentColorText;
     [SerializeField]
-    GameObject _spinCooldownObject;
+    private GameObject _spinCooldownObject;
     Text _spinCooldownText;
+    private Image _imageSpinCd;
     [SerializeField]
-    GameObject _rayCooldownObject;
-    Text _rayCooldownText;
+    private GameObject _rayCooldownObject;
+    private Text _rayCooldownText;
     [SerializeField]
-    GameObject _enemiesLeftObject;
-    Text _enemiesLeftText;
+    private GameObject _enemiesLeftObject;
+    private Text _enemiesLeftText;
     [SerializeField]
-    GameObject _pauseMenu;
+    private GameObject _pauseMenu;
+    [SerializeField]
+    private GameObject _menu;
+    [SerializeField]
+    private GameObject _optionsMenu;
     #endregion
 
     #region methods
@@ -36,13 +41,25 @@ public class UI_Manager : MonoBehaviour
     {
         _currentColorText.text = newColor;
     }
-    public void UpdateSpinCooldown(int newTime)
+    public void UpdateSpinCooldown(float cd, float duration)
     {
-        _spinCooldownText.text = "Spin: " + newTime;
+        if (cd < 0f)
+        {
+            Debug.Log("desaparece el cd");
+            _spinCooldownText.gameObject.SetActive(false);
+            _imageSpinCd.fillAmount = 0f;
+        }
+        else
+        {
+            Debug.Log("aparece el cd");
+            _spinCooldownText.gameObject.SetActive(true);
+            _spinCooldownText.text = Mathf.RoundToInt(cd).ToString();
+            _imageSpinCd.fillAmount = cd / duration;
+        }
     }
     public void UpdateRayCooldown(int newTime)
     {
-        _rayCooldownText.text = "Ray: " + newTime;
+        _rayCooldownText.text = newTime.ToString();
     }
     public void UpdateEnemiesLeft(int numEnemies)
     {
@@ -58,6 +75,14 @@ public class UI_Manager : MonoBehaviour
     {
         _pauseMenu.SetActive(enabled);
     }
+    public void SetMenu(bool enabled)
+    {
+        _menu.SetActive(false);
+    }
+    public void SetOptionsMenu(bool enabled)
+    {
+        _optionsMenu.SetActive(enabled);
+    }
     public void Resume()
     {
         GameManager.Instance.Resume();
@@ -66,12 +91,17 @@ public class UI_Manager : MonoBehaviour
     {
         GameManager.Instance.BackToTitle();
     }
+    public void GoToControllerMenu()
+    {
+        GameManager.Instance.GoToControllerMenu();
+    }
 
     private void Awake()
     {
         _currentColorText = _currentColorObject.GetComponent<Text>();
-        _spinCooldownText = _spinCooldownObject.GetComponent<Text>();
-        _rayCooldownText = _rayCooldownObject.GetComponent<Text>();
+        _spinCooldownText = _spinCooldownObject.GetComponentInChildren<Text>();
+        _imageSpinCd = _spinCooldownObject.GetComponent<Image>();
+        _rayCooldownText = _rayCooldownObject.GetComponentInChildren<Text>();
         _enemiesLeftText = _enemiesLeftObject.GetComponent<Text>();
     }
     #endregion
@@ -79,7 +109,8 @@ public class UI_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _imageSpinCd.fillAmount = 0f;
+        _spinCooldownText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

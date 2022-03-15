@@ -14,13 +14,22 @@ public class MainMenu : MonoBehaviour
     #endregion
 
     #region references
-
+    [SerializeField]
+    GameObject _menu;
+    [SerializeField]
+    GameObject _optionsMenu;
     #endregion
 
     #region methods
     public void StartMatch()
     {
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        PlayerPrefs.DeleteKey("Back");
+        SceneManager.LoadScene(3, LoadSceneMode.Single);
+    }
+    public void GoToControllerMenu()
+    {
+        PlayerPrefs.SetString("Back", SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1);
     }
     public void QuitGame()
     {
@@ -31,7 +40,11 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (PlayerPrefs.GetString("Back") == "TitleScreen")
+        {
+            _menu.SetActive(false);
+            _optionsMenu.SetActive(true);
+        }
     }
 
     // Update is called once per frame

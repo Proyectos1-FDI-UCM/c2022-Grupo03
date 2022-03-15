@@ -16,11 +16,23 @@ public class PlayerAttackController : MonoBehaviour
     [SerializeField]
     private float _spinCooldown;
     [SerializeField]
+    private float _durationRay = 0.5f;
+    [SerializeField]
     private Vector3[] _offsets = { Vector3.up, -Vector3.right, -Vector3.up, Vector3.right };
     #endregion
 
     #region properties
+    // colores
     private string[] _enemyColors = { "Red", "Yellow", "Green", "Blue", "Pink" };
+    private Color[] _colors = { Color.red, Color.yellow, Color.green, Color.blue, Color.magenta };
+    // para que se puedan almacenar en el array tienen que ser estáticos
+    private static Color _lightRed = new Color(1, 0.553459f, 0.553459f);
+    private static Color _lightYellow = new Color(1, 0.9764464f, 0.7044024f);
+    private static Color _lightGreen = new Color(0.7987421f, 1, 0.7987421f);
+    private static Color _lightBlue = new Color(0.7610062f, 0.7610062f, 1);
+    private static Color _lightMagenta = new Color(1, 0.8459119f, 1);
+    private Color[] _lightCols = { _lightRed, _lightYellow, _lightGreen, _lightBlue, _lightBlue };
+
     private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
     GameObject _lastAttack;
     GameObject[] _attacks = new GameObject[4];
@@ -28,7 +40,6 @@ public class PlayerAttackController : MonoBehaviour
     private bool _rayMade;
     private bool _spinMade;
     private bool _rayWaiting;
-    // private float _elapsedTime;  // mientras se está realizando/preparando el ataque
     private float _elapsedTimeSpin;
     private float _elapsedTimeRay;
     private Vector3 _dir;
@@ -46,13 +57,14 @@ public class PlayerAttackController : MonoBehaviour
     private PlayerChangeColors _myPlayerChangeColors;
     private AttackAnimation _myAttackAnimation;
     private LayerMask _myLayerMask;
-    private delegate void UpdateCooldown(float cooldown);
+    private delegate void UpdateCooldown(float cd, float duration);
+    // los delegados sirven para pasar métodos como argumentos de otro método
     private LineRenderer _myLineRenderer;
     #endregion
 
     #region methods
     public void MainAttack()
-    { 
+    {
         Vector3 angle = _dirArrowTransform.rotation.eulerAngles;
 
         if (!_attackRunning)
@@ -110,15 +122,20 @@ public class PlayerAttackController : MonoBehaviour
     {
         _myPlayerInputManager.enabled = true;
 
-        _myLineRenderer.positionCount = 2;
-        _myLineRenderer.SetPosition(0, _myTransform.position);
-        _myLineRenderer.SetPosition(1, _myTransform.position + _dir.normalized * _rayLength);
         // debug del raycast
         Debug.DrawLine(_myTransform.position, _myTransform.position + _dir.normalized * _rayLength, Color.red, 2f);
         // hacer que el raycast golpee a todos los enemigos que encuentra a su paso
         RaycastHit2D[] hitInfos;
         hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _myLayerMask);
         int indice = _myPlayerChangeColors.GetCurrentColorIndex();
+
+        // dibujo del raycast en el juego
+        _myLineRenderer.positionCount = 2;
+        _myLineRenderer.SetPosition(0, _myTransform.position);
+        _myLineRenderer.SetPosition(1, _myTransform.position + _dir.normalized * _rayLength);
+        _myLineRenderer.startColor = _lightCols[indice];
+        _myLineRenderer.endColor = _colors[indice];
+
         foreach (RaycastHit2D hit in hitInfos)
         {
             if (hit.collider.GetComponent(_enemyColors[indice]) != null)
@@ -127,7 +144,9 @@ public class PlayerAttackController : MonoBehaviour
                 hit.collider.GetComponent<EnemyLifeComponent>().Damage();
             }
         }
-        Invoke(nameof(DisappearRay), 0.5f);
+
+        Invoke(nameof(DisappearRay), _durationRay);
+
         _rayMade = true;
     }
 
@@ -141,7 +160,7 @@ public class PlayerAttackController : MonoBehaviour
         if (abilityMade)
         {
             elapsedTime += Time.deltaTime;
-            upCd(duration - elapsedTime);
+            upCd(duration - elapsedTime, duration);
             if (elapsedTime > duration)
             {
                 abilityMade = false;
@@ -158,6 +177,11 @@ public class PlayerAttackController : MonoBehaviour
             GameObject.Destroy(_attacks[i]);
         }
         _myPlayerInputManager.enabled = true;
+    }
+
+    private void Awake()
+    {
+
     }
     #endregion
 
@@ -177,8 +201,9 @@ public class PlayerAttackController : MonoBehaviour
         _myLayerMask = LayerMask.GetMask("Enemy");
         _myLineRenderer = GetComponent<LineRenderer>();
 
-        GameManager.Instance.OnRayCooldown(0);
-        GameManager.Instance.OnSpinCooldown(0);
+        // se pueden eliminar estas dos líneas
+        // GameManager.Instance.OnRayCooldown(0);
+        // GameManager.Instance.OnSpinCooldown(0, 0);
     }
 
     // Update is called once per frame
@@ -193,20 +218,6 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             _attackRunning = false;
             Invoke(nameof(DestroyDmgZone), _attackDuration);
-            /*
-            _elapsedTime += Time.deltaTime;
-            if (_elapsedTime > _attackDuration)
-            {
-                GameObject.Destroy(_lastAttack);
-                for (int i = 0; i < _attacks.Length; i++)
-                {
-                    GameObject.Destroy(_attacks[i]);
-                }
-                _attackRunning = false;
-                _myPlayerInputManager.enabled = true;
-                _elapsedTime = 0;
-            }
-            */
         }
 
         // tiempo de espera hasta que el rayo se lanza
@@ -215,32 +226,11 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             _rayWaiting = false;
             Invoke(nameof(LightRay), _rayPreparationTime);
-            /*
-            _elapsedTime += Time.deltaTime;
-            if (_elapsedTime > _rayPreparationTime)
-            {
-                _rayWaiting = false;
-                LightRay();
-                _myPlayerInputManager.enabled = true;
-                _elapsedTime = 0;
-            }
-            */
         }
 
         // tiempos de espera de las habilidades
-        Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay, GameManager.Instance.OnRayCooldown);
+        // Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay, GameManager.Instance.OnRayCooldown);
         // el tiempo de espera del giro tiene que ser superior a la duración del ataque
         Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin, GameManager.Instance.OnSpinCooldown);
-
-        /*
-        if (_rayMade)
-        {
-            GameManager.Instance.OnRayCooldown(_rayCooldown - _elapsedTimeRay);
-        }
-        else if (_spinMade)
-        {
-            GameManager.Instance.OnSpinCooldown(_spinCooldown - _elapsedTimeSpin);
-        }
-        */
     }
 }

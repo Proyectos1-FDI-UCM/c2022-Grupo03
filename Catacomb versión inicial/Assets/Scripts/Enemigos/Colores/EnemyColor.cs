@@ -9,7 +9,7 @@ public class EnemyColor : MonoBehaviour
     #endregion
 
     #region properties
-    Color[] _colorsArray = { Color.red, Color.yellow, Color.green, Color.blue, Color.magenta};
+    Color[] _colors = { Color.red, Color.yellow, Color.green, Color.blue, Color.magenta};
     #endregion
 
     #region references
@@ -42,7 +42,7 @@ public class EnemyColor : MonoBehaviour
                 break;
         }
         _enemyRenderer = gameObject.GetComponent<SpriteRenderer>();
-        _enemyRenderer.color = _colorsArray[randomColor];
+        _enemyRenderer.color = _colors[randomColor];
     }
 
     // Update is called once per frame

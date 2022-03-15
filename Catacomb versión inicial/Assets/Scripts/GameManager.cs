@@ -87,9 +87,9 @@ public class GameManager : MonoBehaviour
     }
 
     // actualiza el tiempo de espera del ataque giratorio
-    public void OnSpinCooldown(float time)
+    public void OnSpinCooldown(float cd, float duration)
     {
-        _myUIManager.UpdateSpinCooldown((int)time);
+        _myUIManager.UpdateSpinCooldown(cd, duration);
     }
 
     // actualiza el tiempo de espera del rayo de luz
@@ -130,9 +130,15 @@ public class GameManager : MonoBehaviour
 
     public void BackToTitle()
     {
+        PlayerPrefs.DeleteKey("Back");
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
+    public void GoToControllerMenu()
+    {
+        PlayerPrefs.SetString("Back", SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
     private void Awake()
     {
         _instance = this;
@@ -153,6 +159,13 @@ public class GameManager : MonoBehaviour
         _directionArrow = GameObject.Find("DirectionArrow").GetComponent<DirectionArrow>();
         _muriendo = false;
         _elapsedTime = 0;
+
+        if (PlayerPrefs.GetString("Back") == "Escena Pedro")
+        {
+            PauseMenu();
+            _myUIManager.SetMenu(false);
+            _myUIManager.SetOptionsMenu(true);
+        }
     }
 
     // Update is called once per frame
