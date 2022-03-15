@@ -10,7 +10,8 @@ public class UI_Manager : MonoBehaviour
     #endregion
 
     #region properties
-
+    bool _spinTextAppears;
+    bool _rayTextAppears;
     #endregion
 
     #region references
@@ -20,10 +21,13 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private GameObject _spinCooldownObject;
     Text _spinCooldownText;
+    [SerializeField]
     private Image _imageSpinCd;
     [SerializeField]
     private GameObject _rayCooldownObject;
     private Text _rayCooldownText;
+    [SerializeField]
+    private Image _imageRayCd;
     [SerializeField]
     private GameObject _enemiesLeftObject;
     private Text _enemiesLeftText;
@@ -41,29 +45,41 @@ public class UI_Manager : MonoBehaviour
     {
         _currentColorText.text = newColor;
     }
+
+    // HUD relativa al tiempo de espera de las habilidades
     public void UpdateSpinCooldown(float cd, float duration)
+    {
+        UpdateCooldown(cd, duration, _spinCooldownObject, _imageSpinCd, _spinCooldownText, ref _spinTextAppears);
+    }
+    public void UpdateRayCooldown(float cd, float duration)
+    {
+        UpdateCooldown(cd, duration, _rayCooldownObject, _imageRayCd, _rayCooldownText, ref _rayTextAppears);
+    }
+    private void UpdateCooldown(float cd, float duration, GameObject cdObject, Image imageCd, Text cdText, ref bool textAppears)
     {
         if (cd < 0f)
         {
-            Debug.Log("desaparece el cd");
-            _spinCooldownText.gameObject.SetActive(false);
-            _imageSpinCd.fillAmount = 0f;
+            cdObject.SetActive(false);
+            imageCd.fillAmount = 0f;
+            textAppears = false;
         }
         else
         {
-            Debug.Log("aparece el cd");
-            _spinCooldownText.gameObject.SetActive(true);
-            _spinCooldownText.text = Mathf.RoundToInt(cd).ToString();
-            _imageSpinCd.fillAmount = cd / duration;
+            // este condicional sirve para hacer que la instrucción
+            // que hace que el texto aparezca en pantalla solo se ejecute una vez
+            if (!textAppears)
+            {
+                cdObject.SetActive(true);
+                textAppears = true;
+            }
+            cdText.text = ((int)cd).ToString();
+            imageCd.fillAmount = cd / duration;
         }
     }
-    public void UpdateRayCooldown(int newTime)
-    {
-        _rayCooldownText.text = newTime.ToString();
-    }
+
     public void UpdateEnemiesLeft(int numEnemies)
     {
-        _enemiesLeftText.text = "Enemies: " + numEnemies;
+        _enemiesLeftText.text = "Enemigos: " + numEnemies;
     }
 
     // menú de pausa
@@ -75,14 +91,6 @@ public class UI_Manager : MonoBehaviour
     {
         _pauseMenu.SetActive(enabled);
     }
-    public void SetMenu(bool enabled)
-    {
-        _menu.SetActive(false);
-    }
-    public void SetOptionsMenu(bool enabled)
-    {
-        _optionsMenu.SetActive(enabled);
-    }
     public void Resume()
     {
         GameManager.Instance.Resume();
@@ -91,17 +99,24 @@ public class UI_Manager : MonoBehaviour
     {
         GameManager.Instance.BackToTitle();
     }
+    public void SetMenu(bool enabled)
+    {
+        _menu.SetActive(false);
+    }
     public void GoToControllerMenu()
     {
         GameManager.Instance.GoToControllerMenu();
+    }
+    public void SetOptionsMenu(bool enabled)
+    {
+        _optionsMenu.SetActive(enabled);
     }
 
     private void Awake()
     {
         _currentColorText = _currentColorObject.GetComponent<Text>();
-        _spinCooldownText = _spinCooldownObject.GetComponentInChildren<Text>();
-        _imageSpinCd = _spinCooldownObject.GetComponent<Image>();
-        _rayCooldownText = _rayCooldownObject.GetComponentInChildren<Text>();
+        _spinCooldownText = _spinCooldownObject.GetComponent<Text>();
+        _rayCooldownText = _rayCooldownObject.GetComponent<Text>();
         _enemiesLeftText = _enemiesLeftObject.GetComponent<Text>();
     }
     #endregion
@@ -109,8 +124,11 @@ public class UI_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _spinCooldownObject.SetActive(false);
         _imageSpinCd.fillAmount = 0f;
-        _spinCooldownText.gameObject.SetActive(false);
+        _rayCooldownObject.SetActive(false);
+        _imageRayCd.fillAmount = 0f;
+        _spinTextAppears = _rayTextAppears = false;
     }
 
     // Update is called once per frame

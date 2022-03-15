@@ -229,7 +229,7 @@ public class PlayerAttackController : MonoBehaviour
         }
 
         // tiempos de espera de las habilidades
-        // Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay, GameManager.Instance.OnRayCooldown);
+        Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay, GameManager.Instance.OnRayCooldown);
         // el tiempo de espera del giro tiene que ser superior a la duración del ataque
         Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin, GameManager.Instance.OnSpinCooldown);
     }

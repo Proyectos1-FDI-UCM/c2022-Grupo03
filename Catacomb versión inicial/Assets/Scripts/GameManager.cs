@@ -93,9 +93,9 @@ public class GameManager : MonoBehaviour
     }
 
     // actualiza el tiempo de espera del rayo de luz
-    public void OnRayCooldown(float time)
+    public void OnRayCooldown(float cd, float duration)
     {
-        _myUIManager.UpdateRayCooldown((int)time);
+        _myUIManager.UpdateRayCooldown(cd, duration);
     }
 
     // menú de pausa
