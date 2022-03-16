@@ -55,7 +55,7 @@ public class AttackAnimation : MonoBehaviour
                 _myAnimator.SetTrigger("YellowAttack");
             }
             else if (n == 2) //abajo
-                _myAnimator.SetTrigger("DownAttack");
+                _myAnimator.SetTrigger("DownAttackYellow");
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
