@@ -35,10 +35,10 @@ public class EnemyColor : MonoBehaviour
                 gameObject.AddComponent<Green>();
                 break;
             case 3:
-                gameObject.AddComponent<Pink>();
+                gameObject.AddComponent<Blue>();
                 break;
             case 4:
-                gameObject.AddComponent<Blue>();
+                gameObject.AddComponent<Pink>();
                 break;
         }
         _enemyRenderer = gameObject.GetComponent<SpriteRenderer>();
