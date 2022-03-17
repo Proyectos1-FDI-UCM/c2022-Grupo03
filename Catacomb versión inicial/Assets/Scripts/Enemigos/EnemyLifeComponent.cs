@@ -52,6 +52,7 @@ public class EnemyLifeComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         GameManager.Instance.RegisterEnemy(this);
         _myPinkComponent = GetComponent<Pink>();
         _myBlueComponent = GetComponent<Blue>();

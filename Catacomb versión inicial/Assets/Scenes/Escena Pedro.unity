@@ -1940,7 +1940,6 @@ GameObject:
   m_Component:
   - component: {fileID: 905208268}
   - component: {fileID: 905208267}
-  - component: {fileID: 905208266}
   m_Layer: 0
   m_Name: SpiderBody
   m_TagString: Untagged
@@ -1948,33 +1947,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &905208266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905208265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb08bfccc7878744c949daa894abdbbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _durationSecondState: 10
-  _durationThirdState: 10
-  _offsets:
-  - {x: -3, y: -1, z: 0}
-  - {x: -3, y: 1, z: 0}
-  - {x: 3, y: -1, z: 0}
-  - {x: 3, y: 1, z: 0}
-  _rndLeg: {fileID: 1140888004800933438, guid: 7025cced8c414fa4598a6b79d80ad1c4, type: 3}
-  _spiderLegs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _spiderHead: {fileID: 1575311044}
-  _spiderHeadCollider: {fileID: 0}
 --- !u!212 &905208267
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2034,7 +2006,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905208265}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.44, y: 3.05, z: 0}
+  m_LocalPosition: {x: -6.375553, y: 3.006119, z: 0}
   m_LocalScale: {x: 5, y: 4, z: 3}
   m_Children:
   - {fileID: 1575311046}
@@ -2816,7 +2788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575311044}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.616, z: 0}
+  m_LocalPosition: {x: -0.01, y: -0.616, z: 0}
   m_LocalScale: {x: 0.2, y: 0.25, z: 0.33333334}
   m_Children: []
   m_Father: {fileID: 905208268}
@@ -3561,6 +3533,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001374908}
   m_CullTransparentMesh: 1
+--- !u!1 &2018613361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2018613363}
+  - component: {fileID: 2018613362}
+  m_Layer: 0
+  m_Name: BossManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2018613362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018613361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb08bfccc7878744c949daa894abdbbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _durationFirstState: 3
+  _durationSecondState: 4000
+  _offsets:
+  - {x: -3, y: -1, z: 0}
+  - {x: -3, y: 1, z: 0}
+  - {x: 3, y: -1, z: 0}
+  - {x: 3, y: 1, z: 0}
+  _rotationFactor: 20
+  _rndLeg: {fileID: 1140888004800933438, guid: 7025cced8c414fa4598a6b79d80ad1c4, type: 3}
+  _spiderBody: {fileID: 905208265}
+  _spiderHead: {fileID: 1575311044}
+--- !u!4 &2018613363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018613361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9920925, y: -0.26012772, z: -2.5304084}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2066413025
 GameObject:
   m_ObjectHideFlags: 0
