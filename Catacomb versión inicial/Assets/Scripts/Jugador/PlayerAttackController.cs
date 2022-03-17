@@ -6,7 +6,11 @@ public class PlayerAttackController : MonoBehaviour
 {
     #region parameters
     [SerializeField]
-    private float _attackDuration;
+    private float _dmgZoneDuration;
+    // tiempo que duran las zonas de daño en escena
+    [SerializeField]
+    private float _afterDmgZone;
+    // tiempo después del cual se destruyen las zonas de daño
     [SerializeField]
     private float _rayLength;
     [SerializeField]
@@ -56,13 +60,13 @@ public class PlayerAttackController : MonoBehaviour
     private PlayerMovementController _myPlayerMovementController;
     private PlayerChangeColors _myPlayerChangeColors;
     private AttackAnimation _myAttackAnimation;
-    private LayerMask _myLayerMask;
     private delegate void UpdateCooldown(float cd, float duration);
     // los delegados sirven para pasar métodos como argumentos de otro método
     private LineRenderer _myLineRenderer;
     #endregion
 
     #region methods
+    // ataque principal
     public void MainAttack()
     {
         Vector3 angle = _dirArrowTransform.rotation.eulerAngles;
@@ -85,7 +89,7 @@ public class PlayerAttackController : MonoBehaviour
             Vector3 offset = _offsets[indice];
 
             Vector3 instPoint = _myTransform.position + offset;
-            _lastAttack = Instantiate(_damageZones[0], instPoint, rotation);
+            StartCoroutine(DmgZonesMainAttack(instPoint, rotation));
 
             _attackRunning = true;
             _myPlayerInputManager.enabled = false;
@@ -93,21 +97,44 @@ public class PlayerAttackController : MonoBehaviour
             _myAttackAnimation.AttackAni(indice);
         }
     }
+    private IEnumerator DmgZonesMainAttack(Vector3 position, Quaternion rotation)
+    {
+        yield return new WaitForSeconds(_afterDmgZone);
 
+        _lastAttack = Instantiate(_damageZones[0], position, rotation);
+    }
+
+    // ataque giratorio
     public void SpintAttack()
     {
         if (!_attackRunning && !_spinMade)
         {
-            for (int i = 0; i < _attacks.Length; i++)
-            {
-                _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], Quaternion.identity);
-            }
+            Invoke(nameof(DmgZonesSpinAttack), _afterDmgZone);
             _attackRunning = true;
             _spinMade = true;
             _myPlayerInputManager.enabled = false;
         }
     }
+    private void DmgZonesSpinAttack()
+    {
+        for (int i = 0; i < _attacks.Length; i++)
+        {
+            _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], Quaternion.identity);
+        }
+    }
 
+    // destruir las zonas de daño, tanto las del ataque principal como las del ataque giratorio
+    private void DestroyDmgZone()
+    {
+        GameObject.Destroy(_lastAttack);
+        for (int i = 0; i < _attacks.Length; i++)
+        {
+            GameObject.Destroy(_attacks[i]);
+        }
+        _myPlayerInputManager.enabled = true;
+    }
+
+    // rayo de luz
     public void Shoot()
     {
         if (!_rayMade)
@@ -117,7 +144,6 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerInputManager.enabled = false;
         }
     }
-
     private void LightRay()
     {
         _myPlayerInputManager.enabled = true;
@@ -125,8 +151,7 @@ public class PlayerAttackController : MonoBehaviour
         // debug del raycast
         Debug.DrawLine(_myTransform.position, _myTransform.position + _dir.normalized * _rayLength, Color.red, 2f);
         // hacer que el raycast golpee a todos los enemigos que encuentra a su paso
-        RaycastHit2D[] hitInfos;
-        hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _myLayerMask);
+        RaycastHit2D[] hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength);
         int indice = _myPlayerChangeColors.GetCurrentColorIndex();
 
         // dibujo del raycast en el juego
@@ -136,17 +161,32 @@ public class PlayerAttackController : MonoBehaviour
         _myLineRenderer.startColor = _lightCols[indice];
         _myLineRenderer.endColor = _colors[indice];
 
-        foreach (RaycastHit2D hit in hitInfos)
+        // el rayo de luz de luz se frena cuando choca con un obstáculo
+        bool enemigoChocado = true;
+        int i = 0;
+        while (i < hitInfos.Length && enemigoChocado)
         {
-            if (hit.collider.GetComponent(_enemyColors[indice]) != null)
+            // si choca con un enemigo, el rayo continúa
+            EnemyLifeComponent enemyLifeComponent = hitInfos[i].collider.GetComponent<EnemyLifeComponent>();
+            if (enemyLifeComponent != null)
             {
-                Debug.Log("dentro del if");
-                hit.collider.GetComponent<EnemyLifeComponent>().Damage();
+                // si el color del enemigo es igual que el del rayo, el enemigo sufre daño
+                if (hitInfos[i].collider.GetComponent(_enemyColors[indice]) != null)
+                {
+                    hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage();
+                }
             }
+            // si choca con un obstáculo, el rayo se frena
+            else
+            {
+                enemigoChocado = false;
+                _myLineRenderer.SetPosition(1, hitInfos[i].collider.transform.position);
+            }
+            i++;
         }
 
+        // tras cierto tiempo, el rayo desaparece
         Invoke(nameof(DisappearRay), _durationRay);
-
         _rayMade = true;
     }
 
@@ -168,21 +208,7 @@ public class PlayerAttackController : MonoBehaviour
             }
         }
     }
-
-    private void DestroyDmgZone()
-    {
-        GameObject.Destroy(_lastAttack);
-        for (int i = 0; i < _attacks.Length; i++)
-        {
-            GameObject.Destroy(_attacks[i]);
-        }
-        _myPlayerInputManager.enabled = true;
-    }
-
-    private void Awake()
-    {
-
-    }
+ 
     #endregion
 
     // Start is called before the first frame update
@@ -198,12 +224,7 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _myAttackAnimation = GetComponent<AttackAnimation>();
-        _myLayerMask = LayerMask.GetMask("Enemy");
         _myLineRenderer = GetComponent<LineRenderer>();
-
-        // se pueden eliminar estas dos líneas
-        // GameManager.Instance.OnRayCooldown(0);
-        // GameManager.Instance.OnSpinCooldown(0, 0);
     }
 
     // Update is called once per frame
@@ -217,7 +238,9 @@ public class PlayerAttackController : MonoBehaviour
             // porque si se estaba moviendo antes de desactivarlo se seguirá moviendo después
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             _attackRunning = false;
-            Invoke(nameof(DestroyDmgZone), _attackDuration);
+            Invoke(nameof(DestroyDmgZone), _dmgZoneDuration + _afterDmgZone);
+            // las zonas de daño se destruyen después de que se hayan creado
+            // y haya pasado un tiempo determinado
         }
 
         // tiempo de espera hasta que el rayo se lanza
