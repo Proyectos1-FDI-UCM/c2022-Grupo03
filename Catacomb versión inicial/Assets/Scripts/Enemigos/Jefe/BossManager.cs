@@ -57,7 +57,6 @@ public class BossManager : MonoBehaviour
             if (_spiderLegs[i] != null)
             {
                 contLegs++;
-                Debug.Log(contLegs);
             }
         }
         return contLegs;
@@ -65,7 +64,6 @@ public class BossManager : MonoBehaviour
 
     private IEnumerator Transition(int state, bool activate, float waitTime)
     {
-        Debug.Log("se ha ejecutado");
         yield return new WaitForSeconds(waitTime);
 
         _state = state;
@@ -104,6 +102,22 @@ public class BossManager : MonoBehaviour
     }
     #endregion
 
+    Quaternion myQuat;
+    Quaternion targetQuat;
+    float elapsedTime;
+    IEnumerator prueba(float tiempo)
+    {
+        Debug.Log("ha entrado prueba");
+        Debug.Log(myQuat);
+        Debug.Log(targetQuat);
+        if (myQuat != Quaternion.identity)
+        {
+            _spiderBodyTransform.rotation = Quaternion.RotateTowards(myQuat, Quaternion.identity, _rotationFactor);
+            myQuat = Quaternion.Euler(_spiderBodyTransform.eulerAngles);
+            yield return new WaitForSeconds(tiempo);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -117,6 +131,8 @@ public class BossManager : MonoBehaviour
         _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
         _headWorking = false;
         _transitionMade = false;
+
+        targetQuat = Quaternion.Euler(0, 360, 0);
     }
 
     // Update is called once per frame
@@ -142,7 +158,6 @@ public class BossManager : MonoBehaviour
                 Debug.Log("estado 1");
                 if (!_transitionMade)
                 {
-                    Debug.Log("transicion");
                     _transitionMade = true;
                     StartCoroutine(Transition(0, true, _durationFirstState));
                 }
@@ -154,6 +169,7 @@ public class BossManager : MonoBehaviour
                 {
                     _spiderHeadCollider.enabled = true;
                     _headWorking = true;
+                    // la cabeza de la araña siempre es roja
                     _spiderHeadSprite.color = Color.red;
                 }
 
@@ -166,12 +182,30 @@ public class BossManager : MonoBehaviour
 
                 SpiderRotation();
 
+                _elapsedTime += Time.deltaTime;
+                if (_elapsedTime > _durationSecondState)
+                {
+                    _state = 4;
+                    _elapsedTime = 0;
+                    myQuat = Quaternion.Euler(_spiderBodyTransform.eulerAngles);
+                }
+                /*
                 if (!_transitionMade)
                 {
                     _transitionMade = true;
                     Invoke(nameof(SecondToZero), _durationSecondState);
                 }
+                */
                 break;
+
+            case 4:
+                Debug.Log("estado 4");
+                if (myQuat != Quaternion.identity)
+                {
+                    _spiderBodyTransform.rotation = Quaternion.RotateTowards(myQuat, Quaternion.identity, _rotationFactor);
+                    myQuat = Quaternion.Euler(_spiderBodyTransform.eulerAngles);
+                }
+                    break;
         }
     }
 }

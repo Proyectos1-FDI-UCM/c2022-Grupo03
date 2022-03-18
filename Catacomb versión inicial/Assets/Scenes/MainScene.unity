@@ -233,11 +233,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7356c08a54e24c3428c8095cb9b6db9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDuration: 0.5
+  _dmgZoneDuration: 0.2
+  _afterDmgZone: 0.2
   _rayLength: 10
   _rayCooldown: 1
   _rayPreparationTime: 0.3
   _spinCooldown: 10
+  _durationRay: 0.5
   _offsets:
   - {x: 0, y: 1, z: 0}
   - {x: -1, y: 0, z: 0}
@@ -455,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e617c1457134e45b620ef8b6b2da6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 999
+  _maxLife: 5
   healthBar: {fileID: 230692921}
 --- !u!114 &23466199
 MonoBehaviour:
@@ -13972,8 +13974,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentColorObject: {fileID: 1021040633}
   _spinCooldownObject: {fileID: 2053155540}
+  _imageSpinCd: {fileID: 0}
   _rayCooldownObject: {fileID: 885758963}
+  _imageRayCd: {fileID: 0}
   _enemiesLeftObject: {fileID: 503817564}
+  _pauseMenu: {fileID: 0}
+  _menu: {fileID: 0}
+  _optionsMenu: {fileID: 0}
 --- !u!114 &717768827
 MonoBehaviour:
   m_ObjectHideFlags: 0
