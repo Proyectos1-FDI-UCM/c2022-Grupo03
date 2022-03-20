@@ -17,10 +17,7 @@ public class EnemyColor : MonoBehaviour
     #endregion
 
     #region methods
-
-    #endregion
-
-    void Start()
+    private void Awake()
     {
         int randomColor = GameManager.Instance.NumRandom(0, 4);
         switch (randomColor)
@@ -43,6 +40,12 @@ public class EnemyColor : MonoBehaviour
         }
         _enemyRenderer = gameObject.GetComponent<SpriteRenderer>();
         _enemyRenderer.color = _colors[randomColor];
+    }
+    #endregion
+
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
