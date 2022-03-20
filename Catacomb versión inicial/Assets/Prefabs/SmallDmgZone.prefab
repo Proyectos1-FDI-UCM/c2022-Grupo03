@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9144157733389877042}
   - component: {fileID: 5060432272656624237}
   - component: {fileID: 4488349133811694315}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SmallDmgZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

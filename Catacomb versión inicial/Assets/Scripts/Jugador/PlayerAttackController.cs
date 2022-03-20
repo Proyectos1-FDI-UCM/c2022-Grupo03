@@ -36,7 +36,6 @@ public class PlayerAttackController : MonoBehaviour
     private static Color _lightBlue = new Color(0.7610062f, 0.7610062f, 1);
     private static Color _lightMagenta = new Color(1, 0.8459119f, 1);
     private Color[] _lightCols = { _lightRed, _lightYellow, _lightGreen, _lightBlue, _lightBlue };
-
     private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
     GameObject _lastAttack;
     GameObject[] _attacks = new GameObject[4];
@@ -62,6 +61,8 @@ public class PlayerAttackController : MonoBehaviour
     private AttackAnimation _myAttackAnimation;
     private delegate void UpdateCooldown(float cd, float duration);
     // los delegados sirven para pasar métodos como argumentos de otro método
+    private LayerMask _rayLayerMask;
+    // el raycast tiene que ignorar al player y a las damage zones
     private LineRenderer _myLineRenderer;
     #endregion
 
@@ -151,7 +152,7 @@ public class PlayerAttackController : MonoBehaviour
         // debug del raycast
         Debug.DrawLine(_myTransform.position, _myTransform.position + _dir.normalized * _rayLength, Color.red, 2f);
         // hacer que el raycast golpee a todos los enemigos que encuentra a su paso
-        RaycastHit2D[] hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength);
+        RaycastHit2D[] hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _rayLayerMask);
         int indice = _myPlayerChangeColors.GetCurrentColorIndex();
 
         // dibujo del raycast en el juego
@@ -180,7 +181,7 @@ public class PlayerAttackController : MonoBehaviour
             else
             {
                 enemigoChocado = false;
-                _myLineRenderer.SetPosition(1, hitInfos[i].collider.transform.position);
+                _myLineRenderer.SetPosition(1, hitInfos[i].point);
             }
             i++;
         }
@@ -224,6 +225,7 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _myAttackAnimation = GetComponent<AttackAnimation>();
+        _rayLayerMask = ~(LayerMask.GetMask("Player") | LayerMask.GetMask("DmgZones"));
         _myLineRenderer = GetComponent<LineRenderer>();
     }
 
