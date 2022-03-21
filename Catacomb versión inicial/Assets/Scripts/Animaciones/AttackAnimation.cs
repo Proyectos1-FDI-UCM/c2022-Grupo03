@@ -94,7 +94,7 @@ public class AttackAnimation : MonoBehaviour
                 _myAnimator.SetTrigger("BlueAttack");
             }
             else if (n == 2) //abajo
-                _myAnimator.SetTrigger("DownAttack");
+                _myAnimator.SetTrigger("DownAttackBlue");
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
@@ -113,7 +113,7 @@ public class AttackAnimation : MonoBehaviour
                 _myAnimator.SetTrigger("PinkAttack");
             }
             else if (n == 2) //abajo
-                _myAnimator.SetTrigger("DownAttack");
+                _myAnimator.SetTrigger("DownAttackPink");
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
