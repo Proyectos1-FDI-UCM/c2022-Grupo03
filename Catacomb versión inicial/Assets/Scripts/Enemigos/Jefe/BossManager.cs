@@ -104,7 +104,7 @@ public class BossManager : MonoBehaviour
         _state = 2;
         // se puede golpear a la cabeza y, por lo tanto, el jefe puede sufrir daño
         _spiderHeadCollider.enabled = true;
-        _spiderHeadSprite.color = Color.red;
+        _spiderHeadSprite.color = GameManager.Instance.Colors[0];
     }
 
     // en la fase 2 el jefe rota para que sea más difícil golpearle
@@ -127,6 +127,7 @@ public class BossManager : MonoBehaviour
         _spiderHeadCollider = _spiderHead.GetComponent<BoxCollider2D>();
         _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
         _spiderHeadCollider.enabled = false;
+        _spiderHeadSprite.color = _white;
         _transitionMade = false;
 
         // el jefe comienza en el estado 0
@@ -168,6 +169,7 @@ public class BossManager : MonoBehaviour
                 // eliminar al jefe
                 if (_spiderHead == null)
                 {
+                    // si se destruye la cabeza, el jefe muere
                     _state = -1;
                     GameObject.Destroy(_spiderBody);
                     // cancelar el invoke de que el jefe pase del

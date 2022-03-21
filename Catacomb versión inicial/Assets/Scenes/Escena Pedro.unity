@@ -765,6 +765,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpiderBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 2248050188496630950, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1499,6 +1503,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7356c08a54e24c3428c8095cb9b6db9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainAttackDmg: 1
+  _spinDamage: 2
+  _rayDamage: 2
   _dmgZoneDuration: 0.5
   _afterDmgZone: 0.2
   _rayLength: 10
@@ -2548,7 +2555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9612d422046ce84390756626d4926a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 1
+  _maxLife: 2
   _desiredTimeToRecovery: 5
 --- !u!114 &1396836670
 MonoBehaviour:
@@ -2559,10 +2566,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1396836667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ab0ca8b626cb8a4cb8a35c7b67b8399, type: 3}
+  m_Script: {fileID: 11500000, guid: ab90eca0a1ff6ca449a52e075f93a4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _recoveryPoints: 1
+  _increasedDamage: 1
 --- !u!212 &1396836671
 SpriteRenderer:
   m_ObjectHideFlags: 0

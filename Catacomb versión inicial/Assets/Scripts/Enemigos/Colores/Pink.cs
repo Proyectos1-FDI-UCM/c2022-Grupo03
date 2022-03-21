@@ -5,7 +5,8 @@ using UnityEngine;
 public class Pink : MonoBehaviour
 {
     #region parameters
-    private int _increasedLife=2;
+    [SerializeField]
+    private int _increasedLife = 2;
     #endregion
 
     #region properties
@@ -13,7 +14,7 @@ public class Pink : MonoBehaviour
     #endregion
 
     #region references
-
+    private SpriteRenderer _mySpriteRenderer;
     #endregion
 
     #region methods
@@ -26,7 +27,8 @@ public class Pink : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _mySpriteRenderer = GetComponent<SpriteRenderer>();
+        _mySpriteRenderer.color = GameManager.Instance.Colors[4];
     }
 
     // Update is called once per frame

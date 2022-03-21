@@ -24,13 +24,13 @@ public class EnemyLifeComponent : MonoBehaviour
     #endregion
 
     #region methods
-    public void Damage()
+    public void Damage(int hitDamage)
     {
         // los enemigos azules tienen un 20% de probabilidades de ser inmunes a los ataques
         int rndNum = GameManager.Instance.NumRandom(0, 5);
         if (!_isBlue || rndNum != 0)
         {
-            _currentLife--;
+            _currentLife -= hitDamage;
             if (_currentLife <= 0)
             {
                 Die();
@@ -43,20 +43,6 @@ public class EnemyLifeComponent : MonoBehaviour
         GameManager.Instance.OnEnemyDies(this);
         GameObject.Destroy(gameObject);
     }
-
-    // no funciona, la colisión está en el script dmg zone
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.GetComponent<DamageZone>())
-        {
-            Debug.Log("ha entrado");
-            int rnd = Random.Range(1, 6);
-            // TIENE UN 20% DE POSIBILIDADES DE SER INMUNE AL ATAQUE SI ES AZUL
-            if (_isBlue && rnd != 1) Damage();
-        }
-    }
-    */
     #endregion
 
     // Start is called before the first frame update

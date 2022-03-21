@@ -5,6 +5,13 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     #region parameters
+    // daño que causa el ataque principal y cada una de las habilidades
+    [SerializeField]
+    private int _mainAttackDmg = 1;
+    [SerializeField]
+    private int _spinDamage = 1;
+    [SerializeField]
+    private int _rayDamage = 1;
     [SerializeField]
     private float _dmgZoneDuration;
     // tiempo que duran las zonas de daño en escena
@@ -28,14 +35,6 @@ public class PlayerAttackController : MonoBehaviour
     #region properties
     // colores
     private string[] _enemyColors = { "Red", "Yellow", "Green", "Blue", "Pink" };
-    private Color[] _colors = { Color.red, Color.yellow, Color.green, Color.blue, Color.magenta };
-    // para que se puedan almacenar en el array tienen que ser estáticos
-    private static Color _lightRed = new Color(1, 0.553459f, 0.553459f);
-    private static Color _lightYellow = new Color(1, 0.9764464f, 0.7044024f);
-    private static Color _lightGreen = new Color(0.7987421f, 1, 0.7987421f);
-    private static Color _lightBlue = new Color(0.7610062f, 0.7610062f, 1);
-    private static Color _lightMagenta = new Color(1, 0.8459119f, 1);
-    private Color[] _lightCols = { _lightRed, _lightYellow, _lightGreen, _lightBlue, _lightBlue };
     private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
     GameObject _lastAttack;
     GameObject[] _attacks = new GameObject[4];
@@ -103,6 +102,7 @@ public class PlayerAttackController : MonoBehaviour
         yield return new WaitForSeconds(_afterDmgZone);
 
         _lastAttack = Instantiate(_damageZones[0], position, rotation);
+        _lastAttack.GetComponent<DamageZone>().SetDamage(_mainAttackDmg);
     }
 
     // ataque giratorio
@@ -121,6 +121,7 @@ public class PlayerAttackController : MonoBehaviour
         for (int i = 0; i < _attacks.Length; i++)
         {
             _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], Quaternion.identity);
+            _attacks[i].GetComponent<DamageZone>().SetDamage(_spinDamage);
         }
     }
 
@@ -159,8 +160,8 @@ public class PlayerAttackController : MonoBehaviour
         _myLineRenderer.positionCount = 2;
         _myLineRenderer.SetPosition(0, _myTransform.position);
         _myLineRenderer.SetPosition(1, _myTransform.position + _dir.normalized * _rayLength);
-        _myLineRenderer.startColor = _lightCols[indice];
-        _myLineRenderer.endColor = _colors[indice];
+        _myLineRenderer.startColor = GameManager.Instance.LightColors[indice];
+        _myLineRenderer.endColor = GameManager.Instance.Colors[indice];
 
         // el rayo de luz de luz se frena cuando choca con un obstáculo
         bool enemigoChocado = true;
@@ -174,7 +175,7 @@ public class PlayerAttackController : MonoBehaviour
                 // si el color del enemigo es igual que el del rayo, el enemigo sufre daño
                 if (hitInfos[i].collider.GetComponent(_enemyColors[indice]) != null)
                 {
-                    hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage();
+                    hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
                 }
             }
             // si choca con un obstáculo, el rayo se frena

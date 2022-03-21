@@ -233,6 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7356c08a54e24c3428c8095cb9b6db9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainAttackDmg: 1
+  _spinDamage: 1
+  _rayDamage: 1
   _dmgZoneDuration: 0.2
   _afterDmgZone: 0.2
   _rayLength: 10
@@ -26872,7 +26875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ebe038d10c1254ca75a05a3c68b526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tiempoMuerte: 10
+  _tiempoMuerte: 2
 --- !u!4 &989876696
 Transform:
   m_ObjectHideFlags: 0

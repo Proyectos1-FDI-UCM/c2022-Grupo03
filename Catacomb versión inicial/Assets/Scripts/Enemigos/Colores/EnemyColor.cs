@@ -9,11 +9,9 @@ public class EnemyColor : MonoBehaviour
     #endregion
 
     #region properties
-    Color[] _colors = { Color.red, Color.yellow, Color.green, Color.blue, Color.magenta};
     #endregion
 
     #region references
-    private SpriteRenderer _enemyRenderer;
     #endregion
 
     #region methods
@@ -38,8 +36,6 @@ public class EnemyColor : MonoBehaviour
                 gameObject.AddComponent<Pink>();
                 break;
         }
-        _enemyRenderer = gameObject.GetComponent<SpriteRenderer>();
-        _enemyRenderer.color = _colors[randomColor];
     }
     #endregion
 
