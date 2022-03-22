@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: a61b5d655a249b048bea33e5924a0a6d
   - enabled: 1
+    path: Assets/Scenes/SettingsScreen.unity
+    guid: bc24521327e03a140a6db3601fe83682
+  - enabled: 1
     path: Assets/Scenes/Escena Pedro.unity
     guid: 33bbd4a8c68ee704e8b4b1d51bf18daa
   m_configObjects: {}

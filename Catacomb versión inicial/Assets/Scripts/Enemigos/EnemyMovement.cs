@@ -36,6 +36,7 @@ public class EnemyMovement : MonoBehaviour
     private float distanceMultiplier;
     private Green _myGreenComponent;
     private Yellow _myYellowComponent;
+    private Rigidbody2D rb;
     #endregion
 
     #region methods
@@ -56,6 +57,7 @@ public class EnemyMovement : MonoBehaviour
     {
         _myTransform = transform;
         targetObject = GameObject.Find("Player");
+        rb = GetComponent<Rigidbody2D>();
         targetTransform = targetObject.transform;
         SetPlayerDirection();
         offset = 45;
@@ -127,10 +129,11 @@ public class EnemyMovement : MonoBehaviour
             _movementDirection += SocialDistancing();
 
         }
-        _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
+        rb.velocity = (_speed * _movementDirection);
+        //rb.MovePosition(_speed * _movementDirection * Time.deltaTime);    
     }
 
-    private RaycastHit2D FirstTargetHit()
+        private RaycastHit2D FirstTargetHit()
     {
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection * 100.0f, Color.red, 1.0f);
