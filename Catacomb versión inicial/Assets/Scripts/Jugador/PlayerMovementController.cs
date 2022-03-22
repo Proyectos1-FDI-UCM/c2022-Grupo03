@@ -15,6 +15,7 @@ public class PlayerMovementController : MonoBehaviour
 
     #region references
     private Transform _myTransform;
+    private Rigidbody2D rb;
     #endregion
 
     #region methods
@@ -32,11 +33,14 @@ public class PlayerMovementController : MonoBehaviour
     void Start()
     {
         _myTransform = transform;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        _myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
+        //_myTransform.Translate(_speed * _movementDirection * Time.deltaTime);
+        //rb.velocity = (_speed * _movementDirection);
+        rb.MovePosition(_speed * _movementDirection * Time.deltaTime);
     }
 }
