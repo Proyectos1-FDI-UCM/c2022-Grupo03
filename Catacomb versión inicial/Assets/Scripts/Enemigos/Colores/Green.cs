@@ -14,7 +14,7 @@ public class Green : MonoBehaviour
     #endregion
 
     #region references
-
+    private SpriteRenderer _mySpriteRenderer;
     #endregion
 
     #region methods
@@ -27,7 +27,8 @@ public class Green : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _mySpriteRenderer = GetComponent<SpriteRenderer>();
+        _mySpriteRenderer.color=GameManager.Instance.Colors[2];
     }
 
     // Update is called once per frame

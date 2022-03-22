@@ -11,6 +11,7 @@ public class DamageZone : MonoBehaviour
     #region properties
     private float _elapsedTime;
     private string[] _enemyColors = { "Red", "Yellow", "Green", "Blue", "Pink" };
+    private int _damage;
     #endregion
 
     #region references
@@ -25,8 +26,13 @@ public class DamageZone : MonoBehaviour
         // comprobar si contra lo que choca es un enemigo y su color
         if (collider.GetComponent(_enemyColors[indice]) != null)
         {
-            collider.GetComponent<EnemyLifeComponent>().Damage();
+            collider.GetComponent<EnemyLifeComponent>().Damage(_damage);
         }
+    }
+
+    public void SetDamage(int damage)
+    {
+        _damage = damage;
     }
     #endregion
 

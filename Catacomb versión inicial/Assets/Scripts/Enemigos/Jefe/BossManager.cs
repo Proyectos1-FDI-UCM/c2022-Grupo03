@@ -9,20 +9,20 @@ public class BossManager : MonoBehaviour
     private float _durationFirstState;
     [SerializeField]
     private float _durationSecondState;
+    // distancia de las patas respecto del cuerpo
     [SerializeField]
-    private Vector3[] _offsets = { new Vector3(-3, -1, 0), new Vector3(-3, 1, 0), new Vector3(3, -1, 0), new Vector3(3, 1, 0) };
+    private Vector3[] _legOffsets = { new Vector3(-3, -1, 0), new Vector3(-3, 1, 0), new Vector3(3, -1, 0), new Vector3(3, 1, 0) };
     [SerializeField]
     private float _rotationFactor;
     #endregion
 
     #region properties
+    // estado del jefe ya que es un máquina de estados
     private int _state;
+    // contador del número de patas que debería tener la araña en este momento
     private int _numLegs;
-    // private int _contLegs;
-    private float _elapsedTime;
-    private bool _headWorking;
+    // booleano que sirve para hacer que los Invoke se ejecuten una sola vez
     private bool _transitionMade;
-    private float rotZ;
     private Color _white = new Color(1, 1, 1);
     #endregion
 
@@ -33,6 +33,7 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     private GameObject _spiderBody;
     private Transform _spiderBodyTransform;
+    // la cabeza del jefe siempre es del mismo color
     [SerializeField]
     private GameObject _spiderHead;
     private BoxCollider2D _spiderHeadCollider;
@@ -40,15 +41,23 @@ public class BossManager : MonoBehaviour
     #endregion
 
     #region methods
-    // una de las cosas que sucede cuando el jefe pasa del segundo estado
-    // al estado cero es que le aparecen nuevas patas
+    // cuando el jefe pasa del segundo estado al estado cero le aparecen nuevas patas
     private void NewSpiderLegs()
     {
         for (int i = 0; i < _spiderLegs.Length; i++)
         {
-            _spiderLegs[i] = Instantiate(_rndLeg, _spiderBodyTransform.position + _offsets[i], Quaternion.identity);
+            _spiderLegs[i] = Instantiate(_rndLeg, _spiderBodyTransform.position + _legOffsets[i], Quaternion.identity);
         }
     }
+
+    private void InitiateStateZero()
+    {
+        _state = 0;
+        NewSpiderLegs();
+        _numLegs = 4;
+    }
+
+    // devuelve el número de patas actuales de la araña
     private int CountCurrentLegs()
     {
         int contLegs = 0;
@@ -62,14 +71,15 @@ public class BossManager : MonoBehaviour
         return contLegs;
     }
 
+    // pasar del estado 0 al 1 y viceversa
     private IEnumerator Transition(int state, bool activate, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
 
         _state = state;
         _transitionMade = false;
+        // al activar/desactivar el cuerpo de la araña le sucede lo mismo a la cabeza
         _spiderBody.SetActive(activate);
-        _spiderHead.SetActive(activate);
         for (int i = 0; i < _spiderLegs.Length; i++)
         {
             if (_spiderLegs[i] != null)
@@ -79,18 +89,25 @@ public class BossManager : MonoBehaviour
         }
     }
 
-    private void SecondToZero()
+    private void SecondToThird()
     {
-        _state = 0;
-        _spiderBodyTransform.rotation = Quaternion.identity;
+        _state = 3;
         _transitionMade = false;
+        // el jefe tiene que rotar en sentido contrario para volver a la posición inicial
+        _rotationFactor = -_rotationFactor;
         _spiderHeadCollider.enabled = false;
-        _headWorking = false;
         _spiderHeadSprite.color = _white;
-        NewSpiderLegs();
-        _numLegs = 4;
     }
 
+    private void ZeroToSecond()
+    {
+        _state = 2;
+        // se puede golpear a la cabeza y, por lo tanto, el jefe puede sufrir daño
+        _spiderHeadCollider.enabled = true;
+        _spiderHeadSprite.color = GameManager.Instance.Colors[0];
+    }
+
+    // en la fase 2 el jefe rota para que sea más difícil golpearle
     private void SpiderRotation()
     {
         _spiderBodyTransform.Rotate(_spiderBodyTransform.forward, _rotationFactor * Time.deltaTime);
@@ -102,42 +119,25 @@ public class BossManager : MonoBehaviour
     }
     #endregion
 
-    Quaternion myQuat;
-    Quaternion targetQuat;
-    float elapsedTime;
-    IEnumerator prueba(float tiempo)
-    {
-        Debug.Log("ha entrado prueba");
-        Debug.Log(myQuat);
-        Debug.Log(targetQuat);
-        if (myQuat != Quaternion.identity)
-        {
-            _spiderBodyTransform.rotation = Quaternion.RotateTowards(myQuat, Quaternion.identity, _rotationFactor);
-            myQuat = Quaternion.Euler(_spiderBodyTransform.eulerAngles);
-            yield return new WaitForSeconds(tiempo);
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-        _state = 0;
         _spiderBodyTransform = _spiderBody.GetComponent<Transform>();
         _spiderLegs = new GameObject[4];
-        _numLegs = _spiderLegs.Length;
-        NewSpiderLegs();
         _spiderHeadCollider = _spiderHead.GetComponent<BoxCollider2D>();
-        _spiderHeadCollider.enabled = false;
         _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
-        _headWorking = false;
+        _spiderHeadCollider.enabled = false;
+        _spiderHeadSprite.color = _white;
         _transitionMade = false;
 
-        targetQuat = Quaternion.Euler(0, 360, 0);
+        // el jefe comienza en el estado 0
+        InitiateStateZero();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // el jefe tiene 4 estados
         switch (_state)
         {
             case 0:
@@ -145,10 +145,11 @@ public class BossManager : MonoBehaviour
                 int contLegs = CountCurrentLegs();
                 if (contLegs == 0)
                 {
-                    _state = 2;
+                    ZeroToSecond();
                 }
                 else if (contLegs < _numLegs)
                 {
+                    // se pueden eliminar varias patas a la vez
                     _numLegs = contLegs;
                     StartCoroutine(Transition(1, false, 0f));
                 }
@@ -165,47 +166,42 @@ public class BossManager : MonoBehaviour
 
             case 2:
                 Debug.Log("estado 2");
-                if (!_headWorking)
-                {
-                    _spiderHeadCollider.enabled = true;
-                    _headWorking = true;
-                    // la cabeza de la araña siempre es roja
-                    _spiderHeadSprite.color = Color.red;
-                }
-
                 // eliminar al jefe
                 if (_spiderHead == null)
                 {
+                    // si se destruye la cabeza, el jefe muere
                     _state = -1;
                     GameObject.Destroy(_spiderBody);
+                    // cancelar el invoke de que el jefe pase del
+                    // estado 2 al 4 en el caso de que haya sido derrotado
+                    CancelInvoke(nameof(SecondToThird));
                 }
 
                 SpiderRotation();
 
-                _elapsedTime += Time.deltaTime;
-                if (_elapsedTime > _durationSecondState)
-                {
-                    _state = 4;
-                    _elapsedTime = 0;
-                    myQuat = Quaternion.Euler(_spiderBodyTransform.eulerAngles);
-                }
-                /*
                 if (!_transitionMade)
                 {
                     _transitionMade = true;
-                    Invoke(nameof(SecondToZero), _durationSecondState);
+                    Invoke(nameof(SecondToThird), _durationSecondState);
                 }
-                */
                 break;
 
-            case 4:
-                Debug.Log("estado 4");
-                if (myQuat != Quaternion.identity)
+            case 3:
+                // el jefe rota para regresar a la posición inicial
+                Debug.Log("estado 3");
+                float rotZ = _spiderBodyTransform.rotation.eulerAngles.z;
+                // valores cercanos a 360 y 0 porque son float
+                if (rotZ < 359f && rotZ > 1f)
                 {
-                    _spiderBodyTransform.rotation = Quaternion.RotateTowards(myQuat, Quaternion.identity, _rotationFactor);
-                    myQuat = Quaternion.Euler(_spiderBodyTransform.eulerAngles);
+                    _spiderBodyTransform.Rotate(_spiderBodyTransform.forward, _rotationFactor * Time.deltaTime);
                 }
-                    break;
+                else
+                {
+                    // terminar de ajustar la posición del jefe
+                    _spiderBodyTransform.rotation = Quaternion.identity;
+                    InitiateStateZero();
+                }
+                break;
         }
     }
 }

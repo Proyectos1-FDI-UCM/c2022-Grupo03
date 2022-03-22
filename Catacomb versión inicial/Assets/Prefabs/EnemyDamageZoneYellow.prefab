@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1294699678388635160}
   - component: {fileID: 7977859190336662993}
   - component: {fileID: 4808082896678406933}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyDamageZoneYellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

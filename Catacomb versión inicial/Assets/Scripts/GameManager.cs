@@ -11,9 +11,35 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region properties
+    static private GameManager _instance;
+    // accesor a la instancia del GameManager
+    static public GameManager Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+    // lista de enemigos
+    List<EnemyLifeComponent> _listOfEnemies;
+
+    // se utiliza para que se active la animación de morir
     private bool _muriendo;
-    private float _elapsedTime;
-    bool _gameIsPaused;
+    // determina si el juego está pausado o no
+    private bool _gameIsPaused;
+
+    // al poner los colors en el GameManager resulta sencillo modificar la paleta de colores de una sola vez
+    private Color[] _colors = { Color.red, Color.yellow, Color.green, Color.blue, Color.magenta };
+    public Color[] Colors { get => _colors; }
+
+    private Color[] _lightColors = { 
+        new Color(1, 0.553459f, 0.553459f), // rojo claro
+        new Color(1, 0.9764464f, 0.7044024f),   // amarillo claro
+        new Color(0.7987421f, 1, 0.7987421f),   // verde claro
+        new Color(0.7610062f, 0.7610062f, 1),   // azul claro
+        new Color(1, 0.8459119f, 1)             // magenta claro
+            };
+    public Color[] LightColors { get => _lightColors; }
     #endregion
 
     #region references
@@ -23,18 +49,6 @@ public class GameManager : MonoBehaviour
     private DeathAnimation _playerDeathAnimation;
     private PlayerMovementController _playerMovementController;
     private DirectionArrow _directionArrow;
-    #endregion
-
-    #region properties
-    static private GameManager _instance;
-    static public GameManager Instance // accesor a la instancia del game manager 
-    {
-        get
-        {
-            return _instance;
-        }
-    }
-    List<EnemyLifeComponent> _listOfEnemies;
     #endregion
 
     #region methods
@@ -158,7 +172,6 @@ public class GameManager : MonoBehaviour
         _playerDeathAnimation = _player.GetComponent<DeathAnimation>();
         _directionArrow = GameObject.Find("DirectionArrow").GetComponent<DirectionArrow>();
         _muriendo = false;
-        _elapsedTime = 0;
 
         if (PlayerPrefs.GetString("Back") == "Escena Pedro")
         {
@@ -174,11 +187,7 @@ public class GameManager : MonoBehaviour
         if (_muriendo)
         {
             _playerMovementController.SetMovementDirection(Vector3.zero);
-            _elapsedTime += Time.deltaTime;
-            if (_elapsedTime > _tiempoMuerte)
-            {
-                OnPlayerDefeat();
-            }
+            Invoke(nameof(OnPlayerDefeat), _tiempoMuerte);
         }
 
         // actualiza el HUD con los enemigos restantes
