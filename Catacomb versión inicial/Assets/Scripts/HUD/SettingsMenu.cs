@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
@@ -10,6 +11,10 @@ public class SettingsMenu : MonoBehaviour
     private AudioMixer audioMixer;
     [SerializeField]
     private Dropdown resolutionDropdown;
+    [SerializeField]
+    private GameObject controls;   
+    private GameObject MKcontrols; 
+    private GameObject JScontrols;
 
     Resolution[] resolutions;
     private void Start()
@@ -32,6 +37,8 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(resOptions);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+        MKcontrols = controls.transform.GetChild(2).transform.gameObject;
+        JScontrols = controls.transform.GetChild(3).transform.gameObject;
     }
     public void volumeControl (float volume)
     {
@@ -47,5 +54,29 @@ public class SettingsMenu : MonoBehaviour
     {
         Resolution res = resolutions[resIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+    }
+
+    public void ShowControls()
+    {
+        if (!controls.activeSelf) controls.SetActive(true);
+        else controls.SetActive(false);
+    }    
+    public void ShowControlType()
+    {
+        if (!MKcontrols.activeSelf)
+        {
+            MKcontrols.SetActive(true);
+            JScontrols.SetActive(false);
+        }
+        else
+        {
+            MKcontrols.SetActive(false);
+            JScontrols.SetActive(true);
+        }
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 }

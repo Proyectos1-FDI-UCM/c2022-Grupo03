@@ -28,8 +28,8 @@ public class MainMenu : MonoBehaviour
     }
     public void GoToControllerMenu()
     {
-        PlayerPrefs.SetString("Back", SceneManager.GetActiveScene().name);
-        SceneManager.LoadScene(1);
+        PlayerPrefs.DeleteKey("Back");
+        SceneManager.LoadScene(4, LoadSceneMode.Single);
     }
     public void QuitGame()
     {
