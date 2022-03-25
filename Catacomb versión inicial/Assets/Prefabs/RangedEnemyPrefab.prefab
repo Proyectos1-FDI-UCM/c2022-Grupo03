@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9612d422046ce84390756626d4926a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 2
+  _maxLife: 1
   _desiredTimeToRecovery: 5
 --- !u!50 &4946740501492387813
 Rigidbody2D:

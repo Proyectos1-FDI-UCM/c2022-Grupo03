@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     private bool _gameIsPaused;
 
     // al poner los colors en el GameManager resulta sencillo modificar la paleta de colores de una sola vez
+    [SerializeField]
     private Color[] _colors = {
         Color.red,  // rojo
         Color.yellow,   // amarillo
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
         new Color(1,0,0.6452723f)   // rosa
     };
     public Color[] Colors { get => _colors; }
-
+    [SerializeField]
     private Color[] _lightColors = {
         new Color(1, 0.553459f, 0.553459f), // rojo claro
         new Color(1, 0.9764464f, 0.7044024f),   // amarillo claro
@@ -46,13 +47,13 @@ public class GameManager : MonoBehaviour
         new Color(1, 0.5251572f, 0.8324085f)    // rosa claro
     };
     public Color[] LightColors { get => _lightColors; }
-
+    [SerializeField]
     private Color[] _translucentColors = {
-        new Color(1,0,0,0.2f),  // rojo translúcido
-        new Color(1,0.92f,0.16f,0.2f),  // amarillo translúcido
-        new Color(0,1,0,0.2f),  // verde translúcido
-        new Color(0,0,1,0.2f),  // azul translúcido
-        new Color(1,0,0.6452723f,0.2f)  // rosa trasnlúcido
+        new Color(1,0,0,1f),  // rojo translúcido
+        new Color(1,0.92f,0.16f,1f),  // amarillo translúcido
+        new Color(0,1,0,1f),  // verde translúcido
+        new Color(0,0,1,1f),  // azul translúcido
+        new Color(1,0,0.6452723f,1f)  // rosa trasnlúcido
     };
     public Color[] TranslucentColors { get => _translucentColors; }
     #endregion

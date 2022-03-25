@@ -35,7 +35,7 @@ public class PlayerAttackController : MonoBehaviour
     #region properties
     // colores
     private string[] _enemyColors = { "Red", "Yellow", "Green", "Blue", "Pink" };
-    private Quaternion[] _rotations = { Quaternion.identity, Quaternion.Euler(0, 0, 90) };
+    private Quaternion[] _rotations = { Quaternion.Euler(180, 0, 0), Quaternion.Euler(0, 0, 270), Quaternion.identity, Quaternion.Euler(0, 0, 90) };
     GameObject _lastAttack;
     GameObject[] _attacks = new GameObject[4];
     private bool _attackRunning; // indicar si se ha efectuado el ataque o no
@@ -85,7 +85,7 @@ public class PlayerAttackController : MonoBehaviour
 
             int indice = (int)(angle.z - 45) / 90;
 
-            Quaternion rotation = _rotations[indice % 2];
+            Quaternion rotation = _rotations[indice];
             Vector3 offset = _offsets[indice];
 
             Vector3 instPoint = _myTransform.position + offset;
@@ -120,7 +120,8 @@ public class PlayerAttackController : MonoBehaviour
     {
         for (int i = 0; i < _attacks.Length; i++)
         {
-            _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], Quaternion.identity);
+
+            _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], _rotations[i]);
             _attacks[i].GetComponent<DamageZone>().SetDamage(_spinDamage);
         }
     }

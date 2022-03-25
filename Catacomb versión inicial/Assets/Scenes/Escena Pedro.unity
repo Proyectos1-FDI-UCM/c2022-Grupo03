@@ -1515,10 +1515,10 @@ MonoBehaviour:
   _spinCooldown: 10
   _durationRay: 0.2
   _offsets:
-  - {x: 0, y: 1, z: 0}
-  - {x: -1, y: 0, z: 0}
-  - {x: 0, y: -1, z: 0}
-  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 1.25, z: 0}
+  - {x: -1.25, y: 0, z: 0}
+  - {x: 0, y: -1.25, z: 0}
+  - {x: 1.25, y: 0, z: 0}
   _damageZones:
   - {fileID: 6653043378017638796, guid: cb3dfaf72e3f02940b6d0c111a7eacc1, type: 3}
   - {fileID: 3927458185145662951, guid: 20e941c422dc0db48bd9949d26c3c7da, type: 3}
@@ -2160,7 +2160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 48.1, y: -15.2}
+  m_AnchoredPosition: {x: 48.099976, y: -15.200012}
   m_SizeDelta: {x: 316.061, y: 50.28961}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1054314234
@@ -3552,6 +3552,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tiempoMuerte: 1000
+  _colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.6452723, a: 1}
+  _lightColors:
+  - {r: 1, g: 0.553459, b: 0.553459, a: 1}
+  - {r: 1, g: 0.9764464, b: 0.7044024, a: 1}
+  - {r: 0.7987421, g: 1, b: 0.7987421, a: 1}
+  - {r: 0.7610062, g: 0.7610062, b: 1, a: 1}
+  - {r: 1, g: 0.5251572, b: 0.8324085, a: 1}
+  _translucentColors:
+  - {r: 0.9811321, g: 0.25361332, b: 0.25361332, a: 0.5529412}
+  - {r: 1, g: 0.92, b: 0.16, a: 0.5529412}
+  - {r: 0, g: 1, b: 0, a: 0.5529412}
+  - {r: 0, g: 0, b: 1, a: 0.5529412}
+  - {r: 1, g: 0, b: 0.6452723, a: 0.5529412}
 --- !u!4 &1992791440
 Transform:
   m_ObjectHideFlags: 0
