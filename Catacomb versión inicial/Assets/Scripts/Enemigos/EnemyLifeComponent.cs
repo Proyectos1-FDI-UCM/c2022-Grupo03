@@ -8,8 +8,9 @@ public class EnemyLifeComponent : MonoBehaviour
     [SerializeField]
     private int _maxLife;
     [SerializeField]
-    private float _desiredTimeToRecovery = 5f;  
+    private float _desiredTimeToRecovery = 5f;
     // determina cada cuanto tiempo recuperan vida los enemigos azules
+    private Vector3 _offset; //distancia desde el transform hasta el cartel que se instancia a los enemigos azules que esquiven un ataque
     #endregion
 
     #region properties
@@ -21,6 +22,7 @@ public class EnemyLifeComponent : MonoBehaviour
     #region references
     private Pink _myPinkComponent;
     private Blue _myBlueComponent;
+    private Transform _myTransform;
     #endregion
 
     #region methods
@@ -36,6 +38,11 @@ public class EnemyLifeComponent : MonoBehaviour
                 Die();
             }
         }
+        else if(_isBlue && rndNum==0) //es azul y lo ha esquivado
+        {
+            //muestra sobre el enemigo un cartel de que no ha sido efectivo el ataque
+
+        }
     }
 
     private void Die()
@@ -49,6 +56,8 @@ public class EnemyLifeComponent : MonoBehaviour
     void Start()
     {
         GameManager.Instance.RegisterEnemy(this);
+
+        _myTransform = transform;
 
         _myPinkComponent = GetComponent<Pink>();
         if (_myPinkComponent != null)

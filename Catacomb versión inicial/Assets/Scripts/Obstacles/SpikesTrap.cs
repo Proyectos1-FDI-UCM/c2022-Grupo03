@@ -56,7 +56,6 @@ public class SpikesTrap : MonoBehaviour
         switch (_state)
         {
             case 0:
-                Debug.Log("estado bajo");
                 _elapsedTime += Time.deltaTime;
                 // transición del estado bajo al alto
                 if (_elapsedTime > _durationDown)
@@ -68,7 +67,6 @@ public class SpikesTrap : MonoBehaviour
                 break;
 
             case 1:
-                Debug.Log("estado alto");
                 _elapsedTime += Time.deltaTime;
                 // transición del estado alto al bajo
                 if (_elapsedTime > _durationUp)
