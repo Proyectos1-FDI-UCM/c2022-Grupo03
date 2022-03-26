@@ -48,14 +48,21 @@ public class SpiderNest : MonoBehaviour
         return vector;
     }
 
+    // spawnea la misma secuencia de enemigos de forma infinita
     private IEnumerator SpawnEnemies(float time)
     {
-        for (int i = 0; i < _enemiesIndex.Length; i++)
+        int i = 0;
+        while (i < _enemiesIndex.Length)
         {
             yield return new WaitForSeconds(time);
             int numRandom = GameManager.Instance.NumRandom(0, 3);
             Vector3 spawnPoint = _myTransform.position + _offsets[numRandom];
             Instantiate(_enemies[_enemiesIndex[i]], spawnPoint, Quaternion.identity);
+            i++;
+            if (i == _enemiesIndex.Length)
+            {
+                i = 0;
+            }
         }
     }
     #endregion

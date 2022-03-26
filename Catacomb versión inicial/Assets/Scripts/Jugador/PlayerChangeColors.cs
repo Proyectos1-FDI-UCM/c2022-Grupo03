@@ -39,7 +39,7 @@ public class PlayerChangeColors : MonoBehaviour
     public void SetCurrentColor(int indice)
     {
         _currentColor = IndexToColor(indice);
-        GameManager.Instance.OnPlayerChangeColor(ColorToString(_currentColor));
+        GameManager.Instance.OnPlayerChangeColor(GameManager.Instance.LightColors[indice]);
     }
 
     public void ChangeColor(float variation)
@@ -66,9 +66,11 @@ public class PlayerChangeColors : MonoBehaviour
                 _currentColor--;
             }
         }
-        GameManager.Instance.OnPlayerChangeColor(ColorToString(_currentColor));
+        int indice = ColorToIndex(_currentColor);
+        GameManager.Instance.OnPlayerChangeColor(GameManager.Instance.LightColors[indice]);
     }
 
+    /*
     private string ColorToString(colors col)
     {
         // inicialización de colString
@@ -93,13 +95,14 @@ public class PlayerChangeColors : MonoBehaviour
         }
         return colString;
     }
+    */
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         _currentColor = 0;
-        GameManager.Instance.OnPlayerChangeColor(ColorToString(_currentColor));
+        GameManager.Instance.OnPlayerChangeColor(GameManager.Instance.LightColors[0]);
     }
 
     // Update is called once per frame

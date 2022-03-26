@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Blue : MonoBehaviour
+public class BulletLifeTime : MonoBehaviour
 {
-    #region parameteres
+    #region parameters
     [SerializeField]
-    private int _recoveryPoints = 1;
+    private float _duration = 2f;
     #endregion
 
     #region properties
@@ -14,22 +14,21 @@ public class Blue : MonoBehaviour
     #endregion
 
     #region references
-    private SpriteRenderer _mySpriteRenderer;
+
     #endregion
 
     #region methods
-    public int RecoveryPoints()
+    // las balas se destruyen cuando pasa cierto tiempo
+    private void DestroyBullet()
     {
-        return _recoveryPoints;
+        GameObject.Destroy(gameObject);
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        // color azul
-        _mySpriteRenderer = GetComponent<SpriteRenderer>();
-        _mySpriteRenderer.color=GameManager.Instance.Colors[3];
+        Invoke(nameof(DestroyBullet), _duration);
     }
 
     // Update is called once per frame

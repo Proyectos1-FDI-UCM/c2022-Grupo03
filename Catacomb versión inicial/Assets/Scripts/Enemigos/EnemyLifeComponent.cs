@@ -23,6 +23,7 @@ public class EnemyLifeComponent : MonoBehaviour
     private Pink _myPinkComponent;
     private Blue _myBlueComponent;
     private Transform _myTransform;
+    private Message _myMessage;
     #endregion
 
     #region methods
@@ -33,16 +34,17 @@ public class EnemyLifeComponent : MonoBehaviour
         if (!_isBlue || rndNum != 0)
         {
             _currentLife -= hitDamage;
+            _myMessage.SetMessage((-1).ToString());
             if (_currentLife <= 0)
             {
                 Die();
             }
         }
-        else if(_isBlue && rndNum==0) //es azul y lo ha esquivado
+        else if (_isBlue && rndNum == 0) //es azul y lo ha esquivado
         {
-            //muestra sobre el enemigo un cartel de que no ha sido efectivo el ataque
-
+            _myMessage.SetMessage("MISS!!");
         }
+        _myMessage.ActivateMessage();
     }
 
     private void Die()
@@ -65,6 +67,7 @@ public class EnemyLifeComponent : MonoBehaviour
             _maxLife += _myPinkComponent.IncreasedLife();
         }
         _myBlueComponent = GetComponent<Blue>();
+        _myMessage = GetComponentInChildren<Message>();
         _isBlue = _myBlueComponent != null;
 
         _currentLife = _maxLife;

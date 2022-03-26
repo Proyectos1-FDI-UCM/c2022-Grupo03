@@ -63,6 +63,8 @@ public class PlayerAttackController : MonoBehaviour
     private LayerMask _rayLayerMask;
     // el raycast tiene que ignorar al player y a las damage zones
     private LineRenderer _myLineRenderer;
+    private GameObject _bossManagerObject;
+    private BossManager _bossManager;
     #endregion
 
     #region methods
@@ -176,7 +178,16 @@ public class PlayerAttackController : MonoBehaviour
                 // si el color del enemigo es igual que el del rayo, el enemigo sufre daño
                 if (hitInfos[i].collider.GetComponent(_enemyColors[indice]) != null)
                 {
-                    hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
+                    // solo se puede dañar al jefe si se encuentra en el segundo estado
+                    if (hitInfos[i].collider.name == "SpiderHead" && _bossManager.State == 2)
+                    {
+                        hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
+                    }
+                    // dañar al resto de cosas
+                    else
+                    {
+                        hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
+                    }
                 }
             }
             // si choca con un obstáculo, el rayo se frena
@@ -229,6 +240,11 @@ public class PlayerAttackController : MonoBehaviour
         _myAttackAnimation = GetComponent<AttackAnimation>();
         _rayLayerMask = ~(LayerMask.GetMask("Player") | LayerMask.GetMask("DmgZones"));
         _myLineRenderer = GetComponent<LineRenderer>();
+        _bossManagerObject = GameObject.Find("BossManager");
+        if (_bossManagerObject != null)
+        {
+            _bossManager = _bossManagerObject.GetComponent<BossManager>();
+        }
     }
 
     // Update is called once per frame

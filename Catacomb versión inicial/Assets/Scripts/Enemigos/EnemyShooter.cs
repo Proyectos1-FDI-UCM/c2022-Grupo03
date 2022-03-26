@@ -14,7 +14,6 @@ public class EnemyShooter : MonoBehaviour
     private float _fireRate = 3.0f;
     private float _elapsedTime = 0;
     public bool reloading = false;
-    private Quaternion playerDir;
     [SerializeField]
     private GameObject ammo;
     [SerializeField]
@@ -58,7 +57,9 @@ public class EnemyShooter : MonoBehaviour
         }
         if (!reloading)
         {
-            GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity, _myTransform); //se instancia como hijo
+            //se instancia como hijo
+            GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity, _myTransform);
+            shotAmmo.GetComponent<ProjectileMovement>().SetDamage(damage);
             reloading = true;
         }
     }

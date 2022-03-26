@@ -92,6 +92,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DestroyEnemies()
+    {
+        foreach (EnemyLifeComponent enemy in _listOfEnemies)
+        {
+            GameObject.Destroy(enemy.gameObject);
+        }
+    }
+
     // se llama cuando el personaje sufre daño
     public void OnPlayerDamage(int lifePoints)
     {
@@ -111,7 +119,7 @@ public class GameManager : MonoBehaviour
     }
 
     // actualiza en el HUD el color de la espada
-    public void OnPlayerChangeColor(string color)
+    public void OnPlayerChangeColor(Color color)
     {
         _myUIManager.UpdateCurrentColor(color);
     }

@@ -17,7 +17,7 @@ public class UI_Manager : MonoBehaviour
     #region references
     [SerializeField]
     private GameObject _currentColorObject;
-    private Text _currentColorText;
+    private Image _currentColorImage;
     [SerializeField]
     private GameObject _spinCooldownObject;
     Text _spinCooldownText;
@@ -41,9 +41,9 @@ public class UI_Manager : MonoBehaviour
 
     #region methods
     // HUD del juego
-    public void UpdateCurrentColor(string newColor)
+    public void UpdateCurrentColor(Color newColor)
     {
-        _currentColorText.text = newColor;
+        _currentColorImage.color = newColor;
     }
 
     // HUD relativa al tiempo de espera de las habilidades
@@ -114,7 +114,7 @@ public class UI_Manager : MonoBehaviour
 
     private void Awake()
     {
-        _currentColorText = _currentColorObject.GetComponent<Text>();
+        _currentColorImage = _currentColorObject.GetComponent<Image>();
         _spinCooldownText = _spinCooldownObject.GetComponent<Text>();
         _rayCooldownText = _rayCooldownObject.GetComponent<Text>();
         _enemiesLeftText = _enemiesLeftObject.GetComponent<Text>();

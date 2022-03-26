@@ -7,40 +7,75 @@ public class ProjectileMovement : MonoBehaviour
     #region parameters
     [SerializeField]
     private float _projectileSpeed = 5.0f;
-    
+    #endregion
+
+    #region properties
+    private int _damage;
+    private bool _lineExists;
     #endregion
 
     #region references
-    private GameObject target;
+    private GameObject _target;
     private Transform _myTransform;
-    private Rigidbody2D hitbox;
-    private EnemyShooter _myEnemyShooter;
+    private Rigidbody2D _myRigidBody2D;
+    private LineRenderer _myLineRenderer;
     #endregion
 
     #region methods
+    public void SetDamage(int damage)
+    {
+        _damage = damage;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // las balas se destruyen cuando chocan contra cualquier cosa
+        // excepto los enemigos u otras balas
+        // se tiene que colocar debajo
+        if (_lineExists)
+        {
+            _myLineRenderer.positionCount = 0;
+        }
+        _myRigidBody2D.velocity = Vector3.zero;
+        Destroy(this.gameObject);
         PlayerLifeComponent _playerLifeComponent = collision.gameObject.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
         {
-            _playerLifeComponent.Damage(_myEnemyShooter.dañoAtaque());
+            _playerLifeComponent.Damage(_damage);
         }
-        Destroy(this.gameObject);
     }
     #endregion
+
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.Find("Player");
-        _myEnemyShooter = GetComponentInParent<EnemyShooter>();
-        if (target != null)
+        _myTransform = transform;
+        _target = GameObject.Find("Player");
+        if (_target != null)
         {
-            _myTransform = transform;
-            Vector3 temp = (target.transform.position - _myTransform.position).normalized;
+            Vector3 temp = (_target.transform.position - _myTransform.position).normalized;
             _myTransform.up = temp;
-            hitbox = GetComponent<Rigidbody2D>();
-            hitbox.velocity = (_myTransform.up * _projectileSpeed);
+            _myRigidBody2D = GetComponent<Rigidbody2D>();
+            _myRigidBody2D.velocity = (_myTransform.up * _projectileSpeed);
         }
-        
+        _myLineRenderer = GetComponent<LineRenderer>();
+        _lineExists = _myLineRenderer != null;
+        if (_lineExists)
+        {
+            _myLineRenderer.positionCount = 2;
+            _myLineRenderer.SetPosition(0, _myTransform.position);
+            _myLineRenderer.SetPosition(1, _myTransform.position);
+            _myLineRenderer.endColor = Color.white;
+            _myLineRenderer.startColor = Color.white;
+            Debug.Log(_myLineRenderer.endColor);
+        }
+    }
+
+    private void Update()
+    {
+        if (_lineExists)
+        {
+            _myLineRenderer.SetPosition(1, _myTransform.position);
+        }
     }
 }

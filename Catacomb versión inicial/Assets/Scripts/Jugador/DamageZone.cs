@@ -16,9 +16,11 @@ public class DamageZone : MonoBehaviour
     #endregion
 
     #region references
-    GameObject _player;
-    PlayerChangeColors _playerChangeColors;
-    SpriteRenderer _mySpriteRenderer;
+    private GameObject _player;
+    private PlayerChangeColors _playerChangeColors;
+    private SpriteRenderer _mySpriteRenderer;
+    private BossManager _bossManager;
+    private GameObject _bossManagerObject;
     #endregion
 
     #region methods
@@ -27,7 +29,16 @@ public class DamageZone : MonoBehaviour
         // comprobar si contra lo que choca es un enemigo y su color
         if (collider.GetComponent(_enemyColors[_indice]) != null)
         {
-            collider.GetComponent<EnemyLifeComponent>().Damage(_damage);
+            // solo se puede dañar al jefe si se encuentra en el segundo estado
+            if (collider.name == "SpiderHead" && _bossManager.State == 2)
+            {
+                collider.GetComponent<EnemyLifeComponent>().Damage(_damage);
+            }
+            // dañar al resto de cosas
+            else
+            {
+                collider.GetComponent<EnemyLifeComponent>().Damage(_damage);
+            }
         }
     }
 
@@ -48,6 +59,12 @@ public class DamageZone : MonoBehaviour
         // ajustar las diferentes cosas al color de la espada
         _mySpriteRenderer = GetComponent<SpriteRenderer>();
         _mySpriteRenderer.color = GameManager.Instance.TranslucentColors[_indice];
+
+        _bossManagerObject = GameObject.Find("BossManager");
+        if (_bossManagerObject)
+        {
+            _bossManager = GameObject.Find("BossManager").GetComponent<BossManager>();
+        }
     }
 
     // Update is called once per frame
