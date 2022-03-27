@@ -40,6 +40,7 @@ public class SettingsMenu : MonoBehaviour
         MKcontrols = controls.transform.GetChild(2).transform.gameObject;
         JScontrols = controls.transform.GetChild(3).transform.gameObject;
     }
+
     public void volumeControl (float volume)
     {
         audioMixer.SetFloat("volume", volume);
@@ -60,7 +61,8 @@ public class SettingsMenu : MonoBehaviour
     {
         if (!controls.activeSelf) controls.SetActive(true);
         else controls.SetActive(false);
-    }    
+    }
+
     public void ShowControlType()
     {
         if (!MKcontrols.activeSelf)
@@ -73,10 +75,5 @@ public class SettingsMenu : MonoBehaviour
             MKcontrols.SetActive(false);
             JScontrols.SetActive(true);
         }
-    }
-
-    public void ReturnToMenu()
-    {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 }

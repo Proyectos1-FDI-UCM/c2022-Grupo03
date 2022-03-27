@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: 0, y: 1, z: 0}
-  _messageDuration: 2
+  _messageDuration: 0.5
 --- !u!1 &4946740501492387801
 GameObject:
   m_ObjectHideFlags: 0

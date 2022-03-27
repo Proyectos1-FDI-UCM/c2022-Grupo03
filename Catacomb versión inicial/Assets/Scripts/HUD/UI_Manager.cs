@@ -33,10 +33,6 @@ public class UI_Manager : MonoBehaviour
     private Text _enemiesLeftText;
     [SerializeField]
     private GameObject _pauseMenu;
-    [SerializeField]
-    private GameObject _menu;
-    [SerializeField]
-    private GameObject _optionsMenu;
     #endregion
 
     #region methods
@@ -98,18 +94,6 @@ public class UI_Manager : MonoBehaviour
     public void BackToTitle()
     {
         GameManager.Instance.BackToTitle();
-    }
-    public void SetMenu(bool enabled)
-    {
-        _menu.SetActive(false);
-    }
-    public void GoToControllerMenu()
-    {
-        GameManager.Instance.GoToControllerMenu();
-    }
-    public void SetOptionsMenu(bool enabled)
-    {
-        _optionsMenu.SetActive(enabled);
     }
 
     private void Awake()

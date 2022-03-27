@@ -11,6 +11,10 @@ public class PlayerMovementController : MonoBehaviour
 
     #region properties
     private Vector3 _movementDirection;
+    private bool _speedChanged;
+    private float _elapsedTime;
+    private float _originalSpeed;
+    private float _duration;
     #endregion
 
     #region references
@@ -19,13 +23,26 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
 
     #region methods
+    public void SetSpeed(float newSpeed)
+    {
+        _speed = newSpeed;
+        _elapsedTime = 0;
+        _speedChanged = true;
+    }
+
+    public void SetDuration(float newDuration)
+    {
+        _duration = newDuration;
+    }
+
     public void SetMovementDirection(Vector3 newMovementDirection)
     {
         _movementDirection = newMovementDirection;
     }
+
     public void Rodar()
     {
-        _movementDirection = new Vector3(10,0,0);
+        _movementDirection = new Vector3(10, 0, 0);
     }
     #endregion
 
@@ -34,12 +51,28 @@ public class PlayerMovementController : MonoBehaviour
     {
         _myTransform = transform;
         rb = GetComponent<Rigidbody2D>();
+        _originalSpeed = _speed;
+        _speedChanged = false;
+    }
+
+    private void Update()
+    {
+        if (_speedChanged)
+        {
+            _elapsedTime += Time.deltaTime;
+            if (_elapsedTime > _duration)
+            {
+                _speed = _originalSpeed;
+                _elapsedTime = 0;
+                _speedChanged = false;
+            }
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         rb.velocity = (_speed * _movementDirection);
-        //rb.MovePosition(_speed * _movementDirection * Time.deltaTime);
+        // rb.MovePosition(_speed * _movementDirection * Time.deltaTime);
     }
 }

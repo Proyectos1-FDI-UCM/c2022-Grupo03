@@ -168,15 +168,9 @@ public class GameManager : MonoBehaviour
 
     public void BackToTitle()
     {
-        PlayerPrefs.DeleteKey("Back");
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
-    public void GoToControllerMenu()
-    {
-        PlayerPrefs.SetString("Back", SceneManager.GetActiveScene().name);
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
-    }
     private void Awake()
     {
         _instance = this;
@@ -196,13 +190,6 @@ public class GameManager : MonoBehaviour
         _playerDeathAnimation = _player.GetComponent<DeathAnimation>();
         _directionArrow = GameObject.Find("DirectionArrow").GetComponent<DirectionArrow>();
         _muriendo = false;
-
-        if (PlayerPrefs.GetString("Back") == "Escena Pedro")
-        {
-            PauseMenu();
-            _myUIManager.SetMenu(false);
-            _myUIManager.SetOptionsMenu(true);
-        }
     }
 
     // Update is called once per frame

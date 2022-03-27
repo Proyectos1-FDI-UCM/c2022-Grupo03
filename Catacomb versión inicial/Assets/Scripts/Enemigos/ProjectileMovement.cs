@@ -12,6 +12,7 @@ public class ProjectileMovement : MonoBehaviour
     #region properties
     private int _damage;
     private bool _lineExists;
+    private float _playerSpeed;
     #endregion
 
     #region references
@@ -25,6 +26,11 @@ public class ProjectileMovement : MonoBehaviour
     public void SetDamage(int damage)
     {
         _damage = damage;
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        _playerSpeed = newSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -41,7 +47,11 @@ public class ProjectileMovement : MonoBehaviour
         PlayerLifeComponent _playerLifeComponent = collision.gameObject.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
         {
-            _playerLifeComponent.Damage(_damage);
+            // _playerLifeComponent.Damage(_damage);
+            if (_lineExists)
+            {
+                collision.gameObject.GetComponent<PlayerMovementController>().SetSpeed(_playerSpeed);
+            }
         }
     }
     #endregion
@@ -58,6 +68,8 @@ public class ProjectileMovement : MonoBehaviour
             _myRigidBody2D = GetComponent<Rigidbody2D>();
             _myRigidBody2D.velocity = (_myTransform.up * _projectileSpeed);
         }
+
+        // ataque de la araña
         _myLineRenderer = GetComponent<LineRenderer>();
         _lineExists = _myLineRenderer != null;
         if (_lineExists)
@@ -67,7 +79,6 @@ public class ProjectileMovement : MonoBehaviour
             _myLineRenderer.SetPosition(1, _myTransform.position);
             _myLineRenderer.endColor = Color.white;
             _myLineRenderer.startColor = Color.white;
-            Debug.Log(_myLineRenderer.endColor);
         }
     }
 

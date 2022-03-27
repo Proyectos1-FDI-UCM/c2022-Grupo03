@@ -14,14 +14,7 @@ public class BossManager : MonoBehaviour
     private Vector3[] _legOffsets = { new Vector3(-3, -1, 0), new Vector3(-3, 1, 0), new Vector3(3, -1, 0), new Vector3(3, 1, 0) };
     [SerializeField]
     private float _rotationFactor;
-    [SerializeField]
-    private Vector3[] _nestPositions;
-    [SerializeField]
-    private int _numNestsSpawn;
-    [SerializeField]
-    private float _oftenAttack;
-    [SerializeField]
-    private int _spiderWebDamage;
+    
     #endregion
 
     #region properties
@@ -32,14 +25,6 @@ public class BossManager : MonoBehaviour
     private int _numLegs;
     // booleano que sirve para hacer que los Invoke se ejecuten una sola vez
     private bool _transitionMade;
-    // indica el nido de araña que aparece en la escena
-    private int _nestIndex;
-    // vector de booleanos que sirve para indicar si un nido está desactivado o no
-    // true --> está activado
-    // false --> está desactivado
-    private bool[] _nestsActivated;
-    private int _numNests;
-    private float _elapsedTime;
     #endregion
 
     #region references
@@ -50,113 +35,14 @@ public class BossManager : MonoBehaviour
     private GameObject _spiderBody;
     private Transform _spiderBodyTransform;
     // la cabeza del jefe siempre es del mismo color
+    [SerializeField]
     private GameObject _spiderHead;
-    private Transform _spiderHeadTransform;
     private SpriteRenderer _spiderHeadSprite;
-    private GameObject[] _nests;
-    [SerializeField]
-    private GameObject _nestPrefab;
-    [SerializeField]
-    private GameObject _spiderWebBullet;
+    private SpawnNest _mySpawnNest;
+    private SpiderWebAttack _mySpiderWebAttack;
     #endregion
 
     #region methods
-    private void SpiderWebAttack()
-    {
-        _elapsedTime += Time.deltaTime;
-        if (_elapsedTime > _oftenAttack)
-        {
-            GameObject spiderWeb = Instantiate(_spiderWebBullet, _spiderHeadTransform.position, Quaternion.identity);
-            spiderWeb.GetComponent<ProjectileMovement>().SetDamage(_spiderWebDamage);
-            _elapsedTime = 0;
-        }
-    }
-
-    // lógica del spawn de los nidos de araña
-    private void SpawnNests()
-    {
-        CreateNests();
-        bool todosActivados = false;
-        int i = 0;
-        while (i < _numNestsSpawn && !todosActivados)
-        {
-            todosActivados = CheckAllNests();
-            ActivateNests(todosActivados, ref i);
-        }
-    }
-
-    private void CreateNests()
-    {
-        // los nidos se instancian en escena y se desactivan
-        // posteriormete se irán desactivando de dos en dos
-        for (int i = 0; i < _numNests; i++)
-        {
-            if (_nests[i] == null)
-            {
-                _nests[i] = Instantiate(_nestPrefab, _nestPositions[i], Quaternion.identity);
-                _nests[i].SetActive(false);
-                _nestsActivated[i] = false;
-            }
-        }
-    }
-
-    private void DestroyNests()
-    {
-        for (int i = 0; i < _numNests; i++)
-        {
-            if (_nests[i] != null)
-            {
-                GameObject.Destroy(_nests[i]);
-            }
-        }
-    }
-
-    private bool CheckAllNests()
-    {
-        // comprueba si todos los nidos están activados
-        // si lo están devuelve true
-        // en caso contrario, devuelve false
-        bool check = true;
-        int j = 0;
-        while (j < _numNests && check)
-        {
-            if (!_nestsActivated[j])
-            {
-                check = false;
-            }
-            j++;
-        }
-        return check;
-    }
-
-    private void ActivateNests(bool allActivated, ref int index)
-    {
-        // si no están todos los nidos activados procede a activar varios
-        if (!allActivated)
-        {
-            // si el nido no está activado
-            // lo activa, lo marco como activado y
-            // aumenta index en 1 para saber que se ha activado un nido
-            if (!_nestsActivated[_nestIndex])
-            {
-                _nests[_nestIndex].SetActive(true);
-                _nestsActivated[_nestIndex] = true;
-                _nestIndex++;
-                index++;
-            }
-            // en caso de que el nido esté activado pasa a buscar otro que no lo esté
-            else
-            {
-                _nestIndex++;
-            }
-            // si llega al último nido pasa al primero
-            if (_nestIndex == _numNests)
-            {
-                _nestIndex = 0;
-            }
-        }
-    }
-
     // cuando el jefe pasa del segundo estado al estado cero le aparecen nuevas patas
     private void NewSpiderLegs()
     {
@@ -169,7 +55,6 @@ public class BossManager : MonoBehaviour
     private void InitiateStateZero()
     {
         _state = 0;
-        _elapsedTime = 0;
         NewSpiderLegs();
         _numLegs = 4;
     }
@@ -232,35 +117,29 @@ public class BossManager : MonoBehaviour
         }
     }
 
+    // cuando se destruye la cabeza, el jefe muere
     private void BossEliminated()
     {
-        // si se destruye la cabeza, el jefe muere
-        _state = -1;
         GameObject.Destroy(_spiderBody);
-        DestroyNests();
+        _mySpawnNest.DestroyNests();
         GameManager.Instance.DestroyEnemies();
         // cancelar el invoke de que el jefe pase del
         // estado 2 al 4 en el caso de que haya sido derrotado
         CancelInvoke(nameof(SecondToThird));
+        gameObject.SetActive(false);
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        // inicialiar las referencias a la araña y a sus estados
         _spiderBodyTransform = _spiderBody.GetComponent<Transform>();
-        _spiderHead = _spiderBodyTransform.GetChild(0).gameObject;
-        _spiderHeadTransform = _spiderHead.transform;
         _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
         _spiderHeadSprite.color = Color.white;
         _spiderLegs = new GameObject[4];
         _transitionMade = false;
-        // inicializar las referencias los nidos de araña
-        _numNests = _nestPositions.Length;
-        _nests = new GameObject[_numNests];
-        _nestsActivated = new bool[_numNests];
-        _nestIndex = 0;
+        _mySpawnNest = GetComponent<SpawnNest>();
+        _mySpiderWebAttack = GetComponent<SpiderWebAttack>();
 
         // el jefe comienza en el estado 0
         InitiateStateZero();
@@ -274,7 +153,7 @@ public class BossManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("estado 0");
-                SpiderWebAttack();
+                _mySpiderWebAttack.SpiderWeb();
                 int contLegs = CountCurrentLegs();
                 if (contLegs == 0)
                 {
@@ -282,11 +161,11 @@ public class BossManager : MonoBehaviour
                 }
                 else if (contLegs < _numLegs)
                 {
-                    _elapsedTime = 0;
+                    _mySpiderWebAttack.ElapsedTime = 0;
                     // se pueden eliminar varias patas a la vez
                     _numLegs = contLegs;
                     StartCoroutine(Transition(1, false, 0f));
-                    SpawnNests();
+                    _mySpawnNest.SpawnNests();
                 }
                 break;
 

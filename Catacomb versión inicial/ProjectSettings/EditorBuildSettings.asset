@@ -7,17 +7,20 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/TitleScreen.unity
-    guid: 654d12c645fbea2458df637027d6bac0
+    guid: bc24521327e03a140a6db3601fe83682
   - enabled: 1
     path: Assets/Scenes/ControllerMenu.unity
     guid: 3a4e0bece4e20de4a9b6df77d1f3d5cf
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
-    guid: a61b5d655a249b048bea33e5924a0a6d
+    path: Assets/Scenes/Nivel1.unity
+    guid: 5a07e4af4db1d29488f03f056f3663ee
+  - enabled: 1
+    path: Assets/Scenes/Nivel2.unity
+    guid: 381bfa96cf2931c4faa7c8ec29570a83
+  - enabled: 1
+    path: Assets/Scenes/Nivel3.unity
+    guid: 1050a9fa63ea745438bd1bf7883f0ae7
   - enabled: 1
     path: Assets/Scenes/Escena Pedro.unity
     guid: 33bbd4a8c68ee704e8b4b1d51bf18daa
-  - enabled: 1
-    path: Assets/Scenes/SettingsScreen.unity
-    guid: bc24521327e03a140a6db3601fe83682
   m_configObjects: {}
