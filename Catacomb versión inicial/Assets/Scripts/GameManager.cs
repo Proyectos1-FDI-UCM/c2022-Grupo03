@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
     // lista de enemigos
     List<EnemyLifeComponent> _listOfEnemies;
 
-    // se utiliza para que se active la animación de morir
+    // se utiliza para que se active la animaciï¿½n de morir
     private bool _muriendo;
-    // determina si el juego está pausado o no
+    // determina si el juego estï¿½ pausado o no
     private bool _gameIsPaused;
 
     // al poner los colors en el GameManager resulta sencillo modificar la paleta de colores de una sola vez
@@ -49,13 +49,17 @@ public class GameManager : MonoBehaviour
     public Color[] LightColors { get => _lightColors; }
     [SerializeField]
     private Color[] _translucentColors = {
-        new Color(1,0,0,1f),  // rojo translúcido
-        new Color(1,0.92f,0.16f,1f),  // amarillo translúcido
-        new Color(0,1,0,1f),  // verde translúcido
-        new Color(0,0,1,1f),  // azul translúcido
-        new Color(1,0,0.6452723f,1f)  // rosa trasnlúcido
+        new Color(1,0,0,1f),  // rojo translï¿½cido
+        new Color(1,0.92f,0.16f,1f),  // amarillo translï¿½cido
+        new Color(0,1,0,1f),  // verde translï¿½cido
+        new Color(0,0,1,1f),  // azul translï¿½cido
+        new Color(1,0,0.6452723f,1f)  // rosa trasnlï¿½cido
     };
     public Color[] TranslucentColors { get => _translucentColors; }
+
+    private int currentWave = 0;
+    private float waveDuration = 15;
+    private float timePassed = 0;
     #endregion
 
     #region references
@@ -68,7 +72,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region methods
-    // generador de números aleatorios
+    // generador de nï¿½meros aleatorios
     public int NumRandom(int minInclusive, int maxInclusive)
     {
         return Random.Range(minInclusive, maxInclusive + 1);
@@ -100,12 +104,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // se llama cuando el personaje sufre daño
+    // se llama cuando el personaje sufre daï¿½o
     public void OnPlayerDamage(int lifePoints)
     {
         if (lifePoints <= 0)
         {
-            _muriendo = _playerDeathAnimation.DeathAni(); // animación de la muerte
+            _muriendo = _playerDeathAnimation.DeathAni(); // animaciï¿½n de la muerte
             _playerInputManager.enabled = false;
         }
     }
@@ -136,7 +140,7 @@ public class GameManager : MonoBehaviour
         _myUIManager.UpdateRayCooldown(cd, duration);
     }
 
-    // menú de pausa
+    // menï¿½ de pausa
     public void PauseMenu()
     {
         if (_gameIsPaused)
@@ -150,16 +154,16 @@ public class GameManager : MonoBehaviour
     }
     public void Resume()
     {
-        _myUIManager.SetPauseMenu(false);   // desaparece el menú de pausa
+        _myUIManager.SetPauseMenu(false);   // desaparece el menï¿½ de pausa
         Time.timeScale = 1f;    // el tiempo se reanuda
         _directionArrow.enabled = true; // se puede mover la flecha de dir
-        _playerInputManager.enabled = true; // el jugador sí puede recibir input
+        _playerInputManager.enabled = true; // el jugador sï¿½ puede recibir input
         _gameIsPaused = false;
     }
 
     private void Pause()
     {
-        _myUIManager.SetPauseMenu(true);    // aparece el menú de pausa
+        _myUIManager.SetPauseMenu(true);    // aparece el menï¿½ de pausa
         Time.timeScale = 0f;    // el tiempo se para
         _directionArrow.enabled = false;    // no se puede mover la flecha de dir
         _playerInputManager.enabled = false;    // el jugador no puede recibir input
@@ -170,6 +174,27 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
+
+    public void GoToControllerMenu()
+    {
+        PlayerPrefs.SetString("Back", SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
+
+    public float GetTimePassed() { return timePassed; }
+
+    public bool WaveOver()
+    {
+        timePassed += Time.deltaTime;
+        if (timePassed > waveDuration)
+        {
+            currentWave++;
+            return true;
+        }
+        return false;
+    }
+
+    //public int GetCurrentWave() { return currentWave};
 
     private void Awake()
     {
