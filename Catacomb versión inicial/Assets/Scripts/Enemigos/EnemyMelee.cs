@@ -19,10 +19,15 @@ public class EnemyMelee : MonoBehaviour
     private float x_scale, y_scale, z_scale;
     [SerializeField]
     private int _damage = 1;
+    [SerializeField]
+    private int _minrate = 2;
+    [SerializeField]
+    private int _maxrate = 4;
     #endregion
 
     #region properties
     private int _dañoTotal;
+    private int _attackRate;
     #endregion
 
     #region references
@@ -86,6 +91,8 @@ public class EnemyMelee : MonoBehaviour
             yellow = true;
         }
         _dañoTotal = _damage;
+
+        _attackRate = GameManager.Instance.NumRandom(_minrate, _maxrate);
     }
 
     // Update is called once per frame
