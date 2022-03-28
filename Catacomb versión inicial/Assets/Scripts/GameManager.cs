@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     private int currentWave = 0;
     private float waveDuration = 15;
     private float timePassed = 0;
+    private int nEnemies = 0;
     #endregion
 
     #region references
@@ -183,7 +184,7 @@ public class GameManager : MonoBehaviour
 
     public float GetTimePassed() { return timePassed; }
 
-    public bool WaveOver()
+    public bool outOfTime()
     {
         timePassed += Time.deltaTime;
         if (timePassed > waveDuration)
@@ -194,6 +195,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    public void EnemySpawned() { nEnemies++; }
     //public int GetCurrentWave() { return currentWave};
 
     private void Awake()

@@ -49,6 +49,7 @@ public class WaveManager : MonoBehaviour
         {
             //el tipo de enemigo que se spawnea depende de waveContent
             Instantiate(type[currentWave[i]], this.transform.position, Quaternion.identity, _myTransform);
+            GameManager.Instance.EnemySpawned();
         }
     }
     #endregion
@@ -60,7 +61,7 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.WaveOver())
+        if (GameManager.Instance.outOfTime() || nEnemies < 1)
         {
             waveNumber++;
             Spawn();
