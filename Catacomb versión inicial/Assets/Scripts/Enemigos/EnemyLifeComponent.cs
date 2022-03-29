@@ -15,6 +15,7 @@ public class EnemyLifeComponent : MonoBehaviour
 
     #region properties
     private int _currentLife;
+    public int CurrentLife { get => _currentLife; }
     private bool _isBlue = false; // determina si un enemigo es azul
     private float _elapsedTime = 0;
     #endregion
@@ -34,7 +35,10 @@ public class EnemyLifeComponent : MonoBehaviour
         if (!_isBlue || rndNum != 0)
         {
             _currentLife -= hitDamage;
-            _myMessage.SetMessage((-1).ToString());
+            if (gameObject.name != "Shield")
+            {
+                _myMessage.SetMessage((-1).ToString());
+            }
             if (_currentLife <= 0)
             {
                 Die();
@@ -44,7 +48,10 @@ public class EnemyLifeComponent : MonoBehaviour
         {
             _myMessage.SetMessage("MISS!!");
         }
-        _myMessage.ActivateMessage();
+        if (gameObject.name != "Shield")
+        {
+            _myMessage.ActivateMessage();
+        }
     }
 
     private void Die()
@@ -71,6 +78,7 @@ public class EnemyLifeComponent : MonoBehaviour
         _isBlue = _myBlueComponent != null;
 
         _currentLife = _maxLife;
+
     }
 
     // Update is called once per frame
