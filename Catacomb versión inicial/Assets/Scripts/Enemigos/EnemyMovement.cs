@@ -103,7 +103,6 @@ public class EnemyMovement : MonoBehaviour
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection *  100.0f, Color.red, 1.0f);
         hit = FirstTargetHit();
-        Debug.Log(this.gameObject.name + " " + hit.collider);
         SetPlayerDirection();
         if (hit.collider == targetObject.GetComponent<Collider2D>())
         {
@@ -155,7 +154,6 @@ public class EnemyMovement : MonoBehaviour
                 if (tooClose[i].transform.position.magnitude - transform.position.magnitude < 2) distanceMultiplier = 0.8f;
                 else if (tooClose[i].transform.position.magnitude - transform.position.magnitude < 3) distanceMultiplier = 0.5f;
                 else if (tooClose[i].transform.position.magnitude - transform.position.magnitude < 4) distanceMultiplier = 0.3f;
-                Debug.Log(distanceMultiplier);
                 movement += -(tooClose[i].transform.position - transform.position) * distanceMultiplier;
             }
         }

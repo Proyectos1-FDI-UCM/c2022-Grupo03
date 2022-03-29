@@ -20,6 +20,8 @@ public class WaveManager : MonoBehaviour
     private int[] wave2;
     [SerializeField]
     private int[] wave3;
+    [SerializeField]
+    private Vector2 spawnAreaSize;
     private Vector2[] spawnPos;
     private float offset = 1;
     #endregion
@@ -35,28 +37,43 @@ public class WaveManager : MonoBehaviour
         {
             case 0:
                 currentWave = wave0;
+                Debug.Log("wave0");
                 break;
             case 1:
                 currentWave = wave1;
+                Debug.Log("wave1");
                 break;
             case 2:
                 currentWave = wave2;
+                Debug.Log("wave2");
                 break;
             default:
                 break;
         }
-        for(int i = 0; i < currentWave.Length; i++)
+        for (int i = 0; i < currentWave.Length; i++)
         {
             //el tipo de enemigo que se spawnea depende de waveContent
-            Instantiate(type[currentWave[i]], this.transform.position, Quaternion.identity, _myTransform);
+            Instantiate(type[currentWave[i]], spawnPos[i], Quaternion.identity, _myTransform);
             GameManager.Instance.EnemySpawned();
+            nEnemies++;
         }
     }
     #endregion
     void Start()
     {
-        Spawn();
         _myTransform = transform;
+        int cont = 0;
+        int maxCapacity = (int)(spawnAreaSize.x * spawnAreaSize.y);
+        spawnPos = new Vector2[maxCapacity];
+        for (int i = 0; i < spawnAreaSize.x; i++)
+        {
+            for (int j = 0; j < spawnAreaSize.y; j++)
+            {
+                spawnPos[cont] = new Vector2(transform.position.x + i, transform.position.y + j);
+                cont++;
+            }
+        }
+        Invoke("Spawn", 3.0f);
     }
 
     void Update()

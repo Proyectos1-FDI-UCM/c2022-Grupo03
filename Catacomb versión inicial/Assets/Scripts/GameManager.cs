@@ -190,6 +190,7 @@ public class GameManager : MonoBehaviour
         if (timePassed > waveDuration)
         {
             currentWave++;
+            timePassed = 0;
             return true;
         }
         return false;
