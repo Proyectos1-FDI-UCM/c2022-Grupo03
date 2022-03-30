@@ -26,6 +26,8 @@ public class EnemyLifeComponent : MonoBehaviour
     private Transform _myTransform;
     private Message _myMessage;
     private Shield _myShield;
+    [SerializeField]
+    private HpBarScript healthBar = null;
     #endregion
 
     #region methods
@@ -53,6 +55,7 @@ public class EnemyLifeComponent : MonoBehaviour
         {
             _myMessage.ActivateMessage();
         }
+        if (healthBar != null) healthBar.SetHealth(_currentLife);
     }
 
     private void Die()
@@ -86,6 +89,14 @@ public class EnemyLifeComponent : MonoBehaviour
 
         // vida actual del enemigo
         _currentLife = _maxLife;
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(_maxLife);
+            healthBar.SetHealth(_maxLife);
+        }
+        healthBar.SetMaxHealth(_maxLife);
+        healthBar.SetHealth(_maxLife);
     }
 
     // Update is called once per frame

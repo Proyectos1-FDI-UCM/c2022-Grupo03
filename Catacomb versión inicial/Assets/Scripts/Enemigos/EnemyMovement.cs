@@ -24,6 +24,7 @@ public class EnemyMovement : MonoBehaviour
 
     #region references
     private Transform _myTransform;
+    private bool _isReloading;
     private GameObject targetObject;
     private Transform targetTransform;
     private RaycastHit2D hit;
@@ -61,7 +62,7 @@ public class EnemyMovement : MonoBehaviour
         SetPlayerDirection();
         offset = 45;
         distanceMultiplier = 1;
-        layers = 1 << 8 | 1 << 3 | 1 << 6;
+        layers = 1 << 8 | 1 << 6 | 1 << 3 ;
         _myGreenComponent = GetComponent<Green>();
         if (_myGreenComponent != null)
         {
@@ -105,9 +106,10 @@ public class EnemyMovement : MonoBehaviour
         SetPlayerDirection();
         if (hit.collider == targetObject.GetComponent<Collider2D>())
         {
+            Debug.Log(hit.collider.gameObject);
             _movementDirection = temp.normalized;
             if (hit.distance > _range) SetPlayerDirection();
-            else SetEscapeDirection();
+            else if (ranged && (hit.distance < _range)) SetEscapeDirection();
         }
         else
         {
@@ -123,21 +125,22 @@ public class EnemyMovement : MonoBehaviour
             else if (rightRay.distance == 0) _movementDirection = right.normalized;
             else if (leftRay.distance > rightRay.distance) _movementDirection = left.normalized;
             else if (rightRay.distance > leftRay.distance) _movementDirection = right.normalized;
-            _movementDirection += SocialDistancing();
 
+            _movementDirection += SocialDistancing();
         }
+
+        if (hit.distance < _range) _movementDirection = Vector3.zero;
+
         rb.velocity = (_speed * _movementDirection);
         //rb.MovePosition(_speed * _movementDirection * Time.deltaTime);    
     }
 
-        private RaycastHit2D FirstTargetHit()
+    private RaycastHit2D FirstTargetHit()
     {
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection * 100.0f, Color.red, 1.0f);
         hitArray = Physics2D.RaycastAll(transform.position, temp.normalized, 100.0f, layers);
-        int i = 0;
-        while (hitArray[i].collider == this.gameObject.GetComponent<Collider2D>()) i++;
-        return hitArray[i];
+        return hitArray[1];
     }
 
     private Vector3 SocialDistancing()
@@ -157,5 +160,4 @@ public class EnemyMovement : MonoBehaviour
         }
         return movement.normalized;
     }
-
 }
