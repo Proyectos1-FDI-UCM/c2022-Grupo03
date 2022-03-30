@@ -5,13 +5,12 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     #region properties
-    [SerializeField]
     private int waveNumber = 0;
-    [SerializeField]
     private int nEnemies = 3;
     [SerializeField]
     private GameObject[] type;
 
+    private int[][] waves;
     [SerializeField]
     private int[] wave0;
     [SerializeField]
@@ -23,33 +22,23 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private Vector2 spawnAreaSize;
     private Vector2[] spawnPos;
-    private float offset = 1;
     #endregion
     #region references
     private Transform _myTransform;
     #endregion
     #region methods
+    private void InitializeWaveArray()
+    {
+        waves = new int[4][];
+        waves[0] = wave0;
+        waves[1] = wave1;
+        waves[2] = wave2;
+        waves[3] = wave3;
+    }
     private void Spawn()
     {
-        int[] currentWave = wave0;
+        int[] currentWave = waves[waveNumber];
 
-        switch (waveNumber)
-        {
-            case 0:
-                currentWave = wave0;
-                Debug.Log("wave0");
-                break;
-            case 1:
-                currentWave = wave1;
-                Debug.Log("wave1");
-                break;
-            case 2:
-                currentWave = wave2;
-                Debug.Log("wave2");
-                break;
-            default:
-                break;
-        }
         for (int i = 0; i < currentWave.Length; i++)
         {
             //el tipo de enemigo que se spawnea depende de waveContent
@@ -74,6 +63,7 @@ public class WaveManager : MonoBehaviour
             }
         }
         Invoke("Spawn", 3.0f);
+        InitializeWaveArray();
     }
 
     void Update()

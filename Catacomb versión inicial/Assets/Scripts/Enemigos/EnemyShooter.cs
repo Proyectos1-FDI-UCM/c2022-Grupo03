@@ -12,15 +12,15 @@ public class EnemyShooter : MonoBehaviour
     #region parameters
     private float _fireRate;
     private float _elapsedTime = 0;
-    public bool reloading = false;
+    private bool reloading = true;
     [SerializeField]
     private GameObject ammo;
     [SerializeField]
     private int damage = 1;
     [SerializeField]
-    private int _maxrate = 3;
+    private int _maxrate = 6;
     [SerializeField]
-    private int _minrate = 6;
+    private int _minrate = 3;
 
     #endregion
 
@@ -51,12 +51,12 @@ public class EnemyShooter : MonoBehaviour
         }
 
         _fireRate = GameManager.Instance.NumRandom(_minrate, _maxrate);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
         _elapsedTime += Time.deltaTime;
         if (_elapsedTime > _fireRate)
         {

@@ -24,7 +24,6 @@ public class EnemyMovement : MonoBehaviour
 
     #region references
     private Transform _myTransform;
-    private bool _isReloading;
     private GameObject targetObject;
     private Transform targetTransform;
     private RaycastHit2D hit;
@@ -107,9 +106,8 @@ public class EnemyMovement : MonoBehaviour
         if (hit.collider == targetObject.GetComponent<Collider2D>())
         {
             _movementDirection = temp.normalized;
-            if (ranged) _isReloading = GetComponentInChildren<EnemyShooter>().reloading;
             if (hit.distance > _range) SetPlayerDirection();
-            else if (_isReloading && (hit.distance < _range)) SetEscapeDirection();
+            else SetEscapeDirection();
         }
         else
         {
