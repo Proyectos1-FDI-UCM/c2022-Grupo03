@@ -124,8 +124,22 @@ public class AttackAnimation : MonoBehaviour
     }
     public void Rotate(bool spin)
     {
-        if(spin)
-            _myAnimator.SetTrigger("Giratorio");
+        // POR TERMINAR -- DOING
+        int color = _myChangeColors.GetCurrentColorIndex();
+        if (spin)
+        {
+            if (color == 0) // rojo
+                _myAnimator.SetTrigger("Giratorio");
+            else if (color == 1) // amarillo
+                _myAnimator.SetTrigger("Giratorio");
+            else if (color == 2) // verde
+                _myAnimator.SetTrigger("Giratorio");
+            else if (color == 3) // azul
+                _myAnimator.SetTrigger("Giratorio");
+            else if (color == 4) // rosa
+                _myAnimator.SetTrigger("GiratorioRosa");
+        }
+            
     }
     #endregion
 
