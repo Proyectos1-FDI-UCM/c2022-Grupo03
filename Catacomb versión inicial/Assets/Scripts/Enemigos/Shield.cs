@@ -15,13 +15,23 @@ public class Shield : MonoBehaviour
 
     #region references
     private EnemyLifeComponent _myShieldLifeComponent;
+    // es un array porque tanto el escudo como el enemigo cuerpo a cuerpo tienen BoxCollider2D
     private BoxCollider2D[] _myEnemyBoxCollider2D;
     private EnemyMelee _myEnemyMelee;
     private Transform _myEnemyTransform;
     #endregion
 
     #region methods
-
+    private void RemoveShield()
+    {
+        _myEnemyBoxCollider2D[1].enabled = true;    // se activa el box collider del enemigo cuerpo a cuerpo
+        _myEnemyMelee.enabled = true;   // se activa el script de ataque del enemigo cuerpo a cuerpo
+        // se rota al enemigo xq cuando se le destruye el escudo rota solo
+        float negXScale = -_myEnemyTransform.localScale.x;
+        _myEnemyTransform.localScale = new Vector3(negXScale, 1, 1);
+        // se destruye el escudo
+        GameObject.Destroy(gameObject);
+    }
     #endregion
 
     // Start is called before the first frame update
@@ -60,11 +70,10 @@ public class Shield : MonoBehaviour
                 }
                 break;
             case 1:
-                _myEnemyBoxCollider2D[1].enabled = true;
-                _myEnemyMelee.enabled = true;
-                float negXScale = -_myEnemyTransform.localScale.x;
-                _myEnemyTransform.localScale = new Vector3(negXScale, 1, 1);
-                GameObject.Destroy(gameObject);
+                // hay un pequeño error y es que si el enemigo es del mismo color
+                // que el último color del escudo cuando se destruye el escudo
+                // el enemigo también sufre daño
+                RemoveShield();
                 break;
         }
     }

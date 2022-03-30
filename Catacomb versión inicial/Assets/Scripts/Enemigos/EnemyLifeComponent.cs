@@ -25,6 +25,7 @@ public class EnemyLifeComponent : MonoBehaviour
     private Blue _myBlueComponent;
     private Transform _myTransform;
     private Message _myMessage;
+    private Shield _myShield;
     #endregion
 
     #region methods
@@ -35,7 +36,7 @@ public class EnemyLifeComponent : MonoBehaviour
         if (!_isBlue || rndNum != 0)
         {
             _currentLife -= hitDamage;
-            if (gameObject.name != "Shield")
+            if (_myShield == null)
             {
                 _myMessage.SetMessage((-1).ToString());
             }
@@ -48,7 +49,7 @@ public class EnemyLifeComponent : MonoBehaviour
         {
             _myMessage.SetMessage("MISS!!");
         }
-        if (gameObject.name != "Shield")
+        if (_myShield == null)
         {
             _myMessage.ActivateMessage();
         }
@@ -64,21 +65,27 @@ public class EnemyLifeComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // registrar al enemigo en la lista de enemigos
         GameManager.Instance.RegisterEnemy(this);
 
+        // inicializar referencias a otros componentes
         _myTransform = transform;
+        _myMessage = GetComponentInChildren<Message>();
+        _myShield = GetComponent<Shield>();
 
+        // componente rosa
         _myPinkComponent = GetComponent<Pink>();
         if (_myPinkComponent != null)
         {
             _maxLife += _myPinkComponent.IncreasedLife();
         }
+
+        // componente azul
         _myBlueComponent = GetComponent<Blue>();
-        _myMessage = GetComponentInChildren<Message>();
         _isBlue = _myBlueComponent != null;
 
+        // vida actual del enemigo
         _currentLife = _maxLife;
-
     }
 
     // Update is called once per frame

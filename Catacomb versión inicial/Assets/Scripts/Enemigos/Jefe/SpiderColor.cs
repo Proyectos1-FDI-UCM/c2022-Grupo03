@@ -17,6 +17,7 @@ public class SpiderColor : MonoBehaviour
     #region methods
     private void Awake()
     {
+        // todos los colores menos el azul
         int randomColor = GameManager.Instance.NumRandom(0, 3);
         switch (randomColor)
         {

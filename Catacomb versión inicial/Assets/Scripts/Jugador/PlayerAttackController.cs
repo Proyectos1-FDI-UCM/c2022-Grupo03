@@ -161,7 +161,7 @@ public class PlayerAttackController : MonoBehaviour
 
         // dibujo del raycast en el juego
         _myLineRenderer.positionCount = 2;
-        _myLineRenderer.SetPosition(0, _myTransform.position);
+        _myLineRenderer.SetPosition(0, _myTransform.position + _dir * 1f);
         _myLineRenderer.SetPosition(1, _myTransform.position + _dir.normalized * _rayLength);
         _myLineRenderer.startColor = GameManager.Instance.LightColors[indice];
         _myLineRenderer.endColor = GameManager.Instance.Colors[indice];

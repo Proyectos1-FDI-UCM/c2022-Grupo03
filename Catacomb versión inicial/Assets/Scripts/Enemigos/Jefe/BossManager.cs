@@ -38,7 +38,7 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     private GameObject _spiderHead;
     private SpriteRenderer _spiderHeadSprite;
-    private SpawnNest _mySpawnNest;
+    private NestSpawner _myNestSpawner;
     private SpiderWebAttack _mySpiderWebAttack;
     #endregion
 
@@ -121,7 +121,7 @@ public class BossManager : MonoBehaviour
     private void BossEliminated()
     {
         GameObject.Destroy(_spiderBody);
-        _mySpawnNest.DestroyNests();
+        _myNestSpawner.DestroyNests();
         GameManager.Instance.DestroyEnemies();
         // cancelar el invoke de que el jefe pase del
         // estado 2 al 4 en el caso de que haya sido derrotado
@@ -138,7 +138,7 @@ public class BossManager : MonoBehaviour
         _spiderHeadSprite.color = Color.white;
         _spiderLegs = new GameObject[4];
         _transitionMade = false;
-        _mySpawnNest = GetComponent<SpawnNest>();
+        _myNestSpawner = GetComponent<NestSpawner>();
         _mySpiderWebAttack = GetComponent<SpiderWebAttack>();
 
         // el jefe comienza en el estado 0
@@ -165,7 +165,7 @@ public class BossManager : MonoBehaviour
                     // se pueden eliminar varias patas a la vez
                     _numLegs = contLegs;
                     StartCoroutine(Transition(1, false, 0f));
-                    _mySpawnNest.SpawnNests();
+                    _myNestSpawner.SpawnNests();
                 }
                 break;
 

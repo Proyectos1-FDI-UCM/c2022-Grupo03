@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnNest : MonoBehaviour
+public class NestSpawner : MonoBehaviour
 {
     #region parameters
     [SerializeField]
@@ -18,6 +18,7 @@ public class SpawnNest : MonoBehaviour
     // true --> está activado
     // false --> está desactivado
     private bool[] _nestsActivated;
+    // número de nidos que aparecen en cada segunda fase
     private int _numNests;
     #endregion
 
@@ -33,9 +34,13 @@ public class SpawnNest : MonoBehaviour
     {
         CreateNests();
         bool todosActivados = false;
+        // el bucle termina cuando todos los nido están activados
+        // o cuando se han activado como máximo el número de nidos que habíamos determinado
         int i = 0;
         while (i < _numNestsSpawn && !todosActivados)
         {
+            // si todos los nidos están activados no se
+            // puede activar ninguno y, por lo tanto, el bucle termina
             todosActivados = CheckAllNests();
             ActivateNests(todosActivados, ref i);
         }
@@ -43,8 +48,8 @@ public class SpawnNest : MonoBehaviour
 
     private void CreateNests()
     {
-        // los nidos se instancian en escena y se desactivan
-        // posteriormete se irán desactivando de dos en dos
+        // los nidos que no estén en escena se instancian y se desactivan
+        // posteriormente se irán activando
         for (int i = 0; i < _numNests; i++)
         {
             if (_nests[i] == null)

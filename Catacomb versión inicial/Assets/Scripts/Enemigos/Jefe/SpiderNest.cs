@@ -16,15 +16,13 @@ public class SpiderNest : MonoBehaviour
     // 1 - Melee
     // 2 - Kamikaze
     // 3 - Tanque
-    // se ha tratado de hacer de forma que se escriban los nombres
-    // de los enemigos en un archivo de texto, pero no funciona
     private int[] _enemiesIndex;
     // alrededores del nido de araña
     private Vector3[] _offsets = { Vector3.up, Vector3.down, Vector3.right, Vector3.left };
     #endregion
 
     #region references
-    // prefas de los diferentes tipos de enemigos
+    // prefabs de los diferentes tipos de enemigos
     [SerializeField]
     private GameObject[] _enemies;
     private Transform _myTransform;
