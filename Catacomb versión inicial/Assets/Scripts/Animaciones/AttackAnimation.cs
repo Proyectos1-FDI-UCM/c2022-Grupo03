@@ -17,6 +17,7 @@ public class AttackAnimation : MonoBehaviour
     #region references
     private Transform _myTransform;
     private PlayerChangeColors _myChangeColors;
+    private PlayerAttackController _myAttackController;
     #endregion
 
     #region methods
@@ -120,7 +121,11 @@ public class AttackAnimation : MonoBehaviour
                 _myAnimator.SetTrigger("PinkAttack");
             }       
         }
-
+    }
+    public void Rotate(bool spin)
+    {
+        if(spin)
+            _myAnimator.SetTrigger("Giratorio");
     }
     #endregion
 
@@ -128,6 +133,7 @@ public class AttackAnimation : MonoBehaviour
     void Start()
     {
         _myChangeColors = GetComponent<PlayerChangeColors>();
+        _myAttackController = GetComponent<PlayerAttackController>();
         _myTransform = transform;
         x_scale = _myTransform.localScale.x;
         y_scale = _myTransform.localScale.y;

@@ -115,6 +115,7 @@ public class PlayerAttackController : MonoBehaviour
             Invoke(nameof(DmgZonesSpinAttack), _afterDmgZone);
             _attackRunning = true;
             _spinMade = true;
+            _myAttackAnimation.Rotate(_spinMade);
             _myPlayerInputManager.enabled = false;
         }
     }
