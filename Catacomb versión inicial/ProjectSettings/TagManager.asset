@@ -16,7 +16,7 @@ TagManager:
   - Obstacle
   - Item
   - DmgZones
-  - 
+  - Obstacle(LetBulletPass)
   - 
   - 
   - 
