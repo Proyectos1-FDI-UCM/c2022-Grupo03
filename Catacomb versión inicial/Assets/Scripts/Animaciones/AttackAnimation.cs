@@ -131,7 +131,7 @@ public class AttackAnimation : MonoBehaviour
             if (color == 0) // rojo
                 _myAnimator.SetTrigger("GiratorioRojo");
             else if (color == 1) // amarillo
-                _myAnimator.SetTrigger("Giratorio");
+                _myAnimator.SetTrigger("GiratorioAmarillo");
             else if (color == 2) // verde
                 _myAnimator.SetTrigger("GiratorioVerde");
             else if (color == 3) // azul
