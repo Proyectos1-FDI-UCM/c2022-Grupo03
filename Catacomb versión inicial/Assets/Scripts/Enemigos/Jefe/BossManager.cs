@@ -40,6 +40,8 @@ public class BossManager : MonoBehaviour
     private SpriteRenderer _spiderHeadSprite;
     private NestSpawner _myNestSpawner;
     private SpiderWebAttack _mySpiderWebAttack;
+    [SerializeField]
+    private GameObject _bossLifeBar;
     #endregion
 
     #region methods
@@ -128,11 +130,32 @@ public class BossManager : MonoBehaviour
         CancelInvoke(nameof(SecondToThird));
         gameObject.SetActive(false);
     }
+
+    private void StartBoss()
+    {
+        _bossLifeBar.SetActive(true);
+
+        _spiderBody.SetActive(true);
+        _spiderBodyTransform = _spiderBody.GetComponent<Transform>();
+        _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
+        _spiderLegs = new GameObject[4];
+        _transitionMade = false;
+        _myNestSpawner = GetComponent<NestSpawner>();
+        _mySpiderWebAttack = GetComponent<SpiderWebAttack>();
+
+        // el jefe comienza en el estado 0
+        InitiateStateZero();
+        _spiderHeadSprite.color = Color.white;
+    }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        _state = -1;
+        Invoke(nameof(StartBoss), 5f);
+        /*
         _spiderBodyTransform = _spiderBody.GetComponent<Transform>();
         _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
         _spiderHeadSprite.color = Color.white;
@@ -143,6 +166,7 @@ public class BossManager : MonoBehaviour
 
         // el jefe comienza en el estado 0
         InitiateStateZero();
+        */
     }
 
     // Update is called once per frame

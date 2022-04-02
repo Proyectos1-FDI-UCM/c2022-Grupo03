@@ -17,7 +17,7 @@ public class EnemyColor : MonoBehaviour
     #region methods
     private void Awake()
     {
-        int randomColor = GameManager.Instance.NumRandom(0, 4);
+        int randomColor = GameManager.Instance.NumRandom(0, GameManager.Instance.NumActiveCols - 1);
         switch (randomColor)
         {
             case 0:

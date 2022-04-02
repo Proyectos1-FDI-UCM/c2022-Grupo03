@@ -5,19 +5,21 @@ using UnityEngine;
 public class DeathAnimation : MonoBehaviour
 {
     #region parameters
-    // private bool muriendo = false;
-    private float _elapsedTime;
+
+    #endregion
+
+    #region references
     [SerializeField]
-    private int tiempoMuerte = 1000;
+    private Animator _myAnimator;
     #endregion
 
     #region methods
-    public bool DeathAni()
+    public void DeathAni()
     {
         _myAnimator.ResetTrigger("NoCorrer");
         _myAnimator.SetTrigger("Death");
-        return true;
     }
+
     public void DamageAni()
     {
         _myAnimator.ResetTrigger("NoCorrer");
@@ -26,11 +28,6 @@ public class DeathAnimation : MonoBehaviour
     }
     #endregion
 
-    #region references
-    [SerializeField]
-    private Animator _myAnimator;
-    private Transform _myTransform;
-    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -41,12 +38,6 @@ public class DeathAnimation : MonoBehaviour
     // Update is called once per frame  
     void Update()
     {
-        /*
-        _elapsedTime += Time.deltaTime;
-        if (!muriendo)
-            _elapsedTime = 0;
-        if(muriendo && _elapsedTime > tiempoMuerte)
-            GameManager.Instance.Death();
-        */
+
     }
 }

@@ -79,61 +79,64 @@ public class PlayerInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ataque principal
-        if (Input.GetButtonDown("Fire1"))
+        if (GameManager.Instance._currentState == GameState.inGame)
         {
-            _myPlayerAttackController.MainAttack();
-        }
-        // rayo de luz
-        else if (Input.GetButtonDown("Fire2"))
-        {
-            _myPlayerAttackController.Shoot();
-        }
-        // ataque giratorio
-        else if (Input.GetButtonDown("Fire3"))
-        {
-            _myPlayerAttackController.SpintAttack();
-        }
+            // ataque principal
+            if (Input.GetButtonDown("Fire1"))
+            {
+                _myPlayerAttackController.MainAttack();
+            }
+            // rayo de luz
+            else if (Input.GetButtonDown("Fire2"))
+            {
+                _myPlayerAttackController.Shoot();
+            }
+            // ataque giratorio
+            else if (Input.GetButtonDown("Fire3"))
+            {
+                _myPlayerAttackController.SpintAttack();
+            }
 
-        // rodar
-        if (Input.GetButtonDown("Roll"))
-        {
-            _myPlayerMovementController.Rodar();
-        }
-        // movimiento
-        else
-        {
-            _verticalInput = Input.GetAxis("Vertical");
-            _horizontalInput = Input.GetAxis("Horizontal");
-            Vector3 movementInput = new Vector3(_horizontalInput, _verticalInput, 0);
-            _myPlayerMovementController.SetMovementDirection(movementInput);
-        }
+            // rodar
+            if (Input.GetButtonDown("Roll"))
+            {
+                _myPlayerMovementController.Rodar();
+            }
+            // movimiento
+            else
+            {
+                _verticalInput = Input.GetAxis("Vertical");
+                _horizontalInput = Input.GetAxis("Horizontal");
+                Vector3 movementInput = new Vector3(_horizontalInput, _verticalInput, 0);
+                _myPlayerMovementController.SetMovementDirection(movementInput);
+            }
 
-        // cambiar de color
-        // rueda del ratón
-        _scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        if (_scrollInput != 0)
-        {
-            _myPlayerChangeColors.ChangeColor(_scrollInput);
-        }
-        // mando
-        ColorsController(1, KeyCode.Joystick1Button5);
-        ColorsController(-1, KeyCode.Joystick1Button4);
-        // números del teclado
-        PressNumber(0, KeyCode.Alpha1);
-        PressNumber(1, KeyCode.Alpha2);
-        PressNumber(2, KeyCode.Alpha3);
-        PressNumber(3, KeyCode.Alpha4);
-        PressNumber(4, KeyCode.Alpha5);
+            // cambiar de color
+            // rueda del ratón
+            _scrollInput = Input.GetAxis("Mouse ScrollWheel");
+            if (_scrollInput != 0)
+            {
+                _myPlayerChangeColors.ChangeColor(_scrollInput);
+            }
+            // mando
+            ColorsController(1, KeyCode.Joystick1Button5);
+            ColorsController(-1, KeyCode.Joystick1Button4);
+            // números del teclado
+            PressNumber(0, KeyCode.Alpha1);
+            PressNumber(1, KeyCode.Alpha2);
+            PressNumber(2, KeyCode.Alpha3);
+            PressNumber(3, KeyCode.Alpha4);
+            PressNumber(4, KeyCode.Alpha5);
 
-        // girar la flecha de dirección con el mando
-        _rightHorizontal = Input.GetAxis("RightHorizontal");
-        _rightVertical = Input.GetAxis("RightVertical");
-        Vector3 right = new Vector3(_rightHorizontal, _rightVertical, 0);
-        DeadZone(ref right);
-        if (right.magnitude != 0)
-        {
-            _directionArrow.SetDirection(right);
+            // girar la flecha de dirección con el mando
+            _rightHorizontal = Input.GetAxis("RightHorizontal");
+            _rightVertical = Input.GetAxis("RightVertical");
+            Vector3 right = new Vector3(_rightHorizontal, _rightVertical, 0);
+            DeadZone(ref right);
+            if (right.magnitude != 0)
+            {
+                _directionArrow.SetDirection(right);
+            }
         }
     }
 }

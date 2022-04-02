@@ -8,7 +8,7 @@ public class RayAnimation : MonoBehaviour
     [SerializeField]
     private float _fps = 30f;
     // cada cuantos fps cambia la textura
-    // cuanto menor sea el valor antes cambiará
+    // cuanto mayor sea el valor antes cambiará
     #endregion
 
     #region properties

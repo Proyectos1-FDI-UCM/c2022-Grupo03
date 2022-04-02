@@ -234,6 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxLife: 1
   _desiredTimeToRecovery: 5
+  healthBar: {fileID: 0}
 --- !u!50 &4946740501492387813
 Rigidbody2D:
   serializedVersion: 4
@@ -355,10 +356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6189800c19ea4694d877abe1a374e670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireRate: 5
-  reloading: 0
   ammo: {fileID: 8890617556646615505, guid: ca5ef1b7dba82a744af1cca620c22584, type: 3}
   damage: 1
+  _maxrate: 6
+  _minrate: 3
 --- !u!1 &6812034781063012848
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,4 +438,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MISS!!
+  m_Text: Message

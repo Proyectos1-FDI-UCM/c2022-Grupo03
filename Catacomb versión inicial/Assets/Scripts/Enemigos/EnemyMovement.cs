@@ -140,6 +140,10 @@ public class EnemyMovement : MonoBehaviour
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection * 100.0f, Color.red, 1.0f);
         hitArray = Physics2D.RaycastAll(transform.position, temp.normalized, 100.0f, layers);
+        foreach(RaycastHit2D ray in hitArray)
+        {
+            Debug.Log(ray.collider.gameObject.name);
+        }
         return hitArray[1];
     }
 

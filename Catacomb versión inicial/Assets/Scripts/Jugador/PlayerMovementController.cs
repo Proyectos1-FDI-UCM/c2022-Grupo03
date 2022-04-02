@@ -72,7 +72,10 @@ public class PlayerMovementController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = (_speed * _movementDirection);
-        // rb.MovePosition(_speed * _movementDirection * Time.deltaTime);
+        if (GameManager.Instance._currentState == GameState.inGame)
+        {
+            rb.velocity = (_speed * _movementDirection);
+
+        }
     }
 }

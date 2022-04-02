@@ -7,6 +7,7 @@ public class EnemyLifeComponent : MonoBehaviour
     #region parameters
     [SerializeField]
     private int _maxLife;
+    public int MaxLife { set => _maxLife = value; }
     [SerializeField]
     private float _desiredTimeToRecovery = 5f;
     // determina cada cuanto tiempo recuperan vida los enemigos azules
@@ -16,6 +17,7 @@ public class EnemyLifeComponent : MonoBehaviour
     #region properties
     private int _currentLife;
     public int CurrentLife { get => _currentLife; }
+
     private bool _isBlue = false; // determina si un enemigo es azul
     private float _elapsedTime = 0;
     #endregion
@@ -28,6 +30,7 @@ public class EnemyLifeComponent : MonoBehaviour
     private Shield _myShield;
     [SerializeField]
     private HpBarScript healthBar = null;
+
     #endregion
 
     #region methods
@@ -40,7 +43,7 @@ public class EnemyLifeComponent : MonoBehaviour
             _currentLife -= hitDamage;
             if (_myShield == null)
             {
-                _myMessage.SetMessage((-1).ToString());
+               _myMessage.SetMessage((-1).ToString());
             }
             if (_currentLife <= 0)
             {
@@ -49,11 +52,11 @@ public class EnemyLifeComponent : MonoBehaviour
         }
         else if (_isBlue && rndNum == 0) //es azul y lo ha esquivado
         {
-            _myMessage.SetMessage("MISS!!");
+           _myMessage.SetMessage("MISS!!");
         }
         if (_myShield == null)
         {
-            _myMessage.ActivateMessage();
+           _myMessage.ActivateMessage();
         }
         if (healthBar != null) healthBar.SetHealth(_currentLife);
     }
@@ -93,10 +96,8 @@ public class EnemyLifeComponent : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(_maxLife);
-            healthBar.SetHealth(_maxLife);
+            healthBar.SetHealth(_currentLife);
         }
-        healthBar.SetMaxHealth(_maxLife);
-        healthBar.SetHealth(_maxLife);
     }
 
     // Update is called once per frame

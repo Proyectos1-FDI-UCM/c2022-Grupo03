@@ -295,7 +295,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MISS!!
+  m_Text: Message
 --- !u!1 &9024427974031626944
 GameObject:
   m_ObjectHideFlags: 0

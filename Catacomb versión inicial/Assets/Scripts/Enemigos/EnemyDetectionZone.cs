@@ -16,11 +16,10 @@ public class EnemyDetectionZone : MonoBehaviour
     private bool explota = false;
     private float _elapsedTime;
     private float _tiempoexplosion = 0.5f;
-    private EnemyLifeComponent _enemyLifeComponent;
     #endregion
 
     #region properties
-    private int cont = 0;
+
     #endregion
 
     #region methods
@@ -38,10 +37,6 @@ public class EnemyDetectionZone : MonoBehaviour
             explota = true;   
         }
 
-    }
-    public bool HaExplotado()
-    {
-        return explota;
     }
     #endregion
 

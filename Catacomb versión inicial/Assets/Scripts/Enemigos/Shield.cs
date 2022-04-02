@@ -5,7 +5,8 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     #region parameters
-
+    [SerializeField]
+    private int _tankEnemyLife;
     #endregion
 
     #region properties
@@ -15,17 +16,20 @@ public class Shield : MonoBehaviour
 
     #region references
     private EnemyLifeComponent _myShieldLifeComponent;
-    // es un array porque tanto el escudo como el enemigo cuerpo a cuerpo tienen BoxCollider2D
-    private BoxCollider2D[] _myEnemyBoxCollider2D;
-    private EnemyMelee _myEnemyMelee;
+    private GameObject _myEnemy;
     private Transform _myEnemyTransform;
+    private EnemyMelee _myEnemyMelee;
+    private EnemyLifeComponent _myEnemyLifeComponent;
     #endregion
 
     #region methods
     private void RemoveShield()
     {
-        _myEnemyBoxCollider2D[1].enabled = true;    // se activa el box collider del enemigo cuerpo a cuerpo
-        _myEnemyMelee.enabled = true;   // se activa el script de ataque del enemigo cuerpo a cuerpo
+        // el enemigo cuerpo a cuerpo pasa a tener vida y, por lo tanto, puede recibir daño
+        _myEnemyLifeComponent = _myEnemy.AddComponent<EnemyLifeComponent>();
+        _myEnemyLifeComponent.MaxLife = _tankEnemyLife;
+        // se activa el script del ataque del enemigo cuerpo a cuerpo
+        _myEnemyMelee.enabled = true;
         // se rota al enemigo xq cuando se le destruye el escudo rota solo
         float negXScale = -_myEnemyTransform.localScale.x;
         _myEnemyTransform.localScale = new Vector3(negXScale, 1, 1);
@@ -38,11 +42,11 @@ public class Shield : MonoBehaviour
     void Start()
     {
         _myShieldLifeComponent = GetComponent<EnemyLifeComponent>();
-        _myEnemyBoxCollider2D = GetComponentsInParent<BoxCollider2D>();
-        _myEnemyMelee = GetComponentInParent<EnemyMelee>();
+        _myEnemy = transform.parent.gameObject;
+        _myEnemyTransform = transform.parent;
+        _myEnemyMelee = _myEnemy.GetComponent<EnemyMelee>();
         _primerColor = false;
         _segundoColor = false;
-        _myEnemyTransform = _myEnemyMelee.gameObject.transform;
     }
 
     // Update is called once per frame
@@ -54,7 +58,6 @@ public class Shield : MonoBehaviour
             case 3:
                 if (!_primerColor)
                 {
-                    Debug.Log("primer color");
                     GameObject.Destroy(GetComponent<Red>());
                     gameObject.AddComponent<Yellow>();
                     _primerColor = true;
@@ -63,7 +66,6 @@ public class Shield : MonoBehaviour
             case 2:
                 if (!_segundoColor)
                 {
-                    Debug.Log("segundo color");
                     GameObject.Destroy(GetComponent<Yellow>());
                     gameObject.AddComponent<Green>();
                     _segundoColor = true;

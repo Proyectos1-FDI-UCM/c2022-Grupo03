@@ -39,9 +39,7 @@ public class ProjectileMovement : MonoBehaviour
         PlayerLifeComponent _playerLifeComponent = collision.gameObject.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
         {
-            //Debug.Log("el jugador ha sufrido daño");
-            // hay que descomentarlo
-            // _playerLifeComponent.Damage(_damage);
+            _playerLifeComponent.Damage(_damage);
 
             if (_mySpiderWebCollision != null)
             {

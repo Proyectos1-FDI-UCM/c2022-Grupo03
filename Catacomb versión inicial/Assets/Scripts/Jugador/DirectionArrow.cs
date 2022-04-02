@@ -63,35 +63,38 @@ public class DirectionArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // hacer que la flecha de dirección esté siempre en la posición del jugador
-        _myTransform.position = _playerTransform.position;
-
-        int indice = _myPlayerChangeColors.GetCurrentColorIndex();
-        _myRenderer.color = GameManager.Instance.Colors[indice];
-
-        // rotación de la flecha de dirección en caso de utilizar teclado y ratón
-        if (!_controllerConnected)
+        if (GameManager.Instance._currentState == GameState.inGame)
         {
-            // dirección de la flecha, que indica hacia donde se está apuntando
-            Vector3 targetPoint = WorldPointWithoutZ(Input.mousePosition);
-            Vector3 dir = targetPoint - _playerTransform.position;
-            _myTransform.right = dir.normalized;
-        }
+            // hacer que la flecha de dirección esté siempre en la posición del jugador
+            _myTransform.position = _playerTransform.position;
 
-        // contador de tiempo que se inicia cuando no se recibe input (no ha cambiado el transform de la flecha)
-        // si llega al tiempo establecido, si hay un mando conectado o no
-        if (_myTransform.hasChanged)
-        {
-            _myTransform.hasChanged = false;
-            _elapsedTime = 0;
-        }
-        else
-        {
-            _elapsedTime += Time.deltaTime;
-            if (_elapsedTime > _durationUntilCheck)
+            int indice = _myPlayerChangeColors.GetCurrentColorIndex();
+            _myRenderer.color = GameManager.Instance.Colors[indice];
+
+            // rotación de la flecha de dirección en caso de utilizar teclado y ratón
+            if (!_controllerConnected)
             {
-                _check = true;
+                // dirección de la flecha, que indica hacia donde se está apuntando
+                Vector3 targetPoint = WorldPointWithoutZ(Input.mousePosition);
+                Vector3 dir = targetPoint - _playerTransform.position;
+                _myTransform.right = dir.normalized;
+            }
+
+            // contador de tiempo que se inicia cuando no se recibe input (no ha cambiado el transform de la flecha)
+            // si llega al tiempo establecido, si hay un mando conectado o no
+            if (_myTransform.hasChanged)
+            {
+                _myTransform.hasChanged = false;
                 _elapsedTime = 0;
+            }
+            else
+            {
+                _elapsedTime += Time.deltaTime;
+                if (_elapsedTime > _durationUntilCheck)
+                {
+                    _check = true;
+                    _elapsedTime = 0;
+                }
             }
         }
     }

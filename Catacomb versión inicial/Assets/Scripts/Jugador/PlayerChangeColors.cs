@@ -38,15 +38,19 @@ public class PlayerChangeColors : MonoBehaviour
     // métodos para cambiar de color
     public void SetCurrentColor(int indice)
     {
-        _currentColor = IndexToColor(indice);
-        GameManager.Instance.OnPlayerChangeColor(GameManager.Instance.LightColors[indice]);
+        if (indice < GameManager.Instance.NumActiveCols)
+        {
+            _currentColor = IndexToColor(indice);
+            GameManager.Instance.OnPlayerChangeColor(GameManager.Instance.LightColors[indice]);
+        }
     }
 
     public void ChangeColor(float variation)
     {
+        int limIndexCol = GameManager.Instance.NumActiveCols - 1;
         if (variation > 0f)
         {
-            if (_currentColor >= colors.Rosa)
+            if (_currentColor >= colors.Rosa || _currentColor >= IndexToColor(limIndexCol))
             {
                 _currentColor = 0;
             }
@@ -59,7 +63,7 @@ public class PlayerChangeColors : MonoBehaviour
         {
             if (_currentColor <= 0)
             {
-                _currentColor = colors.Rosa;
+                _currentColor = IndexToColor(limIndexCol);
             }
             else
             {
@@ -69,33 +73,6 @@ public class PlayerChangeColors : MonoBehaviour
         int indice = ColorToIndex(_currentColor);
         GameManager.Instance.OnPlayerChangeColor(GameManager.Instance.LightColors[indice]);
     }
-
-    /*
-    private string ColorToString(colors col)
-    {
-        // inicialización de colString
-        string colString = "";
-        switch (col)
-        {
-            case colors.Rojo:
-                colString = "Rojo";
-                break;
-            case colors.Amarillo:
-                colString = "Amarillo";
-                break;
-            case colors.Azul:
-                colString = "Azul";
-                break;
-            case colors.Verde:
-                colString = "Verde";
-                break;
-            case colors.Rosa:
-                colString = "Rosa";
-                break;
-        }
-        return colString;
-    }
-    */
     #endregion
 
     // Start is called before the first frame update

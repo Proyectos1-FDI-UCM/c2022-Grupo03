@@ -10,20 +10,21 @@ public class CameraMovementController : MonoBehaviour
     #endregion
 
     #region references
-    [SerializeField]
-    private Transform target;
+    private GameObject _player;
+    private Transform _playerTransform;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _player = GameObject.Find("Player");
+        _playerTransform = _player.transform;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 desiredPos = new Vector3(target.position.x, target.position.y, transform.position.z);
+        Vector3 desiredPos = new Vector3(_playerTransform.position.x, _playerTransform.position.y, transform.position.z);
         Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed);
         transform.position = smoothedPos;
     }
