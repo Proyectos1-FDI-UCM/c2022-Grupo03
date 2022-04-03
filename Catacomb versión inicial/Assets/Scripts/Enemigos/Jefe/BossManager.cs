@@ -6,6 +6,8 @@ public class BossManager : MonoBehaviour
 {
     #region parameters
     [SerializeField]
+    private float _timeToStart;
+    [SerializeField]
     private float _durationFirstState;
     [SerializeField]
     private float _durationSecondState;
@@ -14,7 +16,6 @@ public class BossManager : MonoBehaviour
     private Vector3[] _legOffsets = { new Vector3(-3, -1, 0), new Vector3(-3, 1, 0), new Vector3(3, -1, 0), new Vector3(3, 1, 0) };
     [SerializeField]
     private float _rotationFactor;
-    
     #endregion
 
     #region properties
@@ -133,40 +134,26 @@ public class BossManager : MonoBehaviour
 
     private void StartBoss()
     {
-        _bossLifeBar.SetActive(true);
-
         _spiderBody.SetActive(true);
-        _spiderBodyTransform = _spiderBody.GetComponent<Transform>();
-        _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
-        _spiderLegs = new GameObject[4];
-        _transitionMade = false;
-        _myNestSpawner = GetComponent<NestSpawner>();
-        _mySpiderWebAttack = GetComponent<SpiderWebAttack>();
-
+        _bossLifeBar.SetActive(true);
         // el jefe comienza en el estado 0
         InitiateStateZero();
-        _spiderHeadSprite.color = Color.white;
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        _state = -1;
-        Invoke(nameof(StartBoss), 5f);
-        /*
+        // referencias a otros componentes
         _spiderBodyTransform = _spiderBody.GetComponent<Transform>();
         _spiderHeadSprite = _spiderHead.GetComponent<SpriteRenderer>();
-        _spiderHeadSprite.color = Color.white;
         _spiderLegs = new GameObject[4];
         _transitionMade = false;
         _myNestSpawner = GetComponent<NestSpawner>();
         _mySpiderWebAttack = GetComponent<SpiderWebAttack>();
 
-        // el jefe comienza en el estado 0
-        InitiateStateZero();
-        */
+        _state = -1;
+        Invoke(nameof(StartBoss), _timeToStart);
     }
 
     // Update is called once per frame
@@ -177,6 +164,7 @@ public class BossManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("estado 0");
+                _spiderHeadSprite.color = Color.white;
                 _mySpiderWebAttack.SpiderWeb();
                 int contLegs = CountCurrentLegs();
                 if (contLegs == 0)

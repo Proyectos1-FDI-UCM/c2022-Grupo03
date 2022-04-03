@@ -79,7 +79,7 @@ public class PlayerInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance._currentState == GameState.inGame)
+        if (GameManager.Instance.CurrentState == GameState.inGame)
         {
             // ataque principal
             if (Input.GetButtonDown("Fire1"))

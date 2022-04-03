@@ -221,8 +221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e617c1457134e45b620ef8b6b2da6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 5
-  healthBar: {fileID: 0}
+  _maxLife: 3
+  _deathTime: 0
+  _healthBar: {fileID: 0}
 --- !u!120 &6468387945398862691
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -396,5 +397,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341b0eb0f555cbf4fa2743c4e88a71a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoMuerte: 1000
   _myAnimator: {fileID: 6468387945398862695}

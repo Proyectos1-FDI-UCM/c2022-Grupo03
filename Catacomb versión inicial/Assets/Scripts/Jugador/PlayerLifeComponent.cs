@@ -7,12 +7,15 @@ public class PlayerLifeComponent : MonoBehaviour
     #region parameters
     [SerializeField]
     private int _maxLife = 5;
+    public int MaxLife { get => _maxLife; }
+
     [SerializeField]
     private float _deathTime;
     #endregion
 
     #region properties
     private int _currentLife;
+    public int CurrentLife { get => _currentLife; set => _currentLife = value; }
     private float _elapsedTime;
     #endregion
 
@@ -20,6 +23,7 @@ public class PlayerLifeComponent : MonoBehaviour
     private DeathAnimation _deathAnimation;
     [SerializeField]
     private HpBarScript _healthBar;
+
 
     #endregion
 
@@ -29,13 +33,12 @@ public class PlayerLifeComponent : MonoBehaviour
         if (_currentLife > 0)
         {
             _currentLife -= damage;
-            Debug.Log(_currentLife);
             _deathAnimation.DamageAni(); // animación cuando recibe daño
             _healthBar.SetHealth(_currentLife);
             if (_currentLife <= 0)
             {
                 _deathAnimation.DeathAni();
-                GameManager.Instance._currentState = GameState.gameOver;
+                GameManager.Instance.CurrentState = GameState.gameOver;
             }
         }
     }
@@ -55,7 +58,7 @@ public class PlayerLifeComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _currentLife = _maxLife;
+        _currentLife = GameManager.Instance.SavedLife;
         _deathAnimation = GetComponent<DeathAnimation>();
         _healthBar.SetMaxHealth(_maxLife);
         _healthBar.SetHealth(_currentLife);
@@ -64,10 +67,9 @@ public class PlayerLifeComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance._currentState == GameState.gameOver)
+        if (GameManager.Instance.CurrentState == GameState.gameOver)
         {
             _elapsedTime += Time.deltaTime;
-            Debug.Log(_elapsedTime);
             if (_elapsedTime > _deathTime)
             {
                 GameManager.Instance.OnPlayerDefeat();

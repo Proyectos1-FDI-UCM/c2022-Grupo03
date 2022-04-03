@@ -63,7 +63,7 @@ public class DirectionArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance._currentState == GameState.inGame)
+        if (GameManager.Instance.CurrentState == GameState.inGame)
         {
             // hacer que la flecha de dirección esté siempre en la posición del jugador
             _myTransform.position = _playerTransform.position;

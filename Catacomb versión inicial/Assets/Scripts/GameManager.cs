@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region properties
-    public GameState _currentState;
+    private int _savedLife;
+    public int SavedLife { get => _savedLife; }
+    private int _currentLevel;
+    private GameState _currentState;
+    public GameState CurrentState { get => _currentState; set => _currentState = value; }
     static private GameManager _instance;
     // accesor a la instancia del GameManager
     static public GameManager Instance
@@ -26,7 +30,7 @@ public class GameManager : MonoBehaviour
     List<EnemyLifeComponent> _listOfEnemies;
 
     // paletas de colores
-    public int _numActiveCols;
+    private int _numActiveCols;
     public int NumActiveCols { get => _numActiveCols; }
     [SerializeField]
     private Color[] _colors = new Color[5];
@@ -47,8 +51,7 @@ public class GameManager : MonoBehaviour
 
     #region references
     private static UI_Manager _myUIManager;
-    private PlayerInputManager _playerInputManager;
-    private DirectionArrow _directionArrow;
+    private static PlayerLifeComponent _myPlayerLifeComponent;
     #endregion
 
     #region methods
@@ -56,7 +59,13 @@ public class GameManager : MonoBehaviour
     private void TransitionLevel(int numLevel)
     {
         _numActiveCols++;
-        SceneManager.LoadScene(numLevel + 1, LoadSceneMode.Single);
+        _currentState = GameState.inGame;
+        _savedLife = _myPlayerLifeComponent.CurrentLife + 1;
+        SceneManager.LoadScene(numLevel, LoadSceneMode.Single);
+        if (numLevel == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // generador de numeros aleatorios
@@ -94,6 +103,8 @@ public class GameManager : MonoBehaviour
     // se reinicia el nivel
     public void OnPlayerDefeat()
     {
+        _currentState = GameState.inGame;
+        _savedLife = _myPlayerLifeComponent.MaxLife;
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(activeScene.buildIndex, LoadSceneMode.Single);
     }
@@ -162,12 +173,14 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _myUIManager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
+        _myPlayerLifeComponent = GameObject.Find("Player").GetComponent<PlayerLifeComponent>();
         // la primera vez esta instancia del script es null
         // las siguientes veces ya no es null
         if (_instance == null)
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
+            _savedLife = _myPlayerLifeComponent.MaxLife;
         }
         // si ya hay una instancia los objetos de la misma clase se destruyen
         // entonces, se consigue que no haya dos GameManager
@@ -176,18 +189,16 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         _listOfEnemies = new List<EnemyLifeComponent>();
-
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        // menu de pausa
+        _numActiveCols = 3;
         Time.timeScale = 1f;
-
-        // _numActiveCols = 3;
         _currentState = GameState.inGame;
+        _currentLevel = 1;
     }
 
     // Update is called once per frame
@@ -196,9 +207,15 @@ public class GameManager : MonoBehaviour
         // actualiza el HUD con los enemigos restantes
         _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
 
+        // para debug
         if (Input.GetKeyDown(KeyCode.P))
         {
-            TransitionLevel(3);
+            _currentLevel++;
+            if (_currentLevel > 3)
+            {
+                _currentLevel = 0;
+            }
+            TransitionLevel(_currentLevel);
         }
     }
 }

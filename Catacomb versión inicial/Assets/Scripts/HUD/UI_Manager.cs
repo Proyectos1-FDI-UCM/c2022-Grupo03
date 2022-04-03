@@ -20,13 +20,11 @@ public class UI_Manager : MonoBehaviour
     private Image _currentColorImage;
     [SerializeField]
     private GameObject _spinCooldownObject;
-    Text _spinCooldownText;
-    [SerializeField]
+    private Text _spinCooldownText;
     private Image _imageSpinCd;
     [SerializeField]
     private GameObject _rayCooldownObject;
     private Text _rayCooldownText;
-    [SerializeField]
     private Image _imageRayCd;
     [SerializeField]
     private GameObject _enemiesLeftObject;
@@ -45,11 +43,11 @@ public class UI_Manager : MonoBehaviour
     // HUD relativa al tiempo de espera de las habilidades
     public void UpdateSpinCooldown(float cd, float duration)
     {
-        UpdateCooldown(cd, duration, _spinCooldownObject, _imageSpinCd, _spinCooldownText, ref _spinTextAppears);
+        UpdateCooldown(cd, duration, _spinCooldownText.gameObject, _imageSpinCd, _spinCooldownText, ref _spinTextAppears);
     }
     public void UpdateRayCooldown(float cd, float duration)
     {
-        UpdateCooldown(cd, duration, _rayCooldownObject, _imageRayCd, _rayCooldownText, ref _rayTextAppears);
+        UpdateCooldown(cd, duration, _rayCooldownText.gameObject, _imageRayCd, _rayCooldownText, ref _rayTextAppears);
     }
     private void UpdateCooldown(float cd, float duration, GameObject cdObject, Image imageCd, Text cdText, ref bool textAppears)
     {
@@ -98,19 +96,21 @@ public class UI_Manager : MonoBehaviour
 
     private void Awake()
     {
-        _currentColorImage = _currentColorObject.GetComponent<Image>();
-        _spinCooldownText = _spinCooldownObject.GetComponent<Text>();
-        _rayCooldownText = _rayCooldownObject.GetComponent<Text>();
+        _imageSpinCd = _spinCooldownObject.GetComponentsInChildren<Image>()[1];
+        _imageRayCd = _rayCooldownObject.GetComponentsInChildren<Image>()[1];
         _enemiesLeftText = _enemiesLeftObject.GetComponent<Text>();
+        _currentColorImage = _currentColorObject.GetComponent<Image>();
+        _spinCooldownText = _spinCooldownObject.GetComponentInChildren<Text>();
+        _rayCooldownText = _rayCooldownObject.GetComponentInChildren<Text>();
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        _spinCooldownObject.SetActive(false);
+        _spinCooldownText.gameObject.SetActive(false);
         _imageSpinCd.fillAmount = 0f;
-        _rayCooldownObject.SetActive(false);
+        _rayCooldownText.gameObject.SetActive(false);
         _imageRayCd.fillAmount = 0f;
         _spinTextAppears = _rayTextAppears = false;
     }
