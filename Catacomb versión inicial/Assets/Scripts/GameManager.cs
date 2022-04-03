@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     private float waveDuration = 15;
     private float timePassed = 0;
     private int nEnemies = -1;
+    public bool nivelTerminado;
+    private bool _delay;
+    public bool Delay { get => _delay; }
     #endregion
 
     #region references
@@ -56,8 +59,9 @@ public class GameManager : MonoBehaviour
 
     #region methods
     // flujo de juego
-    private void TransitionLevel(int numLevel)
+    private  IEnumerator TransitionLevel(int numLevel, float time)
     {
+        yield return new WaitForSeconds(time);
         _numActiveCols++;
         _currentState = GameState.inGame;
         _savedLife = _myPlayerLifeComponent.CurrentLife + 1;
@@ -170,13 +174,13 @@ public class GameManager : MonoBehaviour
     }
 
     // pasa de oleada
-    public void NextWave()
+    public void NextWave(int value)
     {
-        currentWave++;
+        currentWave = value;
     }
 
     // controla el número de enemigos que hay en el nivel, se llama cada vez que se instancia un enemigo
-    public void EnemySpawned() { nEnemies++; }
+    public void EnemySpawned() { nEnemies++; _delay = false; }
     public void EnemyDestroyed() { nEnemies--; }
 
     public int GetCurrentWave() { return currentWave; }
@@ -188,10 +192,20 @@ public class GameManager : MonoBehaviour
         nEnemies = 0;
     }
 
+    private void DeactiveLvMessage()
+    {
+        _myUIManager.SetLvMessage(false);
+    }
+
     private void Awake()
     {
         _myUIManager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
         _myPlayerLifeComponent = GameObject.Find("Player").GetComponent<PlayerLifeComponent>();
+        /*
+        _myUIManager.LevelMessage("Nivel " + _currentLevel);
+        _myUIManager.SetLvMessage(true);
+        Invoke(nameof(DeactiveLvMessage), 5f);
+        */
         // la primera vez esta instancia del script es null
         // las siguientes veces ya no es null
         if (_instance == null)
@@ -213,10 +227,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _delay = false;
+        _currentLevel = 1;
         _numActiveCols = 3;
         Time.timeScale = 1f;
         _currentState = GameState.inGame;
-        _currentLevel = 1;
+        nivelTerminado = false;
     }
 
     // Update is called once per frame
@@ -225,15 +241,32 @@ public class GameManager : MonoBehaviour
         // actualiza el HUD con los enemigos restantes
         _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
 
+        if (!_delay)
+        {
+            if (WaveTimer() || nEnemies == 0)
+            {
+                Debug.Log("ha entrado");
+                currentWave++;
+                _delay = true;
+            }
+        }
+
         // para debug
-        if (Input.GetKeyDown(KeyCode.P))
+        if (nivelTerminado || Input.GetKeyDown(KeyCode.P))
         {
             _currentLevel++;
             if (_currentLevel > 3)
             {
                 _currentLevel = 0;
             }
-            TransitionLevel(_currentLevel);
+            /*
+            _myUIManager.LevelMessage("Nivel terminado");
+            _myUIManager.SetLvMessage(true);
+            Invoke(nameof(DeactiveLvMessage), 5f);
+            */
+            StartCoroutine(TransitionLevel(_currentLevel, 0f));
+            nivelTerminado = false;
+            currentWave = -1;
         }
     }
 }

@@ -58,8 +58,8 @@ public class PlayerAttackController : MonoBehaviour
     private PlayerMovementController _myPlayerMovementController;
     private PlayerChangeColors _myPlayerChangeColors;
     private AttackAnimation _myAttackAnimation;
-    private delegate void UpdateCooldown(float cd, float duration);
     // los delegados sirven para pasar métodos como argumentos de otro método
+    private delegate void UpdateCooldown(float cd, float duration);
     private LayerMask _rayLayerMask;
     // el raycast tiene que ignorar al player y a las damage zones
     private LineRenderer _myLineRenderer;
@@ -239,7 +239,10 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
         _myPlayerChangeColors = GetComponent<PlayerChangeColors>();
         _myAttackAnimation = GetComponent<AttackAnimation>();
-        _rayLayerMask = ~(LayerMask.GetMask("Player") | LayerMask.GetMask("DmgZones"));
+        _rayLayerMask = ~(LayerMask.GetMask("Player") |
+            LayerMask.GetMask("Item") |
+            LayerMask.GetMask("DmgZones") |
+            LayerMask.GetMask("Obstacle(LetBulletPass)"));
         _myLineRenderer = GetComponent<LineRenderer>();
         _bossManagerObject = GameObject.Find("BossManager");
         if (_bossManagerObject != null)

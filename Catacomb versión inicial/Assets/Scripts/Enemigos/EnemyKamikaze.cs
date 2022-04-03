@@ -21,6 +21,7 @@ public class EnemyKamikaze : MonoBehaviour
     private bool exploto = false;
     private EnemyDetectionZone _myEnemyDetectionZone;
     private Red _myRedComponent;
+    private EnemyLifeComponent _myEnemyLifeComponent;
     #endregion
 
     #region methods
@@ -40,6 +41,7 @@ public class EnemyKamikaze : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _myEnemyLifeComponent = GetComponent<EnemyLifeComponent>();
         _myTransform = transform;
         rotation = _myTransform.rotation;
         instPoint = transform.position;
@@ -55,6 +57,8 @@ public class EnemyKamikaze : MonoBehaviour
     {
         if (exploto)
         {
+            GameManager.Instance.OnEnemyDies(_myEnemyLifeComponent);
+            GameManager.Instance.EnemyDestroyed();
             Destroy(gameObject);
         }
     }

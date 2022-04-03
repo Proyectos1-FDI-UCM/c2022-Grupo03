@@ -21,9 +21,11 @@ public class WaveManager : MonoBehaviour
     private Vector2 spawnAreaSize;
     private Vector2[] spawnPos;
     #endregion
+
     #region references
     private Transform _myTransform;
     #endregion
+
     #region methods
     private void InitializeWaveArray()
     {
@@ -37,14 +39,25 @@ public class WaveManager : MonoBehaviour
     {
         if (GameManager.Instance.GetNumEnemies() < 0) GameManager.Instance.InitEnemyNumber();
         int[] currentWave = waves[GameManager.Instance.GetCurrentWave()];
-        Debug.Log(GameManager.Instance.GetCurrentWave());
         for (int i = 0; i < currentWave.Length; i++)
         {
-            //el tipo de enemigo que se spawnea depende de waveContent
+            // el tipo de enemigo que se spawnea depende de waveContent
             Instantiate(type[currentWave[i]], spawnPos[i], Quaternion.identity, _myTransform);
             GameManager.Instance.EnemySpawned();
         }
-        Debug.Log(GameManager.Instance.GetNumEnemies());
+    }
+
+    private void NextLevel()
+    {
+        Debug.Log(GameManager.Instance.GetCurrentWave());
+        if (GameManager.Instance.GetCurrentWave() < waves.Length)
+        {
+            Spawn();
+        }
+        else
+        {
+            GameManager.Instance.nivelTerminado = true;
+        }
     }
 
     #endregion
@@ -62,18 +75,19 @@ public class WaveManager : MonoBehaviour
                 cont++;
             }
         }
-        Invoke("Spawn", 3.0f);
-        
+        // Invoke(nameof(Spawn), 3.0f);
+
         InitializeWaveArray();
     }
 
     void Update()
     {
-        Debug.Log("enemies: " + GameManager.Instance.GetNumEnemies());
-        if (GameManager.Instance.WaveTimer() || GameManager.Instance.GetNumEnemies() == 0)
+        if (!GameManager.Instance.Delay)
         {
-            GameManager.Instance.NextWave();
-            Invoke("Spawn", 3.0f);
+            if (GameManager.Instance.WaveTimer() || GameManager.Instance.GetNumEnemies() == 0)
+            {
+                Invoke(nameof(NextLevel), 3.0f);
+            }
         }
     }
 }

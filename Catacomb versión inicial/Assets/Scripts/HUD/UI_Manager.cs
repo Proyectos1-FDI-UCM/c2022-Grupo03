@@ -31,6 +31,9 @@ public class UI_Manager : MonoBehaviour
     private Text _enemiesLeftText;
     [SerializeField]
     private GameObject _pauseMenu;
+    [SerializeField]
+    private GameObject _level;
+    private Text _levelText;
     #endregion
 
     #region methods
@@ -94,6 +97,16 @@ public class UI_Manager : MonoBehaviour
         GameManager.Instance.BackToTitle();
     }
 
+    public void LevelMessage(string newText)
+    {
+        _levelText.text = newText;
+    }
+
+    public void SetLvMessage(bool enabled)
+    {
+        _level.SetActive(enabled);
+    }
+
     private void Awake()
     {
         _imageSpinCd = _spinCooldownObject.GetComponentsInChildren<Image>()[1];
@@ -102,6 +115,7 @@ public class UI_Manager : MonoBehaviour
         _currentColorImage = _currentColorObject.GetComponent<Image>();
         _spinCooldownText = _spinCooldownObject.GetComponentInChildren<Text>();
         _rayCooldownText = _rayCooldownObject.GetComponentInChildren<Text>();
+        // _levelText = _level.GetComponent<Text>();
     }
     #endregion
 
