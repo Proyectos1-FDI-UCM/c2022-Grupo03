@@ -64,6 +64,7 @@ public class EnemyLifeComponent : MonoBehaviour
     private void Die()
     {
         GameManager.Instance.OnEnemyDies(this);
+        GameManager.Instance.EnemyDestroyed();
         GameObject.Destroy(gameObject);
     }
     #endregion

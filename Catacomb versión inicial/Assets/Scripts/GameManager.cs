@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     private int currentWave = 0;
     private float waveDuration = 15;
     private float timePassed = 0;
-    private int nEnemies = 0;
+    private int nEnemies = -1;
     #endregion
 
     #region references
@@ -157,18 +157,36 @@ public class GameManager : MonoBehaviour
     }
 
     // gestión de oleadas
-    public bool outOfTime()
+    // controla el tiempo de cada oleada
+    public bool WaveTimer()
     {
         timePassed += Time.deltaTime;
         if (timePassed > waveDuration)
         {
-            currentWave++;
             timePassed = 0;
             return true;
         }
         return false;
     }
+
+    // pasa de oleada
+    public void NextWave()
+    {
+        currentWave++;
+    }
+
+    // controla el número de enemigos que hay en el nivel, se llama cada vez que se instancia un enemigo
     public void EnemySpawned() { nEnemies++; }
+    public void EnemyDestroyed() { nEnemies--; }
+
+    public int GetCurrentWave() { return currentWave; }
+
+    public int GetNumEnemies() { return nEnemies; }
+
+    public void InitEnemyNumber()
+    {
+        nEnemies = 0;
+    }
 
     private void Awake()
     {

@@ -106,7 +106,6 @@ public class EnemyMovement : MonoBehaviour
         SetPlayerDirection();
         if (hit.collider == targetObject.GetComponent<Collider2D>())
         {
-            Debug.Log(hit.collider.gameObject);
             _movementDirection = temp.normalized;
             if (hit.distance > _range) SetPlayerDirection();
             else if (ranged && (hit.distance < _range)) SetEscapeDirection();
@@ -140,10 +139,10 @@ public class EnemyMovement : MonoBehaviour
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection * 100.0f, Color.red, 1.0f);
         hitArray = Physics2D.RaycastAll(transform.position, temp.normalized, 100.0f, layers);
-        foreach(RaycastHit2D ray in hitArray)
-        {
-            Debug.Log(ray.collider.gameObject.name);
-        }
+        //foreach(RaycastHit2D ray in hitArray)
+        //{
+        //    Debug.Log(ray.collider.gameObject.name);
+        //}
         return hitArray[1];
     }
 

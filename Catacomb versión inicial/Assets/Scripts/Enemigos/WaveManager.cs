@@ -5,8 +5,6 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     #region properties
-    private int waveNumber = 0;
-    private int nEnemies = 3;
     [SerializeField]
     private GameObject[] type;
 
@@ -37,16 +35,18 @@ public class WaveManager : MonoBehaviour
     }
     private void Spawn()
     {
-        int[] currentWave = waves[waveNumber];
-
+        if (GameManager.Instance.GetNumEnemies() < 0) GameManager.Instance.InitEnemyNumber();
+        int[] currentWave = waves[GameManager.Instance.GetCurrentWave()];
+        Debug.Log(GameManager.Instance.GetCurrentWave());
         for (int i = 0; i < currentWave.Length; i++)
         {
             //el tipo de enemigo que se spawnea depende de waveContent
             Instantiate(type[currentWave[i]], spawnPos[i], Quaternion.identity, _myTransform);
             GameManager.Instance.EnemySpawned();
-            nEnemies++;
         }
+        Debug.Log(GameManager.Instance.GetNumEnemies());
     }
+
     #endregion
     void Start()
     {
@@ -58,20 +58,22 @@ public class WaveManager : MonoBehaviour
         {
             for (int j = 0; j < spawnAreaSize.y; j++)
             {
-                spawnPos[cont] = new Vector2(transform.position.x + i, transform.position.y + j);
+                spawnPos[cont] = new Vector2(transform.position.x + i, transform.position.y - j);
                 cont++;
             }
         }
         Invoke("Spawn", 3.0f);
+        
         InitializeWaveArray();
     }
 
     void Update()
     {
-        if (GameManager.Instance.outOfTime() || nEnemies < 1)
+        Debug.Log("enemies: " + GameManager.Instance.GetNumEnemies());
+        if (GameManager.Instance.WaveTimer() || GameManager.Instance.GetNumEnemies() == 0)
         {
-            waveNumber++;
-            Spawn();
+            GameManager.Instance.NextWave();
+            Invoke("Spawn", 3.0f);
         }
     }
 }
