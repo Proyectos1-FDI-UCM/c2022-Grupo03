@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
     private int nEnemies = -1;
     public bool nivelTerminado;
     private bool _delay;
-    public bool Delay { get => _delay; }
+    private bool state;
+    public bool State { get => state; set => state = value; }
     #endregion
 
     #region references
@@ -192,6 +193,11 @@ public class GameManager : MonoBehaviour
         nEnemies = 0;
     }
 
+    public bool GetWaveState()
+    {
+        return state;
+    }
+
     private void DeactiveLvMessage()
     {
         _myUIManager.SetLvMessage(false);
@@ -228,6 +234,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _delay = false;
+        state = false;
         _currentLevel = 1;
         _numActiveCols = 3;
         Time.timeScale = 1f;
@@ -241,15 +248,17 @@ public class GameManager : MonoBehaviour
         // actualiza el HUD con los enemigos restantes
         _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
 
-        if (!_delay)
+        Debug.Log(timePassed);
+
+        if ((WaveTimer() || nEnemies == 0) && (!_delay))
         {
-            if (WaveTimer() || nEnemies == 0)
-            {
-                Debug.Log("ha entrado");
-                currentWave++;
-                _delay = true;
-            }
+            Debug.Log("ha entrado");
+            timePassed = 0;
+            currentWave++;
+            state = true;
+            _delay = true;
         }
+
 
         // para debug
         if (nivelTerminado || Input.GetKeyDown(KeyCode.P))

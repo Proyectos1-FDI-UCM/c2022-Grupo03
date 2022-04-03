@@ -37,19 +37,21 @@ public class WaveManager : MonoBehaviour
     }
     private void Spawn()
     {
+        Debug.Log("spawnentered");
         if (GameManager.Instance.GetNumEnemies() < 0) GameManager.Instance.InitEnemyNumber();
-        int[] currentWave = waves[GameManager.Instance.GetCurrentWave()];
-        for (int i = 0; i < currentWave.Length; i++)
+        Debug.Log("OAIHUDGUYAUDUAY  " + GameManager.Instance.GetCurrentWave());
+        Debug.Log("AAAAAAAAAAAAA  " + GameManager.Instance.GetCurrentWave());
+        Debug.Log("length: " + waves[1].Length);
+        for (int i = 0; i < waves[GameManager.Instance.GetCurrentWave()].Length; i++)
         {
             // el tipo de enemigo que se spawnea depende de waveContent
-            Instantiate(type[currentWave[i]], spawnPos[i], Quaternion.identity, _myTransform);
+            Instantiate(type[waves[GameManager.Instance.GetCurrentWave()][i]], spawnPos[i], Quaternion.identity, _myTransform);
             GameManager.Instance.EnemySpawned();
         }
     }
 
     private void NextLevel()
     {
-        Debug.Log(GameManager.Instance.GetCurrentWave());
         if (GameManager.Instance.GetCurrentWave() < waves.Length)
         {
             Spawn();
@@ -75,19 +77,18 @@ public class WaveManager : MonoBehaviour
                 cont++;
             }
         }
-        // Invoke(nameof(Spawn), 3.0f);
-
         InitializeWaveArray();
+
+        Invoke(nameof(Spawn), 3.0f);
     }
 
     void Update()
     {
-        if (!GameManager.Instance.Delay)
+        if (GameManager.Instance.State)
         {
-            if (GameManager.Instance.WaveTimer() || GameManager.Instance.GetNumEnemies() == 0)
-            {
-                Invoke(nameof(NextLevel), 3.0f);
-            }
+            Debug.Log("spawned");
+            Invoke(nameof(NextLevel), 0.0f);
+            GameManager.Instance.State = false;
         }
     }
 }
