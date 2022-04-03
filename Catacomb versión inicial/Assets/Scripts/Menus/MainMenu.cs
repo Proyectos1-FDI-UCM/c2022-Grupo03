@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
     #region methods
     public void StartMatch()
     {
-        SceneManager.LoadScene(2, LoadSceneMode.Single);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     public void QuitGame()
