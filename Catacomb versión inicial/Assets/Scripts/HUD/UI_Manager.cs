@@ -115,7 +115,7 @@ public class UI_Manager : MonoBehaviour
         _currentColorImage = _currentColorObject.GetComponent<Image>();
         _spinCooldownText = _spinCooldownObject.GetComponentInChildren<Text>();
         _rayCooldownText = _rayCooldownObject.GetComponentInChildren<Text>();
-        // _levelText = _level.GetComponent<Text>();
+        _levelText = _level.GetComponent<Text>();
     }
     #endregion
 

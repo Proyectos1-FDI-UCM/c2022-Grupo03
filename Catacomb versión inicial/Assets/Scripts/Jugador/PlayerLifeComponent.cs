@@ -39,6 +39,7 @@ public class PlayerLifeComponent : MonoBehaviour
             {
                 _deathAnimation.DeathAni();
                 GameManager.Instance.CurrentState = GameState.gameOver;
+                StartCoroutine(GameManager.Instance.LevelInfo("¡Has perdido!", 0f, _deathTime));
             }
         }
     }
