@@ -7,15 +7,11 @@ public enum GameState { inGame, pause, gameOver}
 public class GameManager : MonoBehaviour
 {
     #region parameters
-
+    [SerializeField]
+    private float _timeChangeLevel;
     #endregion
 
     #region properties
-    private int _savedLife;
-    public int SavedLife { get => _savedLife; }
-    private int _currentLevel;
-    private GameState _currentState;
-    public GameState CurrentState { get => _currentState; set => _currentState = value; }
     static private GameManager _instance;
     // accesor a la instancia del GameManager
     static public GameManager Instance
@@ -28,6 +24,15 @@ public class GameManager : MonoBehaviour
 
     // lista de enemigos
     List<EnemyLifeComponent> _listOfEnemies;
+
+    // flujo del juego
+    private GameState _currentState;
+    public GameState CurrentState { get => _currentState; set => _currentState = value; }
+    private int _currentLevel;
+    private int _savedLife;
+    public int SavedLife { get => _savedLife; }
+    private float _timeAppearLvMessage = 1f;
+    private float _timeDisappearLvMessage = 3f;
 
     // paletas de colores
     private int _numActiveCols;
@@ -59,27 +64,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region methods
-    // flujo de juego
-    private  IEnumerator TransitionLevel(int numLevel, float time)
-    {
-        yield return new WaitForSeconds(time);
-        _numActiveCols++;
-        _currentState = GameState.inGame;
-        _savedLife = _myPlayerLifeComponent.CurrentLife + 1;
-        SceneManager.LoadScene(numLevel, LoadSceneMode.Single);
-        if (numLevel == 0)
-        {
-            Destroy(gameObject);
-        }
-    }
-
     // generador de numeros aleatorios
     public int NumRandom(int minInclusive, int maxInclusive)
     {
         return Random.Range(minInclusive, maxInclusive + 1);
     }
 
-    // gestión de los enemigos
+    #region enemigos
     // actualiza la lista de enemigos cuando muere un enemigo
     public void OnEnemyDies(EnemyLifeComponent enemy)
     {
@@ -103,6 +94,44 @@ public class GameManager : MonoBehaviour
             GameObject.Destroy(enemy.gameObject);
         }
     }
+    #endregion
+
+    #region flujo
+    private IEnumerator TransitionLevel(int numLevel, float time)
+    {
+        // se muestra en pantalla el mensaje de nivel terminado
+        StartCoroutine(LevelInfo("Nivel terminado\n+1 vida", 0f, _timeChangeLevel));
+
+        yield return new WaitForSeconds(time);
+        _currentState = GameState.inGame;
+        // aumenta la vida del jugador
+        _numActiveCols++;
+        if (_savedLife < _myPlayerLifeComponent.MaxLife)
+        {
+            _savedLife = _myPlayerLifeComponent.CurrentLife + 1;
+        }
+
+        // se carga el siguiente nivel
+        SceneManager.LoadScene(numLevel, LoadSceneMode.Single);
+        if (numLevel == 0)
+        {
+            Destroy(gameObject);
+        }
+        // se muestra en pantalla el número del siguiente nivel
+        StartCoroutine(LevelInfo("Nivel " + _currentLevel, _timeAppearLvMessage, _timeDisappearLvMessage));
+    }
+
+    private void NextLevel(float time)
+    {
+        // aumenta el número de nivel
+        _currentLevel++;
+        if (_currentLevel > 3)
+        {
+            _currentLevel = 0;
+        }
+
+        StartCoroutine(TransitionLevel(_currentLevel, time));
+    }
 
     // se llama cuando el jugador pierde
     // se reinicia el nivel
@@ -112,27 +141,40 @@ public class GameManager : MonoBehaviour
         _savedLife = _myPlayerLifeComponent.MaxLife;
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(activeScene.buildIndex, LoadSceneMode.Single);
+        StartCoroutine(LevelInfo("Nivel" + _currentLevel, _timeAppearLvMessage, _timeDisappearLvMessage));
     }
+    #endregion
 
+    #region HUD
+    public IEnumerator LevelInfo(string lvText, float timeMessageAppear, float timeMessageDisappear)
+    {
+        yield return new WaitForSeconds(timeMessageAppear);
+        _myUIManager.LevelMessage(lvText);    // cambia el mensaje
+        _myUIManager.SetLvMessage(true);    // aparece el mensaje
+        Invoke(nameof(DeactiveLvMessage), timeMessageDisappear);  // se desactiva el mensaje
+    }
+    private void DeactiveLvMessage()
+    {
+        _myUIManager.SetLvMessage(false);
+    }
     // actualiza en el HUD el color de la espada
     public void OnPlayerChangeColor(Color color)
     {
         _myUIManager.UpdateCurrentColor(color);
     }
-
     // actualiza el tiempo de espera del ataque giratorio
     public void OnSpinCooldown(float cd, float duration)
     {
         _myUIManager.UpdateSpinCooldown(cd, duration);
     }
-
     // actualiza el tiempo de espera del rayo de luz
     public void OnRayCooldown(float cd, float duration)
     {
         _myUIManager.UpdateRayCooldown(cd, duration);
     }
+    #endregion
 
-    // menu de pausa
+    #region menuPausa
     public void PauseMenu()
     {
         if (_currentState == GameState.pause)
@@ -160,8 +202,9 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
+    #endregion
 
-    // gestión de oleadas
+    #region oleadas
     // controla el tiempo de cada oleada
     public bool WaveTimer()
     {
@@ -183,35 +226,16 @@ public class GameManager : MonoBehaviour
     // controla el número de enemigos que hay en el nivel, se llama cada vez que se instancia un enemigo
     public void EnemySpawned() { nEnemies++; _delay = false; }
     public void EnemyDestroyed() { nEnemies--; }
-
     public int GetCurrentWave() { return currentWave; }
-
     public int GetNumEnemies() { return nEnemies; }
-
-    public void InitEnemyNumber()
-    {
-        nEnemies = 0;
-    }
-
-    public bool GetWaveState()
-    {
-        return state;
-    }
-
-    private void DeactiveLvMessage()
-    {
-        _myUIManager.SetLvMessage(false);
-    }
+    public void InitEnemyNumber() { nEnemies = 0; }
+    public bool GetWaveState() { return state; }
+    #endregion
 
     private void Awake()
     {
         _myUIManager = GameObject.Find("Canvas").GetComponent<UI_Manager>();
         _myPlayerLifeComponent = GameObject.Find("Player").GetComponent<PlayerLifeComponent>();
-        /*
-        _myUIManager.LevelMessage("Nivel " + _currentLevel);
-        _myUIManager.SetLvMessage(true);
-        Invoke(nameof(DeactiveLvMessage), 5f);
-        */
         // la primera vez esta instancia del script es null
         // las siguientes veces ya no es null
         if (_instance == null)
@@ -233,13 +257,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _delay = false;
-        state = false;
-        _currentLevel = 1;
-        _numActiveCols = 3;
         Time.timeScale = 1f;
         _currentState = GameState.inGame;
+        _currentLevel = 1;
+        StartCoroutine(LevelInfo("Nivel " + _currentLevel, _timeAppearLvMessage, _timeDisappearLvMessage));
+        _numActiveCols = 3;
+
+        _delay = false;
         nivelTerminado = false;
+        state = false;
     }
 
     // Update is called once per frame
@@ -248,34 +274,21 @@ public class GameManager : MonoBehaviour
         // actualiza el HUD con los enemigos restantes
         _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
 
-        Debug.Log(timePassed);
-
         if ((WaveTimer() || nEnemies == 0) && (!_delay))
         {
-            Debug.Log("ha entrado");
-            timePassed = 0;
+            _delay = true;
             currentWave++;
             state = true;
-            _delay = true;
+            timePassed = 0;
         }
 
-
-        // para debug
+        // segunda condición debug
         if (nivelTerminado || Input.GetKeyDown(KeyCode.P))
         {
-            _currentLevel++;
-            if (_currentLevel > 3)
-            {
-                _currentLevel = 0;
-            }
-            /*
-            _myUIManager.LevelMessage("Nivel terminado");
-            _myUIManager.SetLvMessage(true);
-            Invoke(nameof(DeactiveLvMessage), 5f);
-            */
-            StartCoroutine(TransitionLevel(_currentLevel, 0f));
-            nivelTerminado = false;
+            NextLevel(_timeChangeLevel);
+
             currentWave = -1;
+            nivelTerminado = false;
         }
     }
 }
