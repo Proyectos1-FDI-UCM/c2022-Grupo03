@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Heal : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -20,9 +20,11 @@ public class Heal : MonoBehaviour
     {
         // se comprueba si lo que está situado en la curación es el personaje y luego, si tiene menos de la vida máxima
         PlayerLifeComponent playerLifeComponent = other.GetComponent<PlayerLifeComponent>();
+        LifeRecAnimation lifeRecAnimation = other.GetComponent<LifeRecAnimation>();
         if (playerLifeComponent != null && playerLifeComponent.Heal())
         {
             GameObject.Destroy(gameObject);
+            lifeRecAnimation.HealAni();
         }
     }
 
