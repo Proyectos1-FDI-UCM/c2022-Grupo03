@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LifeRecAnimation : MonoBehaviour
 {
+    #region properties
+    float time = 0;
+    #endregion
+
     #region parameters
     [SerializeField]
     private Animator _myAnimator;
@@ -16,16 +20,8 @@ public class LifeRecAnimation : MonoBehaviour
     #region methods
     public void HealAni()
     {
-        if (_myPlayerLife.Heal())
-        {
-            _myAnimator.ResetTrigger("Null");
-            _myAnimator.SetTrigger("Life");
-        }
-        else
-        {
-            _myAnimator.ResetTrigger("Life");
-            _myAnimator.SetTrigger("Null");
-        }
+        _myAnimator.ResetTrigger("Null");
+        _myAnimator.SetTrigger("Life");
     }
     #endregion
 
@@ -38,6 +34,13 @@ public class LifeRecAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        time += Time.deltaTime;
+
+        if (time > 1.5)
+        {
+            _myAnimator.ResetTrigger("Life");
+            _myAnimator.SetTrigger("Null");
+            time = 0;
+        }       
     }
 }
