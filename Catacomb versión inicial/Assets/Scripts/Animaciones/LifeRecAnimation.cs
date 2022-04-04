@@ -16,8 +16,16 @@ public class LifeRecAnimation : MonoBehaviour
     #region methods
     public void HealAni()
     {
-        if (_myPlayerLife.Heal()) _myAnimator.SetTrigger("Life");
-        else _myAnimator.SetTrigger("Null");
+        if (_myPlayerLife.Heal())
+        {
+            _myAnimator.ResetTrigger("Null");
+            _myAnimator.SetTrigger("Life");
+        }
+        else
+        {
+            _myAnimator.ResetTrigger("Life");
+            _myAnimator.SetTrigger("Null");
+        }
     }
     #endregion
 

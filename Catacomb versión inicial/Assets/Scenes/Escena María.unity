@@ -163,7 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothSpeed: 0.2
-  target: {fileID: 1846781500}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -761,6 +760,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57ee95592fbfc414ab0958a07a4f992f, type: 3}
+--- !u!1 &1095992920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4946740501492387801, guid: 7bef0aeae12505549a633d11f6c7e660, type: 3}
+  m_PrefabInstance: {fileID: 1160052887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1095992921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095992920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6189800c19ea4694d877abe1a374e670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammo: {fileID: 8890617556646615505, guid: ca5ef1b7dba82a744af1cca620c22584, type: 3}
+  damage: 1
+  _maxrate: 6
+  _minrate: 3
 --- !u!1001 &1160052887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1493,7 +1513,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341b0eb0f555cbf4fa2743c4e88a71a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoMuerte: 2
   _myAnimator: {fileID: 1846781498}
 --- !u!114 &1846781505
 MonoBehaviour:
@@ -1564,7 +1583,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxLife: 5
-  healthBar: {fileID: 0}
+  _deathTime: 0
+  _healthBar: {fileID: 0}
 --- !u!50 &1846781509
 Rigidbody2D:
   serializedVersion: 4
@@ -1933,7 +1953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ebe038d10c1254ca75a05a3c68b526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tiempoMuerte: 1000
+  _timeChangeLevel: 0
   _colors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -1952,6 +1972,7 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 0, b: 0.6452723, a: 1}
+  nivelTerminado: 0
 --- !u!4 &2142073531
 Transform:
   m_ObjectHideFlags: 0
