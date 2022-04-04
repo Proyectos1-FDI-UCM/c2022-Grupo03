@@ -34,6 +34,8 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private GameObject _level;
     private Text _levelText;
+    [SerializeField]
+    private GameObject _playerLifeBar;
     #endregion
 
     #region methods
@@ -105,6 +107,31 @@ public class UI_Manager : MonoBehaviour
     public void SetLvMessage(bool enabled)
     {
         _level.SetActive(enabled);
+    }
+
+    public void SetRayCooldown(bool enabled)
+    {
+        _rayCooldownObject.SetActive(enabled);
+    }
+
+    public void SetSpinCooldown(bool enabled)
+    {
+        _spinCooldownObject.SetActive(enabled);
+    }
+
+    public void SetCurrentColor(bool enabled)
+    {
+        _currentColorObject.SetActive(enabled);
+    }
+
+    public void SetEnemiesLeft(bool enabled)
+    {
+        _enemiesLeftObject.SetActive(enabled);
+    }
+
+    public void SetPlayerLifeBar(bool enabled)
+    {
+        _playerLifeBar.SetActive(enabled);
     }
 
     private void Awake()

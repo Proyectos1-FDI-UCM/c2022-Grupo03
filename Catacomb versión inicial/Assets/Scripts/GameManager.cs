@@ -189,12 +189,23 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         _myUIManager.SetPauseMenu(false);   // desaparece el menu de pausa
+        _myUIManager.SetRayCooldown(true);
+        _myUIManager.SetSpinCooldown(true);
+        _myUIManager.SetCurrentColor(true);
+        _myUIManager.SetEnemiesLeft(true);
+        _myUIManager.SetPlayerLifeBar(true);
         Time.timeScale = 1f;    // el tiempo se reanuda
         _currentState = GameState.inGame;
     }
     private void Pause()
     {
         _myUIManager.SetPauseMenu(true);    // aparece el menu de pausa
+        _myUIManager.SetLvMessage(false);
+        _myUIManager.SetRayCooldown(false);
+        _myUIManager.SetSpinCooldown(false);
+        _myUIManager.SetCurrentColor(false);
+        _myUIManager.SetEnemiesLeft(false);
+        _myUIManager.SetPlayerLifeBar(false);
         Time.timeScale = 0f;    // el tiempo se para
         _currentState = GameState.pause;
     }
@@ -260,7 +271,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         _currentState = GameState.inGame;
         _currentLevel = 1;
-        StartCoroutine(LevelInfo("Nivel " + _currentLevel, _timeAppearLvMessage, _timeDisappearLvMessage));
+        StartCoroutine(LevelInfo("Nivel " + _currentLevel, 0f, _timeDisappearLvMessage));
         _numActiveCols = 3;
 
         _delay = false;
