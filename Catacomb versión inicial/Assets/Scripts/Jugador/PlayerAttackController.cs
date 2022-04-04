@@ -30,6 +30,8 @@ public class PlayerAttackController : MonoBehaviour
     private float _durationRay = 0.5f;
     [SerializeField]
     private Vector3[] _offsets = { Vector3.up, -Vector3.right, -Vector3.up, Vector3.right };
+    private float x_scale, y_scale, z_scale;
+    private float time = 0;
     #endregion
 
     #region properties
@@ -45,6 +47,7 @@ public class PlayerAttackController : MonoBehaviour
     private float _elapsedTimeSpin;
     private float _elapsedTimeRay;
     private Vector3 _dir;
+    private bool atacarayo = false;
     #endregion
 
     #region references
@@ -65,6 +68,7 @@ public class PlayerAttackController : MonoBehaviour
     private LineRenderer _myLineRenderer;
     private GameObject _bossManagerObject;
     private BossManager _bossManager;
+    private Rigidbody2D _myRigidBody2D;
     #endregion
 
     #region methods
@@ -94,6 +98,7 @@ public class PlayerAttackController : MonoBehaviour
             StartCoroutine(DmgZonesMainAttack(instPoint, rotation));
 
             _attackRunning = true;
+
             _myPlayerInputManager.enabled = false;
 
             _myAttackAnimation.AttackAni(indice);
@@ -160,6 +165,33 @@ public class PlayerAttackController : MonoBehaviour
         RaycastHit2D[] hitInfos = Physics2D.RaycastAll(_myTransform.position, _dir.normalized, _rayLength, _rayLayerMask);
         int indice = _myPlayerChangeColors.GetCurrentColorIndex();
 
+        //que el jugador mire hacia donde tiene que mirar cuando se usa el rayo
+        Vector3 angle = _dirArrowTransform.rotation.eulerAngles;
+        if (angle.y == 180)
+        {
+            angle.z = angle.y;
+        }
+        // ajustar los ángulos menores que 45º y mayores o iguales que 0º para que su índice sea 3
+        else if (angle.z < 45 && angle.z >= 0)
+        {
+            angle.z = angle.z + 360;
+        }
+
+        int ind = (int)(angle.z - 45) / 180;
+
+        if(ind == 0)
+        {
+            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+            _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        else if(ind == 1)
+        {
+            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+            _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        atacarayo = true;
+        time = 0;
+
         // dibujo del raycast en el juego
         _myLineRenderer.positionCount = 2;
         _myLineRenderer.SetPosition(0, _myTransform.position + _dir * 1f);
@@ -223,7 +255,10 @@ public class PlayerAttackController : MonoBehaviour
             }
         }
     }
- 
+    public bool AtacaRayo()
+    {
+        return atacarayo;
+    }
     #endregion
 
     // Start is called before the first frame update
@@ -249,6 +284,10 @@ public class PlayerAttackController : MonoBehaviour
         {
             _bossManager = _bossManagerObject.GetComponent<BossManager>();
         }
+        x_scale = _myTransform.localScale.x;
+        y_scale = _myTransform.localScale.y;
+        z_scale = _myTransform.localScale.z;
+        _myRigidBody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -279,5 +318,9 @@ public class PlayerAttackController : MonoBehaviour
         Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay, GameManager.Instance.OnRayCooldown);
         // el tiempo de espera del giro tiene que ser superior a la duración del ataque
         Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin, GameManager.Instance.OnSpinCooldown);
+        time += Time.deltaTime;
+
+        if (time > 0.4)
+            atacarayo = false;      
     }
 }

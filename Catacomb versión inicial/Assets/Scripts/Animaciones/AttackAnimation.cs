@@ -8,6 +8,8 @@ public class AttackAnimation : MonoBehaviour
     [SerializeField]
     private Animator _myAnimator;
     private float x_scale, y_scale, z_scale;
+    private float time = 0;
+    private bool atacando = false;
     #endregion
 
     #region properties
@@ -18,11 +20,13 @@ public class AttackAnimation : MonoBehaviour
     private Transform _myTransform;
     private PlayerChangeColors _myChangeColors;
     private PlayerAttackController _myAttackController;
+    private Rigidbody2D _myRigidBody2D;
     #endregion
 
     #region methods
     public void AttackAni(int n)
     {
+        time = 0;
         int color = _myChangeColors.GetCurrentColorIndex();
 
         if(color == 0)
@@ -34,6 +38,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("RedAttack");
             }
             else if (n == 2) //abajo
@@ -41,8 +46,9 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("RedAttack");
-            }          
+            }
         }
         else if(color == 1)
         {
@@ -53,6 +59,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("YellowAttack");
             }
             else if (n == 2) //abajo
@@ -60,6 +67,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("YellowAttack");
             }
             
@@ -73,6 +81,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("GreenAttack");
             }
             else if (n == 2) //abajo
@@ -80,6 +89,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("GreenAttack");
             }
         }
@@ -92,6 +102,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("BlueAttack");
             }
             else if (n == 2) //abajo
@@ -99,6 +110,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("BlueAttack");
             }
         }
@@ -111,6 +123,7 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 1)
             { //izquierda
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("PinkAttack");
             }
             else if (n == 2) //abajo
@@ -118,9 +131,11 @@ public class AttackAnimation : MonoBehaviour
             else if (n == 3) //derecha
             {
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+                _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
                 _myAnimator.SetTrigger("PinkAttack");
             }       
         }
+        atacando = true;
     }
     public void Rotate(bool spin)
     {
@@ -141,6 +156,11 @@ public class AttackAnimation : MonoBehaviour
         }
             
     }
+
+    public bool Ataca()
+    {
+        return atacando;
+    }
     #endregion
 
     // Start is called before the first frame update
@@ -148,6 +168,7 @@ public class AttackAnimation : MonoBehaviour
     {
         _myChangeColors = GetComponent<PlayerChangeColors>();
         _myAttackController = GetComponent<PlayerAttackController>();
+        _myRigidBody2D = GetComponent<Rigidbody2D>();
         _myTransform = transform;
         x_scale = _myTransform.localScale.x;
         y_scale = _myTransform.localScale.y;
@@ -157,6 +178,8 @@ public class AttackAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        time += Time.deltaTime;
+        if(time > 0.4)
+            atacando = false;                  
     }
 }
