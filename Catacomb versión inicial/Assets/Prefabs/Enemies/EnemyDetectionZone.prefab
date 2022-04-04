@@ -122,5 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3bfaf17189662e48b30943c15820209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyAttackZone: {fileID: 76967132065110462, guid: 2c6dc55f871d359418f0adbf958fb3cd, type: 3}
-  _enemyAttackZoneYellow: {fileID: 2866304816395943830, guid: 0b798594cecb6e64cb6d49b765d283d6, type: 3}
+  _enemyAttackZone: {fileID: 5409784799980838755, guid: e632e4f70f9f76e4bbe592b8ebe89f4b, type: 3}
+  _enemyAttackZoneYellow: {fileID: 3187989376661515701, guid: b313b95a4489aaa428319bffe6fe3f14, type: 3}
