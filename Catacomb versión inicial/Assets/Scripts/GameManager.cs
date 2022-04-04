@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     #region references
     private static UI_Manager _myUIManager;
     private static PlayerLifeComponent _myPlayerLifeComponent;
+    private List<GameObject> spawners;
     #endregion
 
     #region methods
@@ -228,10 +229,9 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    // pasa de oleada
-    public void NextWave(int value)
+    public void AddSpawner(GameObject spawner)
     {
-        currentWave = value;
+        spawners.Add(spawner);
     }
 
     // controla el número de enemigos que hay en el nivel, se llama cada vez que se instancia un enemigo
@@ -241,6 +241,20 @@ public class GameManager : MonoBehaviour
     public int GetNumEnemies() { return nEnemies; }
     public void InitEnemyNumber() { nEnemies = 0; }
     public bool GetWaveState() { return state; }
+
+    private void ActivateSpawners()
+    {
+        int numW = 0;
+        foreach (GameObject g in spawners)
+        {
+            if (!g.GetComponent<WaveManager>().Spawn())
+            {
+                numW++;
+            }
+        }
+        Debug.Log(numW);
+        if (numW == spawners.Count) nivelTerminado = true;
+    }
     #endregion
 
     private void Awake()
@@ -262,6 +276,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         _listOfEnemies = new List<EnemyLifeComponent>();
+        spawners = new List<GameObject>();
+
     }
     #endregion
 
@@ -277,6 +293,7 @@ public class GameManager : MonoBehaviour
         _delay = false;
         nivelTerminado = false;
         state = false;
+        ActivateSpawners();
     }
 
     // Update is called once per frame
@@ -289,8 +306,10 @@ public class GameManager : MonoBehaviour
         {
             _delay = true;
             currentWave++;
-            state = true;
+            ActivateSpawners();
             timePassed = 0;
+            Debug.Log(currentWave);
+
         }
 
         // segunda condición debug
@@ -298,6 +317,7 @@ public class GameManager : MonoBehaviour
         {
             NextLevel(_timeChangeLevel);
 
+            spawners.Clear();
             currentWave = -1;
             nivelTerminado = false;
         }

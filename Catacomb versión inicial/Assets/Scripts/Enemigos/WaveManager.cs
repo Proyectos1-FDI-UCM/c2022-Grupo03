@@ -35,31 +35,21 @@ public class WaveManager : MonoBehaviour
         waves[2] = wave2;
         waves[3] = wave3;
     }
-    private void Spawn()
+    public bool Spawn()
     {
-        Debug.Log("spawnentered");
         if (GameManager.Instance.GetNumEnemies() < 0) GameManager.Instance.InitEnemyNumber();
-        Debug.Log("OAIHUDGUYAUDUAY  " + GameManager.Instance.GetCurrentWave());
-        Debug.Log("AAAAAAAAAAAAA  " + GameManager.Instance.GetCurrentWave());
-        Debug.Log("length: " + waves[1].Length);
-        for (int i = 0; i < waves[GameManager.Instance.GetCurrentWave()].Length; i++)
-        {
-            // el tipo de enemigo que se spawnea depende de waveContent
-            Instantiate(type[waves[GameManager.Instance.GetCurrentWave()][i]], spawnPos[i], Quaternion.identity, _myTransform);
-            GameManager.Instance.EnemySpawned();
-        }
-    }
 
-    private void NextLevel()
-    {
         if (GameManager.Instance.GetCurrentWave() < waves.Length)
         {
-            Spawn();
+            for (int i = 0; i < waves[GameManager.Instance.GetCurrentWave()].Length; i++)
+            {
+                // el tipo de enemigo que se spawnea depende de waveContent
+                Instantiate(type[waves[GameManager.Instance.GetCurrentWave()][i]], spawnPos[i], Quaternion.identity, _myTransform);
+                GameManager.Instance.EnemySpawned();
+                return true;
+            }
         }
-        else
-        {
-            GameManager.Instance.nivelTerminado = true;
-        }
+        return false;
     }
 
     #endregion
@@ -78,17 +68,15 @@ public class WaveManager : MonoBehaviour
             }
         }
         InitializeWaveArray();
-
-        Invoke(nameof(Spawn), 3.0f);
+        GameManager.Instance.AddSpawner(gameObject);
     }
 
     void Update()
     {
-        if (GameManager.Instance.State)
-        {
-            Debug.Log("spawned");
-            Invoke(nameof(NextLevel), 0.0f);
-            GameManager.Instance.State = false;
-        }
+        //if (GameManager.Instance.State)
+        //{
+        //    Debug.Log("spawned");
+        //    Invoke(nameof(NextLevel), 0.0f);
+        //}
     }
 }
