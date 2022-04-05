@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LevelInfo("Nivel " + _currentLevel, _timeAppearLvMessage, _timeDisappearLvMessage));
     }
 
-    private void NextLevel(float time)
+    public void NextLevel()
     {
         // aumenta el número de nivel
         _currentLevel++;
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
             _currentLevel = 0;
         }
 
-        StartCoroutine(TransitionLevel(_currentLevel, time));
+        StartCoroutine(TransitionLevel(_currentLevel, _timeChangeLevel));
     }
 
     // se llama cuando el jugador pierde
@@ -314,13 +314,13 @@ public class GameManager : MonoBehaviour
 
         // segunda condición debug
         // falta condición de nivelTerminado
-        if (Input.GetKeyDown(KeyCode.P))
+        if ((_currentLevel != 3 && nivelTerminado)|| Input.GetKeyDown(KeyCode.P))
         {
-            NextLevel(_timeChangeLevel);
+                NextLevel();
 
-            spawners.Clear();
-            currentWave = -1;
-            nivelTerminado = false;
+                spawners.Clear();
+                currentWave = -1;
+                nivelTerminado = false;
         }
     }
 }

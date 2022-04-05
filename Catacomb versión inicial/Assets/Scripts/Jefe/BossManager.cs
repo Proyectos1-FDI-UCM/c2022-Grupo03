@@ -145,6 +145,7 @@ public class BossManager : MonoBehaviour
         // cancelar el invoke de que el jefe pase del
         // estado 2 al 4 en el caso de que haya sido derrotado
         CancelInvoke(nameof(SecondToThird));
+        GameManager.Instance.NextLevel();
         _bossLifeBar.SetActive(false);
         gameObject.SetActive(false);
     }
