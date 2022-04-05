@@ -11971,6 +11971,14 @@ PrefabInstance:
       propertyPath: _dirArrow
       value: 
       objectReference: {fileID: 2005954039}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _afterDmgZoneMain
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _afterDmgZonesSpin
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
 --- !u!1 &517456539
@@ -17214,7 +17222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1597269285
 MonoBehaviour:
   m_ObjectHideFlags: 0

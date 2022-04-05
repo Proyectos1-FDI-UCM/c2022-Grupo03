@@ -178,10 +178,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainAttackDmg: 1
+  _afterDmgZoneMain: 0.2
   _spinDamage: 2
+  _afterDmgZonesSpin: 0.5
   _rayDamage: 2
   _dmgZoneDuration: 0.5
-  _afterDmgZone: 0.2
   _rayLength: 10
   _rayCooldown: 10
   _rayPreparationTime: 0.5

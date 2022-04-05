@@ -8,24 +8,26 @@ public class PlayerAttackController : MonoBehaviour
     // daño que causa el ataque principal y cada una de las habilidades
     [SerializeField]
     private int _mainAttackDmg = 1;
+    // tiempo que duran las zonas de daño en escena del ataque principal
+    [SerializeField]
+    private float _afterDmgZoneMain;
     [SerializeField]
     private int _spinDamage = 1;
     [SerializeField]
-    private int _rayDamage = 1;
+    private float _afterDmgZonesSpin;
+    [SerializeField]
+    private float _spinCooldown;
     [SerializeField]
     private float _dmgZoneDuration;
-    // tiempo que duran las zonas de daño en escena
-    [SerializeField]
-    private float _afterDmgZone;
     // tiempo después del cual se destruyen las zonas de daño
+    [SerializeField]
+    private int _rayDamage = 1;
     [SerializeField]
     private float _rayLength;
     [SerializeField]
     private float _rayCooldown;
     [SerializeField]
     private float _rayPreparationTime;
-    [SerializeField]
-    private float _spinCooldown;
     [SerializeField]
     private float _durationRay = 0.5f;
     [SerializeField]
@@ -106,7 +108,7 @@ public class PlayerAttackController : MonoBehaviour
     }
     private IEnumerator DmgZonesMainAttack(Vector3 position, Quaternion rotation)
     {
-        yield return new WaitForSeconds(_afterDmgZone);
+        yield return new WaitForSeconds(_afterDmgZoneMain);
 
         _lastAttack = Instantiate(_damageZones[0], position, rotation);
         _lastAttack.GetComponent<DamageZone>().SetDamage(_mainAttackDmg);
@@ -117,7 +119,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (!_attackRunning && !_spinMade)
         {
-            Invoke(nameof(DmgZonesSpinAttack), _afterDmgZone);
+            Invoke(nameof(DmgZonesSpinAttack), _afterDmgZonesSpin);
             _attackRunning = true;
             _spinMade = true;
             _myAttackAnimation.Rotate(_spinMade);
@@ -134,10 +136,27 @@ public class PlayerAttackController : MonoBehaviour
         }
     }
 
-    // destruir las zonas de daño, tanto las del ataque principal como las del ataque giratorio
-    private void DestroyDmgZone()
+    // destruir las zonas de daño
+    private void DestroyDmgZones()
+    {
+        if (_spinMade)
+        {
+            Invoke(nameof(DestroyDmgZonesSpinAttack), _dmgZoneDuration + _afterDmgZonesSpin);
+        }
+        else
+        {
+            Invoke(nameof(DestroyDmgZoneMainAttack), _dmgZoneDuration + _afterDmgZoneMain);
+        }
+    }
+    // destruir la zona de daño del ataque principal
+    private void DestroyDmgZoneMainAttack()
     {
         GameObject.Destroy(_lastAttack);
+        _myPlayerInputManager.enabled = true;
+    }
+    // destruir las zonas de daño del ataque giratorio
+    private void DestroyDmgZonesSpinAttack()
+    {
         for (int i = 0; i < _attacks.Length; i++)
         {
             GameObject.Destroy(_attacks[i]);
@@ -301,7 +320,8 @@ public class PlayerAttackController : MonoBehaviour
             // porque si se estaba moviendo antes de desactivarlo se seguirá moviendo después
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             _attackRunning = false;
-            Invoke(nameof(DestroyDmgZone), _dmgZoneDuration + _afterDmgZone);
+            Debug.Log(_spinMade);
+            DestroyDmgZones();
             // las zonas de daño se destruyen después de que se hayan creado
             // y haya pasado un tiempo determinado
         }
