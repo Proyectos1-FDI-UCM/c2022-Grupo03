@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 698756286798515383}
   - component: {fileID: 698756286798515382}
   - component: {fileID: 698756286798515380}
+  - component: {fileID: 7757984364493257665}
   m_Layer: 6
   m_Name: SpiderHead
   m_TagString: Untagged
@@ -162,6 +163,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _increasedDamage: 1
+--- !u!95 &7757984364493257665
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698756286798515386}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3c9e4a7a4978b804e8691d8bd50b21a0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2191928414475678784
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +272,7 @@ GameObject:
   - component: {fileID: 7716356273591513194}
   - component: {fileID: 698756288542374837}
   - component: {fileID: 6973978479692602871}
+  - component: {fileID: 3883922422425990994}
   m_Layer: 0
   m_Name: SpiderBoss
   m_TagString: Untagged
@@ -351,6 +372,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0946772, y: 1.659113}
   m_EdgeRadius: 0
+--- !u!95 &3883922422425990994
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248050188496630950}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1ea77929a5a7394083d6cfebe7fe30d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4536911523787037733
 GameObject:
   m_ObjectHideFlags: 0

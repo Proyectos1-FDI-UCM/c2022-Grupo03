@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1117165215632582260}
   - component: {fileID: 8729175996119771184}
   - component: {fileID: 2730384645902285645}
+  - component: {fileID: 3892270173687375048}
   m_Layer: 6
   m_Name: SpiderLegUpRight
   m_TagString: Untagged
@@ -161,6 +162,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75815773, y: 0.3577838}
   m_EdgeRadius: 0
+--- !u!95 &3892270173687375048
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140888004800933438}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 11f15e187a06b9540be200c0b3f6effb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2547427241888605577
 GameObject:
   m_ObjectHideFlags: 0
