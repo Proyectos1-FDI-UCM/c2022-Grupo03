@@ -12952,7 +12952,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065334018}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 56f28177087ed9d468549a6c079c702d, type: 3}
@@ -13390,13 +13390,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 698756286798515382, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
+      propertyPath: _maxLife
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 698756286798515382, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 628118580}
     - target: {fileID: 2248050188496630950, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_Name
-      value: SpiderBoss (1)
+      value: SpiderBoss
       objectReference: {fileID: 0}
     - target: {fileID: 2248050188496630950, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_RootOrder
@@ -13416,7 +13424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 17.73
       objectReference: {fileID: 0}
     - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17291,7 +17299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1597269285
 MonoBehaviour:
   m_ObjectHideFlags: 0

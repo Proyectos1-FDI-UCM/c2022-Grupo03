@@ -314,7 +314,7 @@ public class GameManager : MonoBehaviour
 
         // segunda condición debug
         // falta condición de nivelTerminado
-        if (nivelTerminado || Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             NextLevel(_timeChangeLevel);
 
