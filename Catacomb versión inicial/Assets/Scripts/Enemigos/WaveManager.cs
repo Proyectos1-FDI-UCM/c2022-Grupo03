@@ -49,8 +49,8 @@ public class WaveManager : MonoBehaviour
                 // el tipo de enemigo que se spawnea depende de waveContent
                 Instantiate(type[waves[GameManager.Instance.GetCurrentWave()][i]], spawnPos[i], Quaternion.identity, _myTransform);
                 GameManager.Instance.EnemySpawned();
-                return true;
             }
+            return true;
         }
         return false;
     }

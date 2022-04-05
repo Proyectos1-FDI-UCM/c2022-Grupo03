@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     private int nEnemies = -1;
     public bool nivelTerminado;
     private bool _delay;
+    private int numW = 0;
     private bool state;
     public bool State { get => state; set => state = value; }
     #endregion
@@ -244,7 +245,6 @@ public class GameManager : MonoBehaviour
 
     private void ActivateSpawners()
     {
-        int numW = 0;
         foreach (GameObject g in spawners)
         {
             if (!g.GetComponent<WaveManager>().Spawn())
@@ -252,8 +252,6 @@ public class GameManager : MonoBehaviour
                 numW++;
             }
         }
-        Debug.Log(numW);
-        if (numW == spawners.Count) nivelTerminado = true;
     }
     #endregion
 
@@ -309,12 +307,13 @@ public class GameManager : MonoBehaviour
             ActivateSpawners();
             timePassed = 0;
             Debug.Log(currentWave);
-
         }
+
+        if (numW == spawners.Count && nEnemies == 0) nivelTerminado = true;
 
         // segunda condición debug
         // falta condición de nivelTerminado
-        if (Input.GetKeyDown(KeyCode.P))
+        if (nivelTerminado || Input.GetKeyDown(KeyCode.P))
         {
             NextLevel(_timeChangeLevel);
 
