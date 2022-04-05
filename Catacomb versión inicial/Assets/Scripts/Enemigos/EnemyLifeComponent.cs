@@ -43,7 +43,7 @@ public class EnemyLifeComponent : MonoBehaviour
             _currentLife -= hitDamage;
             if (_myShield == null)
             {
-               _myMessage.SetMessage((-1).ToString());
+               _myMessage.SetMessage((-hitDamage).ToString());
             }
             if (_currentLife <= 0)
             {

@@ -32,6 +32,7 @@ public class PlayerAttackController : MonoBehaviour
     private float _durationRay = 0.5f;
     [SerializeField]
     private Vector3[] _offsets = { Vector3.up, -Vector3.right, -Vector3.up, Vector3.right };
+    // animación del ataque giratorio
     private float x_scale, y_scale, z_scale;
     private float time = 0;
     #endregion
@@ -42,13 +43,15 @@ public class PlayerAttackController : MonoBehaviour
     private Quaternion[] _rotations = { Quaternion.Euler(180, 0, 0), Quaternion.Euler(0, 0, 270), Quaternion.identity, Quaternion.Euler(0, 0, 90) };
     GameObject _lastAttack;
     GameObject[] _attacks = new GameObject[4];
-    private bool _attackRunning; // indicar si se ha efectuado el ataque o no
-    private bool _rayMade;
-    private bool _spinMade;
+    private bool _attackRunning; // indicar si se está atacando
+    private bool _rayMade;  // indicar si se ha realizado la habilidad del rayo
+    private bool _spinMade; // indicar si se ha realizado el ataque giratorio
+    private bool _spinCdOn; // indicar si el rayo se encuentra en cooldown
     private bool _rayWaiting;
     private float _elapsedTimeSpin;
     private float _elapsedTimeRay;
     private Vector3 _dir;
+    // animación del rayo
     private bool atacarayo = false;
     #endregion
 
@@ -117,11 +120,12 @@ public class PlayerAttackController : MonoBehaviour
     // ataque giratorio
     public void SpintAttack()
     {
-        if (!_attackRunning && !_spinMade)
+        if (!_attackRunning && !_spinMade && !_spinCdOn)
         {
             Invoke(nameof(DmgZonesSpinAttack), _afterDmgZonesSpin);
             _attackRunning = true;
             _spinMade = true;
+            // animación del rayo
             _myAttackAnimation.Rotate(_spinMade);
             _myPlayerInputManager.enabled = false;
         }
@@ -134,6 +138,8 @@ public class PlayerAttackController : MonoBehaviour
             _attacks[i].GetComponent<DamageZone>().SetDamage(_spinDamage);
             //_attacks[i].GetComponent<SpriteRenderer>().enabled = false;
         }
+        _spinCdOn = true;
+        // el cd del ataque giratorio comienza cuando se han instanciado las zonas de daño
     }
 
     // destruir las zonas de daño
@@ -162,9 +168,11 @@ public class PlayerAttackController : MonoBehaviour
             GameObject.Destroy(_attacks[i]);
         }
         _myPlayerInputManager.enabled = true;
+        _spinMade = false;  // el ataque ya se ha efectuado
     }
 
     // rayo de luz
+    // dispara el rayo de luz en el caso de que no se encuentre en cooldown
     public void Shoot()
     {
         if (!_rayMade)
@@ -174,6 +182,7 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerInputManager.enabled = false;
         }
     }
+    // crea el rayo de luz y lo dibuja en escena
     private void LightRay()
     {
         _myPlayerInputManager.enabled = true;
@@ -198,16 +207,18 @@ public class PlayerAttackController : MonoBehaviour
 
         int ind = (int)(angle.z - 45) / 180;
 
-        if(ind == 0)
+        if (ind == 0)
         {
             _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
             _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
-        else if(ind == 1)
+        else if (ind == 1)
         {
             _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
             _myRigidBody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
+
+        // animación del rayo
         atacarayo = true;
         time = 0;
 
@@ -255,12 +266,12 @@ public class PlayerAttackController : MonoBehaviour
         Invoke(nameof(DisappearRay), _durationRay);
         _rayMade = true;
     }
-
     private void DisappearRay()
     {
         _myLineRenderer.positionCount = 0;
     }
 
+    // cooldowns
     private void Cooldown(float duration, ref bool abilityMade, ref float elapsedTime, UpdateCooldown upCd)
     {
         if (abilityMade)
@@ -274,6 +285,8 @@ public class PlayerAttackController : MonoBehaviour
             }
         }
     }
+
+    // animación rayo
     public bool AtacaRayo()
     {
         return atacarayo;
@@ -288,6 +301,7 @@ public class PlayerAttackController : MonoBehaviour
         _attackRunning = false;
         _rayMade = false;
         _spinMade = false;
+        _spinCdOn = false;
         _rayWaiting = false;
         _myPlayerInputManager = GetComponent<PlayerInputManager>();
         _myPlayerMovementController = GetComponent<PlayerMovementController>();
@@ -320,7 +334,6 @@ public class PlayerAttackController : MonoBehaviour
             // porque si se estaba moviendo antes de desactivarlo se seguirá moviendo después
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             _attackRunning = false;
-            Debug.Log(_spinMade);
             DestroyDmgZones();
             // las zonas de daño se destruyen después de que se hayan creado
             // y haya pasado un tiempo determinado
@@ -337,10 +350,11 @@ public class PlayerAttackController : MonoBehaviour
         // tiempos de espera de las habilidades
         Cooldown(_rayCooldown, ref _rayMade, ref _elapsedTimeRay, GameManager.Instance.OnRayCooldown);
         // el tiempo de espera del giro tiene que ser superior a la duración del ataque
-        Cooldown(_spinCooldown, ref _spinMade, ref _elapsedTimeSpin, GameManager.Instance.OnSpinCooldown);
-        time += Time.deltaTime;
+        Cooldown(_spinCooldown, ref _spinCdOn, ref _elapsedTimeSpin, GameManager.Instance.OnSpinCooldown);
 
+        // animación del rayo
+        time += Time.deltaTime;
         if (time > 0.4)
-            atacarayo = false;      
+            atacarayo = false;
     }
 }
