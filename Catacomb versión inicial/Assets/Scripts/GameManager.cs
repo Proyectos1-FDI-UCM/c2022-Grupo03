@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviour
         _myUIManager.SetLvMessage(true);    // aparece el mensaje
         Invoke(nameof(DeactiveLvMessage), timeMessageDisappear);  // se desactiva el mensaje
     }
+    public int GetWaveTime() { return (int)(waveDuration + 1 - timePassed); }
     private void DeactiveLvMessage()
     {
         _myUIManager.SetLvMessage(false);
