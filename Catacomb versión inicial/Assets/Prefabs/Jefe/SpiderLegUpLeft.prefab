@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1117165215632582260}
   - component: {fileID: 8729175996119771184}
   m_Layer: 6
-  m_Name: SpiderLeg
+  m_Name: SpiderLegUpLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

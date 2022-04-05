@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
+    // 1º pata de arriba a la izquierda
+    // 2º pata de abajo a la izquierda
+    // 3º pata de arriba a la derecha
+    // 4º pata de abajo a la derecha
     #region parameters
     [SerializeField]
     private float _timeToStart;
@@ -13,9 +17,15 @@ public class BossManager : MonoBehaviour
     private float _durationSecondState;
     // distancia de las patas respecto del cuerpo
     [SerializeField]
-    private Vector3[] _legOffsets = { new Vector3(-3, -1, 0), new Vector3(-3, 1, 0), new Vector3(3, -1, 0), new Vector3(3, 1, 0) };
+    private Vector3[] _legOffsets;
+    [SerializeField]
+    private Vector3 _legsSize;
     [SerializeField]
     private float _rotationFactor;
+    [SerializeField]
+    private float _speed;
+    [SerializeField]
+    private float _movementDuration;
     #endregion
 
     #region properties
@@ -26,11 +36,13 @@ public class BossManager : MonoBehaviour
     private int _numLegs;
     // booleano que sirve para hacer que los Invoke se ejecuten una sola vez
     private bool _transitionMade;
+
+    private float _elapsedTime;
     #endregion
 
     #region references
     [SerializeField]
-    private GameObject _rndLeg;
+    private GameObject[] _legs;
     private GameObject[] _spiderLegs;
     [SerializeField]
     private GameObject _spiderBody;
@@ -43,6 +55,7 @@ public class BossManager : MonoBehaviour
     private SpiderWebAttack _mySpiderWebAttack;
     [SerializeField]
     private GameObject _bossLifeBar;
+    private Collider2D[] _legsColliders;
     #endregion
 
     #region methods
@@ -51,13 +64,20 @@ public class BossManager : MonoBehaviour
     {
         for (int i = 0; i < _spiderLegs.Length; i++)
         {
-            _spiderLegs[i] = Instantiate(_rndLeg, _spiderBodyTransform.position + _legOffsets[i], Quaternion.identity);
+            _spiderLegs[i] = Instantiate(_legs[i], _spiderBodyTransform);
+            // situar las patas y darlas el tamaño adecuado
+            Transform spiderLegTransform = _spiderLegs[i].transform;
+            spiderLegTransform.localPosition = _legOffsets[i];
+            _spiderLegs[i].transform.localScale = _legsSize;
+
+            // obtener los colliders de las patas
+            _legsColliders[i] = _spiderLegs[i].GetComponent<Collider2D>();
         }
     }
 
-    private void InitiateStateZero()
+    private void InitiateSpider(int state)
     {
-        _state = 0;
+        _state = state;
         NewSpiderLegs();
         _numLegs = 4;
     }
@@ -76,22 +96,18 @@ public class BossManager : MonoBehaviour
         return contLegs;
     }
 
-    // pasar del estado 0 al 1 y viceversa
-    private IEnumerator Transition(int state, bool activate, float waitTime)
+    // pasar del 1 a moverse hacia abajo
+    private void FirstToGoDown()
     {
-        yield return new WaitForSeconds(waitTime);
-
-        _state = state;
+        _state = -1;
         _transitionMade = false;
-        // al activar/desactivar el cuerpo de la araña le sucede lo mismo a la cabeza
+        SetSpider(true);   // cuando ha pasado cierto tiempo vuelve a aparecer
+    }
+
+    // activar/desactivar la araña
+    private void SetSpider(bool activate)
+    {
         _spiderBody.SetActive(activate);
-        for (int i = 0; i < _spiderLegs.Length; i++)
-        {
-            if (_spiderLegs[i] != null)
-            {
-                _spiderLegs[i].SetActive(activate);
-            }
-        }
     }
 
     private void SecondToThird()
@@ -137,8 +153,36 @@ public class BossManager : MonoBehaviour
     {
         _spiderBody.SetActive(true);
         _bossLifeBar.SetActive(true);
-        // el jefe comienza en el estado 0
-        InitiateStateZero();
+        // el jefe comienza bajando hacia abajo
+        InitiateSpider(-1);
+        SetLegColliders(false);
+    }
+
+    // mover a la araña hacia abajo o hacia arriba
+    private bool SpiderMovement(int dir)
+    {
+        bool stop = false;
+        _spiderBodyTransform.Translate(dir * _spiderBodyTransform.up * _speed * Time.deltaTime);
+        _elapsedTime += Time.deltaTime;
+        if (_elapsedTime > _movementDuration)
+        {
+            stop = true;
+            _elapsedTime = 0;
+        }
+        return stop;
+    }
+
+    // cuando la araña se mueve no se le puede golpear a las piernas,
+    // por lo tanto, sus colliders se desactivan
+    private void SetLegColliders(bool activate)
+    {
+        for (int i = 0; i < _spiderLegs.Length; i++)
+        {
+            if (_spiderLegs[i] != null)
+            {
+                _legsColliders[i].enabled = activate;
+            }
+        }
     }
     #endregion
 
@@ -152,20 +196,31 @@ public class BossManager : MonoBehaviour
         _transitionMade = false;
         _myNestSpawner = GetComponent<NestSpawner>();
         _mySpiderWebAttack = GetComponent<SpiderWebAttack>();
+        _legsColliders = new Collider2D[4];
 
-        _state = -1;
+        _state = -2;
         Invoke(nameof(StartBoss), _timeToStart);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // el jefe tiene 4 estados
+        // el jefe tiene 3 estados principales más 3 de transición
         switch (_state)
         {
+            case -1:
+                // primero aparece y luego, se mueve
+                _spiderHeadSprite.color = Color.white;
+                Debug.Log("estado -1");
+                if (SpiderMovement(-1))
+                {
+                    _state = 0;
+                    SetLegColliders(true);
+                }
+                break;
+
             case 0:
                 Debug.Log("estado 0");
-                _spiderHeadSprite.color = Color.white;
                 _mySpiderWebAttack.SpiderWeb();
                 int contLegs = CountCurrentLegs();
                 if (contLegs == 0)
@@ -177,8 +232,23 @@ public class BossManager : MonoBehaviour
                     _mySpiderWebAttack.ElapsedTime = 0;
                     // se pueden eliminar varias patas a la vez
                     _numLegs = contLegs;
-                    StartCoroutine(Transition(1, false, 0f));
+
+                    // pasa de estar en el estado 0 a moverse hacia arriba
+                    _state = 4;
+                    SetLegColliders(false); // se des
                     _myNestSpawner.SpawnNests();
+                }
+                break;
+
+            case 4:
+                // primero se mueve y luego, desaparece
+                Debug.Log("estado 4");
+                // la araña se mueve hacia arriba
+                if (SpiderMovement(1))
+                {
+                    // cuando ha avanzado lo suficiente se desactiva
+                    SetSpider(false);
+                    _state = 1;
                 }
                 break;
 
@@ -187,7 +257,7 @@ public class BossManager : MonoBehaviour
                 if (!_transitionMade)
                 {
                     _transitionMade = true;
-                    StartCoroutine(Transition(0, true, _durationFirstState));
+                    Invoke(nameof(FirstToGoDown), _durationFirstState);
                 }
                 break;
 
@@ -221,7 +291,7 @@ public class BossManager : MonoBehaviour
                 {
                     // terminar de ajustar la posición del jefe
                     _spiderBodyTransform.rotation = Quaternion.identity;
-                    InitiateStateZero();
+                    InitiateSpider(0);
                 }
                 break;
         }
