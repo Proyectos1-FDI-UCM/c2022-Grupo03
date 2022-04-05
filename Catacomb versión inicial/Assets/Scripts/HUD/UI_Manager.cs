@@ -36,6 +36,8 @@ public class UI_Manager : MonoBehaviour
     private Text _levelText;
     [SerializeField]
     private GameObject _playerLifeBar;
+    [SerializeField]
+    private Text timerText;
     #endregion
 
     #region methods
@@ -163,5 +165,6 @@ public class UI_Manager : MonoBehaviour
         {
             PauseMenu();
         }
+        timerText.text = GameManager.Instance.GetWaveTime().ToString();
     }
 }
