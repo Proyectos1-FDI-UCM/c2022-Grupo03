@@ -50,6 +50,10 @@ public class EnemyMovement : MonoBehaviour
         _movementDirection = (this.transform.position - targetTransform.position).normalized;
     }
 
+    public void StopMovement() { rb.velocity = Vector3.zero; }
+    public float GetRange() { return _range; }
+    public float GetPlayerDistance() { return hit.distance; }
+
     #endregion
 
     // Start is called before the first frame update

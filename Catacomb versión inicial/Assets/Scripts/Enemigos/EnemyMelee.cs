@@ -28,6 +28,8 @@ public class EnemyMelee : MonoBehaviour
     #region properties
     private int _dañoTotal;
     private int _attackRate;
+    private float range = 0;
+    private float playerDistance = 0;
     #endregion
 
     #region references
@@ -93,6 +95,7 @@ public class EnemyMelee : MonoBehaviour
         _dañoTotal = _damage;
 
         _attackRate = GameManager.Instance.NumRandom(_minrate, _maxrate);
+        range = GetComponent<EnemyMovement>().GetRange();
     }
 
     // Update is called once per frame
@@ -121,15 +124,19 @@ public class EnemyMelee : MonoBehaviour
             offset = new Vector3(-1f, 0f, 0f);
         }
 
-        _elapsedTime += Time.deltaTime;
-        if (_elapsedTime > _attackDuration)
+        playerDistance = GetComponent<EnemyMovement>().GetPlayerDistance();
+        if (playerDistance <= range)
         {
-            ataca = true;
-            meleeAttack();
-            _elapsedTime = 0;
+            _elapsedTime += Time.deltaTime;
+            if (_elapsedTime > _attackDuration)
+            {
+                ataca = true;
+                meleeAttack();
+                _elapsedTime = 0;
+            }
         }
         else if (_elapsedTime > _duration)
-        { 
+        {
             //cuando termina de atacar destruye la zona de ataque
             GameObject.Destroy(_enemyAttack);
             ataca = false;

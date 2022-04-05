@@ -13,6 +13,8 @@ public class EnemyShooter : MonoBehaviour
     private float _fireRate;
     private float _elapsedTime = 0;
     private bool reloading = true;
+    private float range = 0;
+    private float playerDistance = 0;
     [SerializeField]
     private GameObject ammo;
     [SerializeField]
@@ -21,6 +23,7 @@ public class EnemyShooter : MonoBehaviour
     private int _maxrate = 6;
     [SerializeField]
     private int _minrate = 3;
+    private Camera camera;
 
     #endregion
 
@@ -44,6 +47,7 @@ public class EnemyShooter : MonoBehaviour
         target = GameObject.Find("Player");
         _myRedComponent = GetComponent<Red>();
         targetTransform = target.transform;
+        camera = Camera.main;
         Vector3 temp = (targetTransform.position - this.transform.position);
         if (_myRedComponent != null)
         {
@@ -51,17 +55,21 @@ public class EnemyShooter : MonoBehaviour
         }
 
         _fireRate = GameManager.Instance.NumRandom(_minrate, _maxrate);
-
+        range = camera.pixelHeight / 2;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _elapsedTime += Time.deltaTime;
-        if (_elapsedTime > _fireRate)
+        playerDistance = GetComponentInParent<EnemyMovement>().GetPlayerDistance();
+        if (playerDistance <= range)
         {
-            _elapsedTime = 0;
-            reloading = false;
+            _elapsedTime += Time.deltaTime;
+            if (_elapsedTime > _fireRate)
+            {
+                _elapsedTime = 0;
+                reloading = false;
+            }
         }
         if (!reloading)
         {
