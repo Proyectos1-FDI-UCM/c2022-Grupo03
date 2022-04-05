@@ -99,8 +99,9 @@ MonoBehaviour:
   - {fileID: 4946740501492387801, guid: fd4792e87ed04c447aaa22c654dedb09, type: 3}
   - {fileID: 4946740501492387801, guid: 7bef0aeae12505549a633d11f6c7e660, type: 3}
   - {fileID: 8389944748203844093, guid: ff7ad330ba27c0a449c2721f8a6ab4c3, type: 3}
-  wave0: 00000000
-  wave1: 00000000
-  wave2: 00000000
+  - {fileID: 4946740501492387801, guid: 812e6db613f7f114886064e56a89fb93, type: 3}
+  wave0: 
+  wave1: 
+  wave2: 
   wave3: 
   spawnAreaSize: {x: 3, y: 3}

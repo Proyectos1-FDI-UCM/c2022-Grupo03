@@ -16,7 +16,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private int[] wave2;
     [SerializeField]
-    private int[] wave3;
+    private int[] wave3;   
+    [SerializeField]
+    private int[] wave4;
     [SerializeField]
     private Vector2 spawnAreaSize;
     private Vector2[] spawnPos;
@@ -34,6 +36,7 @@ public class WaveManager : MonoBehaviour
         waves[1] = wave1;
         waves[2] = wave2;
         waves[3] = wave3;
+        waves[4] = wave4;
     }
     public bool Spawn()
     {
