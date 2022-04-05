@@ -20,6 +20,7 @@ public class SpikesTrap : MonoBehaviour
 
     #region references
     private Collider2D _myCollider2D;
+    private Animator _mySpikeAnimator;
     #endregion
 
     #region methods
@@ -47,6 +48,7 @@ public class SpikesTrap : MonoBehaviour
     void Start()
     {
         _myCollider2D = GetComponent<Collider2D>();
+        _mySpikeAnimator = GetComponent<Animator>();
         InitializateStateZero();
     }
 
@@ -60,9 +62,11 @@ public class SpikesTrap : MonoBehaviour
                 // transición del estado bajo al alto
                 if (_elapsedTime > _durationDown)
                 {
+                    _mySpikeAnimator.ResetTrigger("Down");
+                    _mySpikeAnimator.SetTrigger("Up");
                     _elapsedTime = 0;
                     _state = 1;
-                    _myCollider2D.enabled = true;
+                    _myCollider2D.enabled = true;                  
                 }
                 break;
 
@@ -71,8 +75,10 @@ public class SpikesTrap : MonoBehaviour
                 // transición del estado alto al bajo
                 if (_elapsedTime > _durationUp)
                 {
+                    _mySpikeAnimator.ResetTrigger("Up");
+                    _mySpikeAnimator.SetTrigger("Down");
                     _elapsedTime = 0;
-                    InitializateStateZero();
+                    InitializateStateZero();                   
                 }
                 break;
         }
