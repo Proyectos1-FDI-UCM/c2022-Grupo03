@@ -35,7 +35,7 @@ public class WaveManager : MonoBehaviour
     #region methods
     private void InitializeWaveArray()
     {
-        waves = new int[5][];
+        waves = new int[7][];
         waves[0] = wave0;
         waves[1] = wave1;
         waves[2] = wave2;
