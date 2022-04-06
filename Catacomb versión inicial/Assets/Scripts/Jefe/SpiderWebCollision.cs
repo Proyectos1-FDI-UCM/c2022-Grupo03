@@ -14,8 +14,8 @@ public class SpiderWebCollision : MonoBehaviour
 
     #region references
     private Transform _myTransform;
-    private GameObject _spiderHead;
-    private Transform _spiderHeadTransform;
+    private GameObject _shotPoint;
+    private Transform _shotPointTransform;
     private LineRenderer _myLineRenderer;
     private EdgeCollider2D _myEdgeCollider2D;
     private List<Vector2> _edges;
@@ -25,14 +25,14 @@ public class SpiderWebCollision : MonoBehaviour
     private void SetEdgeFirstPoint()
     {
         _myLineRenderer.positionCount = 2;
-        _myLineRenderer.SetPosition(0, _myTransform.position + new Vector3(0, -0.5f, 0));
+        _myLineRenderer.SetPosition(0, _myTransform.position);
         _edges.Add(Vector2.zero);
     }
 
     private void SetEdgeSecondPoint()
     {
-        _myLineRenderer.SetPosition(1, _myTransform.position + new Vector3(0, -0.5f, 0));
-        Vector2 webDir = _myTransform.position - _spiderHeadTransform.position;
+        _myLineRenderer.SetPosition(1, _myTransform.position);
+        Vector2 webDir = _myTransform.position - _shotPointTransform.position;
         _edges.Add(new Vector2(0, -webDir.magnitude));
     }
     #endregion
@@ -41,8 +41,8 @@ public class SpiderWebCollision : MonoBehaviour
     void Start()
     {
         _myTransform = transform;
-        _spiderHead = GameObject.Find("SpiderHead");
-        _spiderHeadTransform = _spiderHead.transform;
+        _shotPoint = GameObject.Find("ShotPoint");
+        _shotPointTransform = _shotPoint.transform;
         _myLineRenderer = GetComponent<LineRenderer>();
         _myEdgeCollider2D = GetComponent<EdgeCollider2D>();
         _edges = new List<Vector2>();

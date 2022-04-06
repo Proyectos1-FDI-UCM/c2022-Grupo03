@@ -7,7 +7,7 @@ public class Message : MonoBehaviour
 {
     #region parameters
     [SerializeField]
-    private Vector3 _offset = new Vector3(0, 1, 0);
+    private Vector3 _offset = new Vector3(0, 0.5f, 0);
     [SerializeField]
     private float _messageDuration = 2;
     #endregion

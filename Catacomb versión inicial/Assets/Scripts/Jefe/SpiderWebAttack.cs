@@ -26,12 +26,9 @@ public class SpiderWebAttack : MonoBehaviour
 
     #region references
     [SerializeField]
-    private GameObject _spiderBody;
-    [SerializeField]
-    private GameObject _spiderHead;
-    private Transform _spiderHeadTransform;
-    [SerializeField]
     private GameObject _spiderWebBullet;
+    private GameObject _shotPoint;
+    private Transform _shotPointTransform;
     private PlayerMovementController _playerMovementController;
     #endregion
 
@@ -41,7 +38,9 @@ public class SpiderWebAttack : MonoBehaviour
         _elapsedTime += Time.deltaTime;
         if (_elapsedTime > _oftenAttack)
         {
-            GameObject spiderWeb = Instantiate(_spiderWebBullet, _spiderHeadTransform.position, Quaternion.identity);
+            Debug.Log("ha entrado");
+            GameObject spiderWeb = Instantiate(_spiderWebBullet, _shotPointTransform.position, Quaternion.identity);
+            Debug.Log(spiderWeb.transform.position);
             ProjectileMovement projectileMovement = spiderWeb.GetComponent<ProjectileMovement>();
             projectileMovement.SetDamage(_spiderWebDamage);
             projectileMovement.SetSpeed(_speedReducedPlayer);
@@ -53,7 +52,8 @@ public class SpiderWebAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _spiderHeadTransform = _spiderHead.transform;
+        _shotPoint = GameObject.Find("ShotPoint");
+        _shotPointTransform = _shotPoint.transform;
         _playerMovementController = GameObject.Find("Player").GetComponent<PlayerMovementController>();
         _playerMovementController.SetDuration(_durationSpeedReduced);
         _elapsedTime = 0;

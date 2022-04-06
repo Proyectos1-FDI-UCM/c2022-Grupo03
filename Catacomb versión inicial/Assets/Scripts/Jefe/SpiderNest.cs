@@ -27,14 +27,14 @@ public class SpiderNest : MonoBehaviour
     private GameObject[] _enemies;
     private Transform _myTransform;
     [SerializeField]
-    private TextAsset _text;
+    private TextAsset[] _text;
     #endregion
 
     #region methods
     private int[] LeerArchivo()
     {
         // separar el texto ignorando los saltos de línea
-        string[] subs = _text.text.Split("\n"[0]);
+        string[] subs = _text[GameManager.Instance.NumRandom(0,3)].text.Split("\n"[0]);
 
         int[] vector;
         vector = new int[subs.Length];

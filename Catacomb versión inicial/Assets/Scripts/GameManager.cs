@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private float _timeDisappearLvMessage = 3f;
 
     // paletas de colores
-    private int _numActiveCols;
+    public int _numActiveCols;
     public int NumActiveCols { get => _numActiveCols; }
     [SerializeField]
     private Color[] _colors = new Color[5];
@@ -287,7 +287,7 @@ public class GameManager : MonoBehaviour
         _currentState = GameState.inGame;
         _currentLevel = 1;
         StartCoroutine(LevelInfo("Nivel " + _currentLevel, 0f, _timeDisappearLvMessage));
-        _numActiveCols = 3;
+        // _numActiveCols = 3;
 
         _delay = false;
         nivelTerminado = false;
@@ -313,14 +313,13 @@ public class GameManager : MonoBehaviour
         if (numW == spawners.Count && nEnemies == 0) nivelTerminado = true;
 
         // segunda condición debug
-        // falta condición de nivelTerminado
-        if ((_currentLevel != 3 && nivelTerminado)|| Input.GetKeyDown(KeyCode.P))
+        if ((_currentLevel != 3 && nivelTerminado) || Input.GetKeyDown(KeyCode.P))
         {
-                NextLevel();
+            NextLevel();
 
-                spawners.Clear();
-                currentWave = -1;
-                nivelTerminado = false;
+            spawners.Clear();
+            currentWave = -1;
+            nivelTerminado = false;
         }
     }
 }
