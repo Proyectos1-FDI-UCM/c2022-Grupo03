@@ -84,6 +84,9 @@ public class UI_Manager : MonoBehaviour
 
     public void UpdateEnemiesLeft(int numEnemies)
     {
+        if (numEnemies < 0)
+            numEnemies = 0;
+        
         _enemiesLeftText.text = "Enemigos: " + numEnemies;
     }
 

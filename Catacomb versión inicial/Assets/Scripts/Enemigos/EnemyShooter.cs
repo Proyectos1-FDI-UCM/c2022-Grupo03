@@ -55,7 +55,7 @@ public class EnemyShooter : MonoBehaviour
         }
 
         _fireRate = GameManager.Instance.NumRandom(_minrate, _maxrate);
-        range = GetComponent<EnemyMovement>().GetRange();
+        range = camera.pixelHeight/2;
     }
 
     // Update is called once per frame

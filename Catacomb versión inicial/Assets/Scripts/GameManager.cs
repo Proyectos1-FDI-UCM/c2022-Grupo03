@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     #region parameters
     [SerializeField]
     private float _timeChangeLevel;
+    private int q = 0;
     #endregion
 
     #region properties
@@ -144,6 +145,10 @@ public class GameManager : MonoBehaviour
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(activeScene.buildIndex, LoadSceneMode.Single);
         StartCoroutine(LevelInfo("Nivel" + _currentLevel, _timeAppearLvMessage, _timeDisappearLvMessage));
+        numW = 0;
+        spawners.Clear();
+        currentWave = -1;
+        nEnemies = -1;
     }
     #endregion
 
@@ -221,6 +226,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0, LoadSceneMode.Single);
         Time.timeScale = 1f;
         _currentState = GameState.inGame;
+        numW = 0;
+        spawners.Clear();
+        currentWave = -1;
+        nEnemies = -1;
     }
     #endregion
 
@@ -239,7 +248,8 @@ public class GameManager : MonoBehaviour
 
     public void AddSpawner(GameObject spawner)
     {
-        spawners.Add(spawner);
+        if(spawners.Count <= 4)
+            spawners.Add(spawner);
     }
 
     // controla el número de enemigos que hay en el nivel, se llama cada vez que se instancia un enemigo
@@ -253,12 +263,13 @@ public class GameManager : MonoBehaviour
     private void ActivateSpawners()
     {
         foreach (GameObject g in spawners)
-        {
+        {           
             if (!g.GetComponent<WaveManager>().Spawn())
             {
                 numW++;
             }
         }
+        Debug.Log(numW);
     }
     #endregion
 
@@ -305,7 +316,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // actualiza el HUD con los enemigos restantes
-        _myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
+        //_myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
+        _myUIManager.UpdateEnemiesLeft(nEnemies);
 
         if ((WaveTimer() || nEnemies == 0) && (!_delay))
         {

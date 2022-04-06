@@ -112,7 +112,7 @@ public class EnemyMovement : MonoBehaviour
         {
             _movementDirection = temp.normalized;
             if (hit.distance > _range) SetPlayerDirection();
-            else if (ranged && (hit.distance < _range)) { SetEscapeDirection(); Debug.Log("dircon"); }
+            else if (ranged && (hit.distance < _range)) { SetEscapeDirection(); }
         }
         else
         {
