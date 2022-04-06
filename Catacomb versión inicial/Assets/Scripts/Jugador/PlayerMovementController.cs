@@ -42,7 +42,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public void Rodar()
     {
-        _movementDirection = new Vector3(10, 0, 0);
+        _speed = _originalSpeed;
     }
     #endregion
 
@@ -66,7 +66,7 @@ public class PlayerMovementController : MonoBehaviour
                 _elapsedTime = 0;
                 _speedChanged = false;
             }
-        }
+        }        
     }
 
     // Update is called once per frame
