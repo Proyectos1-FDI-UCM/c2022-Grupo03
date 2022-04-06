@@ -34290,6 +34290,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2248050188496630950, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
   m_PrefabInstance: {fileID: 1139118374}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
 --- !u!114 &1582891305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34302,6 +34303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67df497a83a85164b9690e8787d1d8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+>>>>>>> Stashed changes
 --- !u!1 &1597269284
 GameObject:
   m_ObjectHideFlags: 0
@@ -34338,6 +34341,7 @@ MonoBehaviour:
   _speedReducedPlayer: 1.5
   _durationSpeedReduced: 2
   _spiderWebBullet: {fileID: 8890617556646615505, guid: 07a34fe9bfa516e49a292d3ae6b3d349, type: 3}
+  _shotPoint: {fileID: 2123916718}
 --- !u!114 &1597269286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35177,8 +35181,12 @@ MonoBehaviour:
   _pauseMenu: {fileID: 952900309}
   _level: {fileID: 1366632272}
   _playerLifeBar: {fileID: 392406415}
+<<<<<<< Updated upstream
   timerText: {fileID: 0}
   _timer: {fileID: 0}
+=======
+  timerText: {fileID: 1663870014}
+>>>>>>> Stashed changes
 --- !u!114 &1964750875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35649,6 +35657,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
   m_PrefabInstance: {fileID: 2113050167}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2123916718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1803956689501563340, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
+  m_PrefabInstance: {fileID: 1139118374}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2143559450
 PrefabInstance:

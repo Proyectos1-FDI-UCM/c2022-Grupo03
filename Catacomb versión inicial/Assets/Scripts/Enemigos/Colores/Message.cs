@@ -62,6 +62,7 @@ public class Message : MonoBehaviour
     void Update()
     {
         _myTransform.position = _myEnemyTransform.position + _offset;
+        Debug.Log(_myTransform.position);
         MessageRotation(-1, 180);
         MessageRotation(1, 0);
     }

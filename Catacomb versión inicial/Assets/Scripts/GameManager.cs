@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private float _timeDisappearLvMessage = 3f;
 
     // paletas de colores
-    public int _numActiveCols;
+    private int _numActiveCols;
     public int NumActiveCols { get => _numActiveCols; }
     [SerializeField]
     private Color[] _colors = new Color[5];
@@ -289,7 +289,7 @@ public class GameManager : MonoBehaviour
         _currentState = GameState.inGame;
         _currentLevel = 1;
         StartCoroutine(LevelInfo("Nivel " + _currentLevel, 0f, _timeDisappearLvMessage));
-        // _numActiveCols = 3;
+        _numActiveCols = 3;
 
         _delay = false;
         nivelTerminado = false;
