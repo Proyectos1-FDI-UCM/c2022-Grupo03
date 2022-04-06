@@ -38,6 +38,8 @@ public class UI_Manager : MonoBehaviour
     private GameObject _playerLifeBar;
     [SerializeField]
     private Text timerText;
+    [SerializeField]
+    private GameObject _timer;
     #endregion
 
     #region methods
@@ -134,6 +136,11 @@ public class UI_Manager : MonoBehaviour
     public void SetPlayerLifeBar(bool enabled)
     {
         _playerLifeBar.SetActive(enabled);
+    }
+
+    public void SetTimer(bool enabled)
+    {
+        _timer.SetActive(enabled);
     }
 
     private void Awake()
