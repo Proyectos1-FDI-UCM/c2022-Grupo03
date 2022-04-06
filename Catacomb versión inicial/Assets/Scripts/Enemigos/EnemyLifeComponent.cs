@@ -41,22 +41,22 @@ public class EnemyLifeComponent : MonoBehaviour
         if (!_isBlue || rndNum != 0)
         {
             _currentLife -= hitDamage;
-            if (_myShield == null && _myMessage != null)
+            if (_myShield == null)
             {
-                _myMessage.SetMessage((-hitDamage).ToString());
+               _myMessage.SetMessage((-hitDamage).ToString());
             }
             if (_currentLife <= 0)
             {
                 Die();
             }
         }
-        else if (_isBlue && rndNum == 0 && _myMessage != null) //es azul y lo ha esquivado
+        else if (_isBlue && rndNum == 0) //es azul y lo ha esquivado
         {
-            _myMessage.SetMessage("MISS!!");
+           _myMessage.SetMessage("MISS!!");
         }
-        if (_myShield == null && _myMessage != null)
+        if (_myShield == null)
         {
-            _myMessage.ActivateMessage();
+           _myMessage.ActivateMessage();
         }
         if (healthBar != null) healthBar.SetHealth(_currentLife);
     }

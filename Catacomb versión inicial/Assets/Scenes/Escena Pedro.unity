@@ -767,33 +767,17 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1464142338}
-    - target: {fileID: 698756286798515384, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2248050188496630950, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_Name
       value: SpiderBoss
       objectReference: {fileID: 0}
     - target: {fileID: 2248050188496630950, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7716356273591513194, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1802,7 +1786,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeChangeLevel: 0
-  _numActiveCols: 5
   _colors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -2532,7 +2515,6 @@ MonoBehaviour:
   _pauseMenu: {fileID: 1953966303}
   _level: {fileID: 1988034459}
   _playerLifeBar: {fileID: 1427867227}
-  timerText: {fileID: 0}
 --- !u!114 &1749568045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3525,6 +3507,8 @@ MonoBehaviour:
   _spiderWebDamage: 1
   _speedReducedPlayer: 1.5
   _durationSpeedReduced: 2
+  _spiderBody: {fileID: 681805230}
+  _spiderHead: {fileID: 1385127004}
   _spiderWebBullet: {fileID: 8890617556646615505, guid: 07a34fe9bfa516e49a292d3ae6b3d349, type: 3}
 --- !u!1 &2129948266
 GameObject:

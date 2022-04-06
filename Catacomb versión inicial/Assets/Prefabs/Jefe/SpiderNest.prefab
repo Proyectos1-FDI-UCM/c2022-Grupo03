@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 414916001000420105}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1120976054392157840}
   m_Father: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9612d422046ce84390756626d4926a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 2
+  _maxLife: 1
   _desiredTimeToRecovery: 5
   healthBar: {fileID: 0}
 --- !u!114 &1964529263770976830
@@ -244,7 +244,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &7792282651163636523
 MonoBehaviour:
