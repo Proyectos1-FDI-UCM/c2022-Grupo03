@@ -219,6 +219,8 @@ public class GameManager : MonoBehaviour
     public void BackToTitle()
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
+        Time.timeScale = 1f;
+        _currentState = GameState.inGame;
     }
     #endregion
 
