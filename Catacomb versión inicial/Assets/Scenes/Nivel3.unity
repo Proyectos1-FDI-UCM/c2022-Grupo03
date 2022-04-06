@@ -28884,7 +28884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeChangeLevel: 10
-  _numActiveCols: 0
   _colors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -29565,6 +29564,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
+--- !u!1 &1163522545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3582158247110874962, guid: 3871e3d130b019b458586c81fb0f582d, type: 3}
+  m_PrefabInstance: {fileID: 1139118374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1169109937
 GameObject:
   m_ObjectHideFlags: 0
@@ -34417,7 +34421,7 @@ MonoBehaviour:
   _speedReducedPlayer: 1.5
   _durationSpeedReduced: 2
   _spiderWebBullet: {fileID: 8890617556646615505, guid: 07a34fe9bfa516e49a292d3ae6b3d349, type: 3}
-  _shotPoint: {fileID: 0}
+  _shotPoint: {fileID: 1163522545}
 --- !u!114 &1597269286
 MonoBehaviour:
   m_ObjectHideFlags: 0
