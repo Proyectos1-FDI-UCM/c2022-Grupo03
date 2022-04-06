@@ -41,6 +41,8 @@ public class WaveManager : MonoBehaviour
         waves[2] = wave2;
         waves[3] = wave3;
         waves[4] = wave4;
+        waves[5] = wave5;
+        waves[6] = wave6;
     }
     public bool Spawn()
     {
