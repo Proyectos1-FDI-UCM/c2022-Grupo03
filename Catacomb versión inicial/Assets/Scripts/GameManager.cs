@@ -198,6 +198,7 @@ public class GameManager : MonoBehaviour
         _myUIManager.SetEnemiesLeft(true);
         _myUIManager.SetPlayerLifeBar(true);
         _myUIManager.SetTimer(true);
+        _myUIManager.SetBossBar(true);
         Time.timeScale = 1f;    // el tiempo se reanuda
         _currentState = GameState.inGame;
     }
@@ -211,6 +212,7 @@ public class GameManager : MonoBehaviour
         _myUIManager.SetEnemiesLeft(false);
         _myUIManager.SetPlayerLifeBar(false);
         _myUIManager.SetTimer(false);
+        _myUIManager.SetBossBar(false);
         Time.timeScale = 0f;    // el tiempo se para
         _currentState = GameState.pause;
     }

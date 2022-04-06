@@ -39,7 +39,9 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private Text timerText;
     [SerializeField]
-    private GameObject _timer;
+    private GameObject _timer;    
+    [SerializeField]
+    private GameObject _bossBar;
     #endregion
 
     #region methods
@@ -100,6 +102,7 @@ public class UI_Manager : MonoBehaviour
     }
     public void BackToTitle()
     {
+
         GameManager.Instance.BackToTitle();
     }
 
@@ -141,6 +144,10 @@ public class UI_Manager : MonoBehaviour
     public void SetTimer(bool enabled)
     {
         _timer.SetActive(enabled);
+    }    
+    public void SetBossBar(bool enabled)
+    {
+        if(_bossBar != null) _bossBar.SetActive(enabled);
     }
 
     private void Awake()
