@@ -64,7 +64,7 @@ public class EnemyMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         targetTransform = targetObject.transform;
         SetPlayerDirection();
-        offset = 45;
+        offset = 90;
         distanceMultiplier = 1;
         layers = 1 << 8 | 1 << 6 | 1 << 3 ;
         _myGreenComponent = GetComponent<Green>();
