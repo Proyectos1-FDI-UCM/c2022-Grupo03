@@ -165,6 +165,6 @@ public class UI_Manager : MonoBehaviour
         {
             PauseMenu();
         }
-        //timerText.text = GameManager.Instance.GetWaveTime().ToString();
+        timerText.text = GameManager.Instance.GetWaveTime().ToString();
     }
 }
