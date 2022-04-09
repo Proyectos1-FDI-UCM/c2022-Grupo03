@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
         spawners.Clear();
         currentWave = -1;
         nEnemies = -1;
+        timePassed = 10;
     }
     #endregion
 
@@ -230,6 +231,7 @@ public class GameManager : MonoBehaviour
         spawners.Clear();
         currentWave = -1;
         nEnemies = -1;
+        timePassed = 10;
     }
     #endregion
 
