@@ -328,17 +328,30 @@ public class GameManager : MonoBehaviour
             ActivateSpawners();
             timePassed = 0;
             Debug.Log(currentWave);
+            Debug.Log("numW: " + numW);
         }
 
-        if (numW == spawners.Count && nEnemies == 0) nivelTerminado = true;
+        if ((numW == 5 || numW == 12)/*spawners.Count*/ && nEnemies == 0) nivelTerminado = true;
 
         // segunda condición debug
         if ((_currentLevel != 3 && nivelTerminado) || Input.GetKeyDown(KeyCode.P))
         {
-            NextLevel();
+            currentWave = -1;
+            numW = 0;
+            nEnemies = -1;
 
             spawners.Clear();
+
+            NextLevel();
+            
             currentWave = -1;
+            numW = 0;
+            nEnemies = -1;
+
+            //spawners.Clear();
+
+            _delay = false;
+
             nivelTerminado = false;
         }
     }

@@ -16,8 +16,7 @@ public class EnemyDamageZone : MonoBehaviour
     #region methods
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        // duck typing
-        
+        // duck typing       
         PlayerLifeComponent _playerLifeComponent = collider.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
         {
@@ -26,7 +25,6 @@ public class EnemyDamageZone : MonoBehaviour
             else
                 _playerLifeComponent.Damage(_enemyMeleeComponent.DañoAtaque());
         }
-
     }
 
     #endregion
