@@ -232,6 +232,7 @@ public class GameManager : MonoBehaviour
         currentWave = -1;
         nEnemies = -1;
         timePassed = 10;
+        _currentLevel = 0;
     }
     #endregion
 
