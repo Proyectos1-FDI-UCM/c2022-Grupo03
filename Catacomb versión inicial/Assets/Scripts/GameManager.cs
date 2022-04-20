@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     #region parameters
     [SerializeField]
     private float _timeChangeLevel;
-    private int q = 0;
     #endregion
 
     #region properties
