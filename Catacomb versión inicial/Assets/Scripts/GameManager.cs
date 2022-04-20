@@ -270,6 +270,7 @@ public class GameManager : MonoBehaviour
             if (!g.GetComponent<WaveManager>().Spawn())
             {
                 numW++;
+                Debug.Log("+numW: " + numW);
             }
         }
         Debug.Log(numW);
@@ -332,7 +333,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("numW: " + numW);
         }
 
-        if ((numW == 5 || numW == 12)/*spawners.Count*/ && nEnemies == 0) nivelTerminado = true;
+        if ((numW == 5 || numW == 12) && nEnemies == 0) nivelTerminado = true;
 
         // segunda condición debug
         if ((_currentLevel != 3 && nivelTerminado) || Input.GetKeyDown(KeyCode.P))
@@ -349,7 +350,7 @@ public class GameManager : MonoBehaviour
             numW = 0;
             nEnemies = -1;
 
-            //spawners.Clear();
+            spawners.Clear();
 
             _delay = false;
 

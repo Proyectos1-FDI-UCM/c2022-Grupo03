@@ -19,10 +19,10 @@ public class WaveManager : MonoBehaviour
     private int[] wave3;   
     [SerializeField]
     private int[] wave4;    
-    [SerializeField]
-    private int[] wave5;    
-    [SerializeField]
-    private int[] wave6;
+    //[SerializeField]
+    //private int[] wave5;    
+    //[SerializeField]
+    //private int[] wave6;
     [SerializeField]
     private Vector2 spawnAreaSize;
     private Vector2[] spawnPos;
@@ -35,14 +35,14 @@ public class WaveManager : MonoBehaviour
     #region methods
     private void InitializeWaveArray()
     {
-        waves = new int[7][];
+        waves = new int[5][];
         waves[0] = wave0;
         waves[1] = wave1;
         waves[2] = wave2;
         waves[3] = wave3;
         waves[4] = wave4;
-        waves[5] = wave5;
-        waves[6] = wave6;
+        //waves[5] = wave5;
+        //waves[6] = wave6;
     }
     public bool Spawn()
     {
