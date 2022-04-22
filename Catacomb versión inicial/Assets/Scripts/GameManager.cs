@@ -130,12 +130,19 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         // se muestra en pantalla el mensaje de nivel terminado o de fin de nivel
-        string lvText = "Nivel terminado\n+1";
+        string lvText = "Nivel terminado\n+1 vida";
         // aumenta el número de nivel
         _currentLevel++;
         if (_currentLevel > 3)
         {
-            lvText = "¡¡VICTORIA!!";
+            if (_currentLevel == 4)
+            {
+                lvText = "¡¡VICTORIA!!";
+            }
+            else
+            {
+                lvText = "Prueba terminada";
+            }
             _currentLevel = 0;
         }
 
@@ -314,6 +321,11 @@ public class GameManager : MonoBehaviour
         _currentLevel = SceneManager.GetActiveScene().buildIndex;
         StartCoroutine(LevelInfo("Nivel " + _currentLevel, 0f, _timeDisappearLvMessage));
         _numActiveCols = 3 + _currentLevel - 1;
+        Debug.Log(_numActiveCols);
+        if (_numActiveCols > 5)
+        {
+            _numActiveCols = 5;
+        }
 
         _delay = false;
         nivelTerminado = false;
