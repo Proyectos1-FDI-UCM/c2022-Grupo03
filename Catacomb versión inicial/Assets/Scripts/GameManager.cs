@@ -327,7 +327,6 @@ public class GameManager : MonoBehaviour
         if(debug)
         {
             waveDuration = 999;
-            currentWave = 0;
         }
         // actualiza el HUD con los enemigos restantes
         //_myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
@@ -337,6 +336,7 @@ public class GameManager : MonoBehaviour
         {
             _delay = true;
             currentWave++;
+            if (debug) currentWave = 0;
             ActivateSpawners();
             timePassed = 0;
             Debug.Log(currentWave);
