@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     private bool _delay;
     private int numW = 0;
     private bool state;
+    [SerializeField]
+    private bool debug = false;
     public bool State { get => state; set => state = value; }
     #endregion
 
@@ -153,7 +155,7 @@ public class GameManager : MonoBehaviour
         spawners.Clear();
         currentWave = -1;
         nEnemies = -1;
-        timePassed = 10;
+        timePassed = waveDuration * 0.995f;
     }
     #endregion
 
@@ -322,6 +324,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(debug)
+        {
+            waveDuration = 999;
+            currentWave = 0;
+        }
         // actualiza el HUD con los enemigos restantes
         //_myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
         _myUIManager.UpdateEnemiesLeft(nEnemies);

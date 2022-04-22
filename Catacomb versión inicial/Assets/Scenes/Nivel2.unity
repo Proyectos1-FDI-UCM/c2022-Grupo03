@@ -1749,6 +1749,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 0.4}
   - {r: 1, g: 0, b: 0.6452723, a: 0.4}
   nivelTerminado: 0
+  debug: 0
 --- !u!4 &369333492
 Transform:
   m_ObjectHideFlags: 0
@@ -77528,6 +77529,10 @@ PrefabInstance:
     - target: {fileID: 8721665637374424582, guid: c463b1c48d914da4cbaac77947ffc98c, type: 3}
       propertyPath: wave2.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8721665637374424582, guid: c463b1c48d914da4cbaac77947ffc98c, type: 3}
+      propertyPath: wave0.Array.data[0]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8721665637374424582, guid: c463b1c48d914da4cbaac77947ffc98c, type: 3}
       propertyPath: wave0.Array.data[1]

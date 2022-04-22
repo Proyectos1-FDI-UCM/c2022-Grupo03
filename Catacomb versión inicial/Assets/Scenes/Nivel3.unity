@@ -29628,6 +29628,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 0.4}
   - {r: 1, g: 0, b: 0.6452723, a: 0.4}
   nivelTerminado: 0
+  debug: 0
 --- !u!4 &1065334020
 Transform:
   m_ObjectHideFlags: 0

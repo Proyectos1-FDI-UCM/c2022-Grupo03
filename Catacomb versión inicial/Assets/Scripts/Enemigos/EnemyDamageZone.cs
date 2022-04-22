@@ -31,6 +31,23 @@ public class EnemyDamageZone : MonoBehaviour
         Debug.Log("destruido: " + gameObject);
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        Debug.Log("ataque");
+
+        // duck typing       
+        PlayerLifeComponent _playerLifeComponent = collider.gameObject.GetComponent<PlayerLifeComponent>();
+        if (_playerLifeComponent != null)
+        {
+            if (_kamikaze)
+                _playerLifeComponent.Damage(_enemyKamikaze.DañoAtaque());
+            else
+                _playerLifeComponent.Damage(_enemyMeleeComponent.DañoAtaque());
+        }
+        Destroy(this.gameObject);
+        Debug.Log("destruido: " + gameObject);
+    }
+
     #endregion
 
 

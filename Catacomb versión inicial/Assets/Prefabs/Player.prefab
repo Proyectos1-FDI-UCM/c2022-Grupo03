@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxLife: 3
-  _deathTime: 10
+  _deathTime: 3
   _healthBar: {fileID: 0}
 --- !u!120 &6468387945398862691
 LineRenderer:
