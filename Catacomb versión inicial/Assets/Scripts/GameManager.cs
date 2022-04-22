@@ -102,10 +102,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region flujo
-    private IEnumerator TransitionLevel(int numLevel, float time)
+    private IEnumerator TransitionLevel(int numLevel, string lvText, float time)
     {
-        // se muestra en pantalla el mensaje de nivel terminado
-        StartCoroutine(LevelInfo("Nivel terminado\n+1 vida", 0f, _timeChangeLevel));
+        StartCoroutine(LevelInfo(lvText, 0f, _timeChangeLevel));
 
         yield return new WaitForSeconds(time);
         _currentState = GameState.inGame;
@@ -128,14 +127,17 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
+        // se muestra en pantalla el mensaje de nivel terminado o de fin de nivel
+        string lvText = "Nivel terminado\n+1";
         // aumenta el número de nivel
         _currentLevel++;
         if (_currentLevel > 3)
         {
+            lvText = "¡¡VICTORIA!!";
             _currentLevel = 0;
         }
 
-        StartCoroutine(TransitionLevel(_currentLevel, _timeChangeLevel));
+        StartCoroutine(TransitionLevel(_currentLevel, lvText, _timeChangeLevel));
     }
 
     // se llama cuando el jugador pierde
@@ -309,7 +311,7 @@ public class GameManager : MonoBehaviour
         _currentState = GameState.inGame;
         _currentLevel = SceneManager.GetActiveScene().buildIndex;
         StartCoroutine(LevelInfo("Nivel " + _currentLevel, 0f, _timeDisappearLvMessage));
-        _numActiveCols = 3;
+        _numActiveCols = 3 + _currentLevel - 1;
 
         _delay = false;
         nivelTerminado = false;
