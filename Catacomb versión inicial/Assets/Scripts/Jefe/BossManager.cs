@@ -56,8 +56,6 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     private GameObject _bossLifeBar;
     private Collider2D[] _legsColliders;
-    private EnemyLifeComponent _bosslife;
-    private GameObject uimanager;
     #endregion
 
     #region methods
@@ -201,14 +199,10 @@ public class BossManager : MonoBehaviour
         _myNestSpawner = GetComponent<NestSpawner>();
         _mySpiderWebAttack = GetComponent<SpiderWebAttack>();
         _legsColliders = new Collider2D[4];
-        uimanager = GameObject.Find("UI_Manager");
+        _bossLifeBar.SetActive(false);
 
         _state = -2;
         Invoke(nameof(StartBoss), _timeToStart);
-
-        _bosslife = _spiderHead.GetComponent<EnemyLifeComponent>();
-
-        
     }
 
     // Update is called once per frame
@@ -303,10 +297,6 @@ public class BossManager : MonoBehaviour
                     InitiateSpider(0);
                 }
                 break;
-        }
-        if (_bosslife.CurrentLife == 0 && _state != -2)
-        {
-            GameManager.Instance.BackToTitle();
         }
     }
 }

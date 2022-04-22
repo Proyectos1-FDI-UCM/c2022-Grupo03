@@ -93,7 +93,10 @@ public class GameManager : MonoBehaviour
     {
         foreach (EnemyLifeComponent enemy in _listOfEnemies)
         {
-            GameObject.Destroy(enemy.gameObject);
+            if (enemy != null)
+            {
+                GameObject.Destroy(enemy.gameObject);
+            }
         }
     }
     #endregion
@@ -296,7 +299,6 @@ public class GameManager : MonoBehaviour
         }
         _listOfEnemies = new List<EnemyLifeComponent>();
         spawners = new List<GameObject>();
-
     }
     #endregion
 
@@ -305,7 +307,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         _currentState = GameState.inGame;
-        _currentLevel = 1;
+        _currentLevel = SceneManager.GetActiveScene().buildIndex;
         StartCoroutine(LevelInfo("Nivel " + _currentLevel, 0f, _timeDisappearLvMessage));
         _numActiveCols = 3;
 
