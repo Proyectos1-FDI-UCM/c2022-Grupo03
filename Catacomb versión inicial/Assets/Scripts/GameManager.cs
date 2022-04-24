@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("numW: " + numW);
         }
 
-        if ((numW == 5 || numW == 12) && nEnemies == 0) nivelTerminado = true;
+        if ((numW == 5 || numW >= 11) && nEnemies == 0) nivelTerminado = true;
 
         // segunda condición debug
         if ((_currentLevel != 3 && nivelTerminado) || Input.GetKeyDown(KeyCode.P))

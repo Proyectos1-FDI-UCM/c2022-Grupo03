@@ -153,6 +153,7 @@ public class UI_Manager : MonoBehaviour
         if(_bossBar != null) _bossBar.SetActive(enabled);
     }
 
+
     private void Awake()
     {
         _imageSpinCd = _spinCooldownObject.GetComponentsInChildren<Image>()[1];
