@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
     private static UI_Manager _myUIManager;
     private static PlayerLifeComponent _myPlayerLifeComponent;
     private List<GameObject> spawners;
+    private AudioSource _myAudioSource;
     #endregion
 
     #region methods
@@ -129,21 +130,33 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        // se muestra en pantalla el mensaje de nivel terminado o de fin de nivel
-        string lvText = "Nivel terminado\n+1 vida";
-        // aumenta el número de nivel
-        _currentLevel++;
-        if (_currentLevel > 3)
+        // mensaje que se muestra en pantalla al terminar un nivel
+        string lvText;
+
+        // después de terminar un menú seleccionado se vuelve a la pantalla de título
+        if (PlayerPrefs.GetString("Back") == "SelecNivel")
         {
-            if (_currentLevel == 4)
+            lvText = "Nivel terminado";
+            _currentLevel = 0;
+        }
+        else if (PlayerPrefs.GetString("Back") == "Prueba")
+        {
+            lvText = "Prueba terminado";
+            _currentLevel = 0;
+        }
+        // aumenta el número de nivel
+        else
+        {
+            if (_currentLevel == 3)
             {
                 lvText = "¡¡VICTORIA!!";
+                _currentLevel = 0;
             }
             else
             {
-                lvText = "Prueba terminada";
+                lvText = "Nivel terminado\n+1 vida";
+                _currentLevel++;
             }
-            _currentLevel = 0;
         }
 
         StartCoroutine(TransitionLevel(_currentLevel, lvText, _timeChangeLevel));
@@ -156,13 +169,39 @@ public class GameManager : MonoBehaviour
         _savedLife = _myPlayerLifeComponent.MaxLife;
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(activeScene.buildIndex, LoadSceneMode.Single);
-        StartCoroutine(LevelInfo("Nivel" + _currentLevel, _timeAppearLvMessage, _timeDisappearLvMessage));
+        StartCoroutine(LevelInfo(LvIndexToName(_currentLevel), _timeAppearLvMessage, _timeDisappearLvMessage));
         numW = 0;
         spawners.Clear();
         currentWave = -1;
         nEnemies = -1;
         timePassed = waveDuration * 0.995f;
         _currentState = GameState.inGame;
+    }
+
+    private string LvIndexToName(int lvNumber)
+    {
+        string lvName = "";
+        switch (lvNumber)
+        {
+            case 1:
+            case 2:
+            case 3:
+                lvName = "Nivel " + lvNumber;
+                break;
+            case 4:
+                lvName = "Prueba enemigos cuerpo a cuerpo";
+                break;
+            case 5:
+                lvName = "Prueba enemigos a distancia";
+                break;
+            case 6:
+                lvName = "Prueba enemigos kamikazes";
+                break;
+            case 7:
+                lvName = "Prueba enemigos tanques";
+                break;
+        }
+        return lvName;
     }
     #endregion
 
@@ -210,6 +249,7 @@ public class GameManager : MonoBehaviour
     }
     public void Resume()
     {
+        _myAudioSource.mute = false;
         _myUIManager.SetPauseMenu(false);   // desaparece el menu de pausa
         _myUIManager.SetRayCooldown(true);
         _myUIManager.SetSpinCooldown(true);
@@ -223,6 +263,7 @@ public class GameManager : MonoBehaviour
     }
     private void Pause()
     {
+        _myAudioSource.mute = true;
         _myUIManager.SetPauseMenu(true);    // aparece el menu de pausa
         _myUIManager.SetLvMessage(false);
         _myUIManager.SetRayCooldown(false);
@@ -237,7 +278,9 @@ public class GameManager : MonoBehaviour
     }
     public void BackToTitle()
     {
+        GameObject.Destroy(gameObject);
         SceneManager.LoadScene(0, LoadSceneMode.Single);
+
         Time.timeScale = 1f;
         _currentState = GameState.inGame;
         numW = 0;
@@ -315,12 +358,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _myAudioSource = GetComponent<AudioSource>();
+
         Time.timeScale = 1f;
         _currentState = GameState.inGame;
         _currentLevel = SceneManager.GetActiveScene().buildIndex;
-        StartCoroutine(LevelInfo("Nivel " + _currentLevel, 0f, _timeDisappearLvMessage));
+        StartCoroutine(LevelInfo(LvIndexToName(_currentLevel), 0f, _timeDisappearLvMessage));
         _numActiveCols = 3 + _currentLevel - 1;
-        Debug.Log(_numActiveCols);
         if (_numActiveCols > 5)
         {
             _numActiveCols = 5;

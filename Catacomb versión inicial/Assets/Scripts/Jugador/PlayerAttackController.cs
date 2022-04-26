@@ -136,7 +136,7 @@ public class PlayerAttackController : MonoBehaviour
         {
             _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], _rotations[i]);
             _attacks[i].GetComponent<DamageZone>().SetDamage(_spinDamage);
-            //_attacks[i].GetComponent<SpriteRenderer>().enabled = false;
+            _attacks[i].GetComponent<SpriteRenderer>().enabled = false;
         }
         _spinCdOn = true;
         // el cd del ataque giratorio comienza cuando se han instanciado las zonas de daño

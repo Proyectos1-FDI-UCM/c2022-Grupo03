@@ -1729,7 +1729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ebe038d10c1254ca75a05a3c68b526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeChangeLevel: 10
+  _timeChangeLevel: 4
   _colors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -75603,12 +75603,32 @@ PrefabInstance:
       objectReference: {fileID: 1992227649}
     - target: {fileID: 6468387945398862694, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _speed
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _dirArrow
       value: 
       objectReference: {fileID: 1172447555}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _spinDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _durationRay
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _rayCooldown
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _spinCooldown
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _rayPreparationTime
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
 --- !u!4 &1103023108 stripped

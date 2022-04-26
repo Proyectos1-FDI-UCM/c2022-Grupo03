@@ -105,7 +105,6 @@ public class UI_Manager : MonoBehaviour
     }
     public void BackToTitle()
     {
-
         GameManager.Instance.BackToTitle();
     }
 

@@ -39,9 +39,7 @@ public class SpiderWebAttack : MonoBehaviour
         _elapsedTime += Time.deltaTime;
         if (_elapsedTime > _oftenAttack)
         {
-            Debug.Log("ha entrado");
             GameObject spiderWeb = Instantiate(_spiderWebBullet, _shotPointTransform.position, Quaternion.identity);
-            Debug.Log(spiderWeb.transform.position);
             ProjectileMovement projectileMovement = spiderWeb.GetComponent<ProjectileMovement>();
             projectileMovement.SetDamage(_spiderWebDamage);
             projectileMovement.SetSpeed(_speedReducedPlayer);

@@ -16286,12 +16286,24 @@ PrefabInstance:
       objectReference: {fileID: 1982223451}
     - target: {fileID: 6468387945398862694, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _speed
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _dirArrow
       value: 
       objectReference: {fileID: 2133390482}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _spinDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _durationRay
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _rayCooldown
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _afterDmgZoneMain
       value: 0.2
@@ -16299,6 +16311,10 @@ PrefabInstance:
     - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _afterDmgZonesSpin
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468387945398862697, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
+      propertyPath: _rayPreparationTime
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
