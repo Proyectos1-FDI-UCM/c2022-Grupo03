@@ -152,8 +152,7 @@ public class GameManager : MonoBehaviour
     // se llama cuando el jugador pierde
     // se reinicia el nivel
     public void OnPlayerDefeat()
-    {
-        _currentState = GameState.inGame;
+    {    
         _savedLife = _myPlayerLifeComponent.MaxLife;
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(activeScene.buildIndex, LoadSceneMode.Single);
@@ -163,6 +162,7 @@ public class GameManager : MonoBehaviour
         currentWave = -1;
         nEnemies = -1;
         timePassed = waveDuration * 0.995f;
+        _currentState = GameState.inGame;
     }
     #endregion
 

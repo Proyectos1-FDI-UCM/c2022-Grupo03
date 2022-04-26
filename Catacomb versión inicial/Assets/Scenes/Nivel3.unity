@@ -12553,7 +12553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6468387945398862690, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _deathTime
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6468387945398862690, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _healthBar

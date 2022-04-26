@@ -10,7 +10,7 @@ public class PlayerLifeComponent : MonoBehaviour
     public int MaxLife { get => _maxLife; }
 
     [SerializeField]
-    private float _deathTime;
+    private float _deathTime = 1;
     #endregion
 
     #region properties
@@ -37,9 +37,10 @@ public class PlayerLifeComponent : MonoBehaviour
             _healthBar.SetHealth(_currentLife);
             if (_currentLife <= 0)
             {
-                _deathAnimation.DeathAni();
+                Debug.Log("CurrentState: " + GameManager.Instance.CurrentState);
                 GameManager.Instance.CurrentState = GameState.gameOver;
                 StartCoroutine(GameManager.Instance.LevelInfo("¡Has perdido!", 0f, _deathTime));
+                _deathAnimation.DeathAni();                   
             }
         }
     }
@@ -71,8 +72,10 @@ public class PlayerLifeComponent : MonoBehaviour
         if (GameManager.Instance.CurrentState == GameState.gameOver)
         {
             _elapsedTime += Time.deltaTime;
+            Debug.Log("time: " + _elapsedTime);
             if (_elapsedTime > _deathTime)
             {
+                _elapsedTime = 0;
                 GameManager.Instance.OnPlayerDefeat();
             }
         }
