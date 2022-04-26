@@ -5712,7 +5712,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1640945872}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: PruebaDistancia
+        m_MethodName: PruebaKamikaze
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7668,7 +7668,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1640945872}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: PruebaMelee
+        m_MethodName: PruebaTanque
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
