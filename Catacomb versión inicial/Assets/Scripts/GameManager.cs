@@ -286,7 +286,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("+numW: " + numW);
             }
         }
-        Debug.Log(numW);
     }
     #endregion
 
@@ -351,11 +350,11 @@ public class GameManager : MonoBehaviour
             if (debug) currentWave = 0;
             ActivateSpawners();
             timePassed = 0;
-            Debug.Log(currentWave);
+            Debug.Log("CurrentWave: " + currentWave);
             Debug.Log("numW: " + numW);
         }
 
-        if ((numW == 5 || numW >= 11) && nEnemies == 0) nivelTerminado = true;
+        if ((numW >= spawners.Count) && nEnemies == 0) nivelTerminado = true;
 
         // segunda condición debug
         if ((_currentLevel != 3 && nivelTerminado) || Input.GetKeyDown(KeyCode.P))

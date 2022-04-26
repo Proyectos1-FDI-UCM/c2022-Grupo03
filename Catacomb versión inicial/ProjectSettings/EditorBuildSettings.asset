@@ -17,4 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Nivel3.unity
     guid: 1050a9fa63ea745438bd1bf7883f0ae7
+  - enabled: 1
+    path: Assets/Scenes/PruebasMelee.unity
+    guid: 8f3bfbf16a493ac47b0f26abcf320251
+  - enabled: 1
+    path: Assets/Scenes/PruebasRanged.unity
+    guid: 6df98286065f09445904b34e0d3d29f6
+  - enabled: 1
+    path: Assets/Scenes/PruebasKamikaze.unity
+    guid: b20bccee52a259747a51d55be2072d30
+  - enabled: 1
+    path: Assets/Scenes/PruebasTanque.unity
+    guid: b4dec1b6578449649a8df501ea5046f4
   m_configObjects: {}
