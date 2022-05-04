@@ -12,7 +12,6 @@ public class EnemyShooter : MonoBehaviour
     #region parameters
     private float _fireRate;
     private float _elapsedTime = 0;
-    private bool reloading = true;
     private float range = 0;
     private float playerDistance = 0;
     [SerializeField]
@@ -55,28 +54,24 @@ public class EnemyShooter : MonoBehaviour
         }
 
         _fireRate = GameManager.Instance.NumRandom(_minrate, _maxrate);
-        range = camera.pixelHeight/2;
+        //range = camera.pixelHeight/2;
+        range = GetComponentInParent<EnemyMovement>().GetRange();
     }
 
     // Update is called once per frame
     void Update()
     {
         playerDistance = GetComponentInParent<EnemyMovement>().GetPlayerDistance();
+        Debug.Log("distancia: " + playerDistance);
         if (playerDistance <= range)
         {
             _elapsedTime += Time.deltaTime;
             if (_elapsedTime > _fireRate)
             {
                 _elapsedTime = 0;
-                reloading = false;
+                GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity, _myTransform);
+                shotAmmo.GetComponent<ProjectileMovement>().SetDamage(damage);
             }
-        }
-        if (!reloading)
-        {
-            //se instancia como hijo
-            GameObject shotAmmo = Instantiate(ammo, this.transform.position, Quaternion.identity, _myTransform);
-            shotAmmo.GetComponent<ProjectileMovement>().SetDamage(damage);
-            reloading = true;
         }
     }
 }
