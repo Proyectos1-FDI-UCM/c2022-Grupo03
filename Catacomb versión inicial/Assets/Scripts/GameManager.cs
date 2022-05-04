@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     private float timePassed = 0;
     private int nEnemies = -1;
     public bool nivelTerminado;
+    //variable para que no se llame all método varias veces en el update
     private bool _delay;
     private int numW = 0;
     private bool state;
@@ -174,6 +175,7 @@ public class GameManager : MonoBehaviour
         spawners.Clear();
         currentWave = -1;
         nEnemies = -1;
+        _delay = false;
         timePassed = waveDuration * 0.995f;
         _currentState = GameState.inGame;
     }
@@ -400,7 +402,7 @@ public class GameManager : MonoBehaviour
 
         if ((numW >= spawners.Count) && nEnemies == 0) nivelTerminado = true;
 
-        if (_currentLevel != 3 && nivelTerminado)
+        if ((_currentLevel != 3 && nivelTerminado) || Input.GetKeyDown(KeyCode.P))
         {
             currentWave = -1;
             numW = 0;

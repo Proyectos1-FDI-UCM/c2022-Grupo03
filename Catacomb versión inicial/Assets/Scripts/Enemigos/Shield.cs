@@ -18,7 +18,7 @@ public class Shield : MonoBehaviour
     private EnemyLifeComponent _myShieldLifeComponent;
     private GameObject _myEnemy;
     private Transform _myEnemyTransform;
-    private EnemyMelee _myEnemyMelee;
+    //private EnemyMelee _myEnemyMelee;
     private EnemyLifeComponent _myEnemyLifeComponent;
     #endregion
 
@@ -29,7 +29,7 @@ public class Shield : MonoBehaviour
         _myEnemyLifeComponent = _myEnemy.AddComponent<EnemyLifeComponent>();
         _myEnemyLifeComponent.MaxLife = _tankEnemyLife;
         // se activa el script del ataque del enemigo cuerpo a cuerpo
-        _myEnemyMelee.enabled = true;
+        //_myEnemyMelee.enabled = true;
         // se rota al enemigo xq cuando se le destruye el escudo rota solo
         float negXScale = -_myEnemyTransform.localScale.x;
         _myEnemyTransform.localScale = new Vector3(negXScale, 1, 1);
@@ -44,7 +44,7 @@ public class Shield : MonoBehaviour
         _myShieldLifeComponent = GetComponent<EnemyLifeComponent>();
         _myEnemy = transform.parent.gameObject;
         _myEnemyTransform = transform.parent;
-        _myEnemyMelee = _myEnemy.GetComponent<EnemyMelee>();
+        //_myEnemyMelee = _myEnemy.GetComponent<EnemyMelee>();
         _primerColor = false;
         _segundoColor = false;
     }
