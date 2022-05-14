@@ -25,14 +25,14 @@ public class SpiderWebCollision : MonoBehaviour
     private void SetEdgeFirstPoint()
     {
         _myLineRenderer.positionCount = 2;
-        _myLineRenderer.SetPosition(0, _myTransform.position);
+        _myLineRenderer.SetPosition(0, _shotPointTransform.position);
         _edges.Add(Vector2.zero);
     }
 
     private void SetEdgeSecondPoint()
     {
         _myLineRenderer.SetPosition(1, _myTransform.position);
-        Vector2 webDir = _myTransform.position - _shotPointTransform.position;
+        Vector2 webDir = _shotPointTransform.position - _myTransform.position;
         _edges.Add(new Vector2(0, -webDir.magnitude));
     }
     #endregion
@@ -48,6 +48,7 @@ public class SpiderWebCollision : MonoBehaviour
         _edges = new List<Vector2>();
 
         SetEdgeFirstPoint();
+        SetEdgeSecondPoint();
     }
 
     // Update is called once per frame

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7399440527659434884}
   - component: {fileID: -1942826840998187703}
   - component: {fileID: 3861773019963263958}
+  - component: {fileID: 4888371709616338665}
   - component: {fileID: 4273968678476069259}
   - component: {fileID: 4991468061933915343}
-  - component: {fileID: 4888371709616338665}
   m_Layer: 7
   m_Name: SpiderWeb
   m_TagString: Untagged
@@ -83,6 +83,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 3
+--- !u!114 &4888371709616338665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8890617556646615505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e0149bd48d4e940a4b8706c9b780bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &4273968678476069259
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -122,7 +134,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
@@ -201,15 +213,3 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &4888371709616338665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8890617556646615505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e0149bd48d4e940a4b8706c9b780bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
