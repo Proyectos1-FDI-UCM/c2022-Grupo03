@@ -14,8 +14,8 @@ public class EnemyDetectionZone : MonoBehaviour
     private GameObject _enemyExplosion;
     private EnemyKamikaze _enemyKamikaze;
     private bool explota = false;
-    private float _elapsedTime;
-    private float _tiempoexplosion = 0.5f;
+    private float _elapsedTime = 0;
+    private float _tiempoexplosion = 0.4f;
     #endregion
 
     #region properties
@@ -43,6 +43,7 @@ public class EnemyDetectionZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _elapsedTime = 0;
         _myTransform = transform;
         _enemyKamikaze = GetComponentInParent<EnemyKamikaze>();
     }
@@ -51,13 +52,13 @@ public class EnemyDetectionZone : MonoBehaviour
     void Update()
     {
         if (explota)
-        {
+        {           
             _elapsedTime += Time.deltaTime;
             if (_elapsedTime > _tiempoexplosion)
-            {           
+            {
                 _enemyKamikaze.Explosion();
-                Destroy(gameObject);
                 _elapsedTime = 0;
+                Destroy(gameObject);
             }            
         }       
     }

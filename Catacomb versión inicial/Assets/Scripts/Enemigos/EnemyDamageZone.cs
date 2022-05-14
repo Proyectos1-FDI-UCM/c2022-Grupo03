@@ -44,7 +44,7 @@ public class EnemyDamageZone : MonoBehaviour
             else
                 _playerLifeComponent.Damage(_enemyMeleeComponent.DañoAtaque());
         }
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
         Debug.Log("destruido: " + gameObject);
     }
 

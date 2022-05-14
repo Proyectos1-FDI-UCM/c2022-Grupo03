@@ -57,9 +57,9 @@ public class EnemyKamikaze : MonoBehaviour
     {
         if (exploto)
         {
-            GameManager.Instance.OnEnemyDies(_myEnemyLifeComponent);
-            GameManager.Instance.EnemyDestroyed();
             GetComponent<EnemyMovement>().StopMovement();
+            GameManager.Instance.OnEnemyDies(_myEnemyLifeComponent);
+            GameManager.Instance.EnemyDestroyed();         
             Destroy(gameObject);
         }
     }
