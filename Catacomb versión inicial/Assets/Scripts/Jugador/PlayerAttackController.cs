@@ -247,7 +247,7 @@ public class PlayerAttackController : MonoBehaviour
                         hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
                     }
                     // dañar al resto de cosas
-                    else
+                    else if (hitInfos[i].collider.name != "SpiderHead")
                     {
                         hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
                     }

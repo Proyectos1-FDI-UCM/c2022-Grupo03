@@ -50,7 +50,7 @@ public class EnemyLifeComponent : MonoBehaviour
                 Die();
             }
         }
-        else if (_isBlue && rndNum == 0 && _myMessage != null) //es azul y lo ha esquivado
+        else if (_isBlue && rndNum == 0 && _myMessage != null) // es azul y lo ha esquivado
         {
             _myMessage.SetMessage("MISS!!");
         }

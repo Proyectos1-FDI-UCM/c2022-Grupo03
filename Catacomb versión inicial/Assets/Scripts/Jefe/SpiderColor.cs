@@ -17,7 +17,7 @@ public class SpiderColor : MonoBehaviour
     #region methods
     private void Awake()
     {
-        // todos los colores menos el azul
+        // todos los colores menos el rosa
         int randomColor = GameManager.Instance.NumRandom(0, 3);
         switch (randomColor)
         {
@@ -31,7 +31,7 @@ public class SpiderColor : MonoBehaviour
                 gameObject.AddComponent<Green>();
                 break;
             case 3:
-                gameObject.AddComponent<Pink>();
+                gameObject.AddComponent<Blue>();
                 break;
         }
     }

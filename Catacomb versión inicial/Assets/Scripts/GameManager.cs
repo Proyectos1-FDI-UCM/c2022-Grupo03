@@ -396,8 +396,8 @@ public class GameManager : MonoBehaviour
             if (debug) currentWave = 0;
             ActivateSpawners();
             timePassed = 0;
-            Debug.Log("CurrentWave: " + currentWave);
-            Debug.Log("numW: " + numW);
+            // Debug.Log("CurrentWave: " + currentWave);
+            // Debug.Log("numW: " + numW);
         }
 
         if ((numW >= spawners.Count) && nEnemies == 0) nivelTerminado = true;

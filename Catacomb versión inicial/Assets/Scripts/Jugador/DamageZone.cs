@@ -30,19 +30,12 @@ public class DamageZone : MonoBehaviour
         if (collider.GetComponent(_enemyColors[_indice]) != null)
         {
             // solo se puede dañar al jefe si se encuentra en el segundo estado
-            if (collider.name == "SpiderHead")
+            if (collider.name == "SpiderHead" && _bossManager.State == 2)
             {
-                if (_bossManager.State == 2)
-                {
-                    collider.GetComponent<EnemyLifeComponent>().Damage(_damage);
-                }
-                else
-                {
-                    return;
-                }
+                collider.GetComponent<EnemyLifeComponent>().Damage(_damage);
             }
             // dañar al resto de cosas
-            else
+            else if (collider.name != "SpiderHead")
             {
                 EnemyLifeComponent enemyLifeComponent = collider.GetComponent<EnemyLifeComponent>();
                 if (enemyLifeComponent != null)
