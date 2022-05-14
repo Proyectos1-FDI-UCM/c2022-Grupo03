@@ -179,7 +179,7 @@ public class AttackAnimation : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if(time > 0.4)
-            atacando = false;                  
+        if (time > 0.4)
+            atacando = false;
     }
 }

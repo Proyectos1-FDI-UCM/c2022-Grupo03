@@ -18,7 +18,6 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
 
     #region references
-    private Transform _myTransform;
     private Rigidbody2D rb;
     #endregion
 
@@ -39,17 +38,11 @@ public class PlayerMovementController : MonoBehaviour
     {
         _movementDirection = newMovementDirection;
     }
-
-    public void Rodar()
-    {
-        _speed = _originalSpeed;
-    }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        _myTransform = transform;
         rb = GetComponent<Rigidbody2D>();
         _originalSpeed = _speed;
         _speedChanged = false;

@@ -22,7 +22,6 @@ public class EnemyShooter : MonoBehaviour
     private int _maxrate = 6;
     [SerializeField]
     private int _minrate = 3;
-    private Camera camera;
 
     #endregion
 
@@ -36,7 +35,6 @@ public class EnemyShooter : MonoBehaviour
     #region properties
     GameObject target;
     Transform targetTransform;
-    int tiempodif;
     #endregion
 
     // Start is called before the first frame update
@@ -46,7 +44,6 @@ public class EnemyShooter : MonoBehaviour
         target = GameObject.Find("Player");
         _myRedComponent = GetComponent<Red>();
         targetTransform = target.transform;
-        camera = Camera.main;
         Vector3 temp = (targetTransform.position - this.transform.position);
         if (_myRedComponent != null)
         {

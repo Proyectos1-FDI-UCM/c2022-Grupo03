@@ -97,11 +97,6 @@ public class PlayerInputManager : MonoBehaviour
                 _myPlayerAttackController.SpintAttack();
             }
 
-            // rodar
-            if (Input.GetButtonDown("Roll"))
-            {
-                _myPlayerMovementController.Rodar();
-            }
             // movimiento
             else
             {

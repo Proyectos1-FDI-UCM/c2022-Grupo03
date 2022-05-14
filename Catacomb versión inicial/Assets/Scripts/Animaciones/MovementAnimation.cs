@@ -40,31 +40,20 @@ public class MovementAnimation : MonoBehaviour
             if (_myPlayerInput.HInput() == 0 && _myPlayerInput.VInput() == 0)
             {
                 _myAnimator.ResetTrigger("Correr");
-                _myAnimator.ResetTrigger("Roll");
                 _myAnimator.SetTrigger("NoCorrer");
             }
             else if (_myPlayerInput.HInput() < 0) // izq
             {
                 _myAnimator.ResetTrigger("NoCorrer");
-                _myAnimator.ResetTrigger("Roll");
                 _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
                 _myAnimator.SetTrigger("Correr");
             }
             else // der
             {
                 _myAnimator.ResetTrigger("NoCorrer");
-                _myAnimator.ResetTrigger("Roll");
                 _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
                 _myAnimator.SetTrigger("Correr");
             }
-
-            if (Input.GetButtonDown("Roll"))
-            {
-                _myAnimator.ResetTrigger("Correr");
-                _myAnimator.ResetTrigger("NoCorrer");
-                _myAnimator.SetTrigger("Roll");
-            }
         }
-        
     }
 }
