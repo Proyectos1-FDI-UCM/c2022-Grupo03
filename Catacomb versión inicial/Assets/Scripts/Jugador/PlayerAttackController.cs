@@ -133,7 +133,7 @@ public class PlayerAttackController : MonoBehaviour
     private void SpinZone()
     {
         _spinAttack = Instantiate(_damageZones[1], _myTransform.position, Quaternion.identity);
-        DamageZone[] spinZones = GetComponentsInChildren<DamageZone>();
+        DamageZone[] spinZones = _spinAttack.GetComponentsInChildren<DamageZone>();
         for (int i = 0; i < spinZones.Length; i++)
         {
             spinZones[i].SetDamage(_spinDamage);
