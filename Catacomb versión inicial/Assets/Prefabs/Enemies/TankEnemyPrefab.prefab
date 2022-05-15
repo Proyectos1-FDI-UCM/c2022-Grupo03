@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
-  _range: 1
+  _range: 0
   ranged: 0
 --- !u!95 &1179312069590040410
 Animator:

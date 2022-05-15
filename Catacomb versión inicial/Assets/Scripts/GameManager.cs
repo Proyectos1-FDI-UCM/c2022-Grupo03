@@ -393,11 +393,10 @@ public class GameManager : MonoBehaviour
         {
             _delay = true;
             currentWave++;
+            _myUIManager.UpdateCurrentWave(currentWave + 1);
             if (debug) currentWave = 0;
             ActivateSpawners();
             timePassed = 0;
-            // Debug.Log("CurrentWave: " + currentWave);
-            // Debug.Log("numW: " + numW);
         }
 
         if ((numW >= spawners.Count) && nEnemies == 0) nivelTerminado = true;

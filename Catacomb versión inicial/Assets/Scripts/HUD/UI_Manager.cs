@@ -30,6 +30,9 @@ public class UI_Manager : MonoBehaviour
     private GameObject _enemiesLeftObject;
     private Text _enemiesLeftText;
     [SerializeField]
+    private GameObject _currentWaveObject;
+    private Text _currentWaveText;
+    [SerializeField]
     private GameObject _pauseMenu;
     [SerializeField]
     private GameObject _level;
@@ -88,6 +91,13 @@ public class UI_Manager : MonoBehaviour
             numEnemies = 0;
         
         _enemiesLeftText.text = "Enemigos: " + numEnemies;
+    }
+    public void UpdateCurrentWave(int currentWave)
+    {
+        if (currentWave < 0)
+            currentWave = 0;
+
+        _currentWaveText.text = "Oleada: " + currentWave;
     }
 
     // menú de pausa
@@ -161,6 +171,7 @@ public class UI_Manager : MonoBehaviour
         _currentColorImage = _currentColorObject.GetComponent<Image>();
         _spinCooldownText = _spinCooldownObject.GetComponentInChildren<Text>();
         _rayCooldownText = _rayCooldownObject.GetComponentInChildren<Text>();
+        _currentWaveText = _currentWaveObject.GetComponentInChildren<Text>();
         _levelText = _level.GetComponent<Text>();
     }
     #endregion
