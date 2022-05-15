@@ -28,8 +28,6 @@ public class DamageZone : MonoBehaviour
     {
         Shield enemyTankShield = collider.GetComponent<Shield>();
         EnemyLifeComponent enemyLifeComponent = collider.GetComponent<EnemyLifeComponent>();
-        Debug.Log(enemyTankShield);
-        Debug.Log(enemyLifeComponent);
         if (enemyTankShield != null)
         {
             if (enemyTankShield.gameObject.GetComponent(_enemyColors[_indice]) != null)
@@ -47,17 +45,6 @@ public class DamageZone : MonoBehaviour
                 {
                     enemyLifeComponent.Damage(_damage);
                 }
-                /*
-                if (collider.name == "SpiderHead" && _bossManager.State == 2)
-                {
-                    enemyLifeComponent.Damage(_damage);
-                }
-                // dañar al resto de cosas
-                else if (collider.name != "SpiderHead")
-                {
-                    enemyLifeComponent.Damage(_damage);
-                }
-                */
             }
         }
     }

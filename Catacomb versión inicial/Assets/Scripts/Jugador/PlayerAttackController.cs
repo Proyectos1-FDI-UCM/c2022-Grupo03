@@ -42,7 +42,7 @@ public class PlayerAttackController : MonoBehaviour
     private string[] _enemyColors = { "Red", "Yellow", "Green", "Blue", "Pink" };
     private Quaternion[] _rotations = { Quaternion.Euler(180, 0, 0), Quaternion.Euler(0, 0, 270), Quaternion.identity, Quaternion.Euler(0, 0, 90) };
     GameObject _lastAttack;
-    GameObject[] _attacks = new GameObject[4];
+    GameObject _spinAttack;
     private bool _attackRunning; // indicar si se está atacando
     private bool _rayMade;  // indicar si se ha realizado la habilidad del rayo
     private bool _spinMade; // indicar si se ha realizado el ataque giratorio
@@ -122,7 +122,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (!_attackRunning && !_spinMade && !_spinCdOn)
         {
-            Invoke(nameof(DmgZonesSpinAttack), _afterDmgZonesSpin);
+            Invoke(nameof(SpinZone), _afterDmgZonesSpin);
             _attackRunning = true;
             _spinMade = true;
             // animación del rayo
@@ -130,13 +130,13 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerInputManager.enabled = false;
         }
     }
-    private void DmgZonesSpinAttack()
+    private void SpinZone()
     {
-        for (int i = 0; i < _attacks.Length; i++)
+        _spinAttack = Instantiate(_damageZones[1], _myTransform.position, Quaternion.identity);
+        DamageZone[] spinZones = GetComponentsInChildren<DamageZone>();
+        for (int i = 0; i < spinZones.Length; i++)
         {
-            _attacks[i] = Instantiate(_damageZones[i % 2], _myTransform.position + _offsets[i], _rotations[i]);
-            _attacks[i].GetComponent<DamageZone>().SetDamage(_spinDamage);
-            _attacks[i].GetComponent<SpriteRenderer>().enabled = false;
+            spinZones[i].SetDamage(_spinDamage);
         }
         _spinCdOn = true;
         // el cd del ataque giratorio comienza cuando se han instanciado las zonas de daño
@@ -147,7 +147,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (_spinMade)
         {
-            Invoke(nameof(DestroyDmgZonesSpinAttack), _dmgZoneDuration + _afterDmgZonesSpin);
+            Invoke(nameof(DestroySpinZone), _dmgZoneDuration + _afterDmgZonesSpin);
         }
         else
         {
@@ -161,12 +161,9 @@ public class PlayerAttackController : MonoBehaviour
         _myPlayerInputManager.enabled = true;
     }
     // destruir las zonas de daño del ataque giratorio
-    private void DestroyDmgZonesSpinAttack()
+    private void DestroySpinZone()
     {
-        for (int i = 0; i < _attacks.Length; i++)
-        {
-            GameObject.Destroy(_attacks[i]);
-        }
+        GameObject.Destroy(_spinAttack);
         _myPlayerInputManager.enabled = true;
         _spinMade = false;  // el ataque ya se ha efectuado
     }
@@ -250,24 +247,14 @@ public class PlayerAttackController : MonoBehaviour
                 if (hitInfos[i].collider.GetComponentInChildren<Shield>() == null)
                 {
                     // si el color del enemigo es igual que el del rayo, el enemigo sufre daño
+                    // se pone en un if separado para que el rayo pueda atravesar al escudo
                     if (hitInfos[i].collider.GetComponent(_enemyColors[indice]) != null)
                     {
+                        // solo se puede dañar al jefe si se encuentra en el segundo estado
                         if (hitInfos[i].collider.name != "SpiderHead" || _bossManager.State == 2)
                         {
                             enemyLifeComponent.Damage(_rayDamage);
                         }
-                        /*
-                        // solo se puede dañar al jefe si se encuentra en el segundo estado
-                        if (hitInfos[i].collider.name == "SpiderHead" && _bossManager.State == 2)
-                        {
-                            enemyLifeComponent.Damage(_rayDamage);
-                        }
-                        // dañar al resto de cosas
-                        else if (hitInfos[i].collider.name != "SpiderHead")
-                        {
-                            enemyLifeComponent.Damage(_rayDamage);
-                        }
-                        */
                     }
                 }
             }

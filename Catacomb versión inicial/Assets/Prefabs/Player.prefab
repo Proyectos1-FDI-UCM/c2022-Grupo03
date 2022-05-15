@@ -197,7 +197,7 @@ MonoBehaviour:
   - {x: 1.25, y: 0, z: 0}
   _damageZones:
   - {fileID: 6653043378017638796, guid: cb3dfaf72e3f02940b6d0c111a7eacc1, type: 3}
-  - {fileID: 3927458185145662951, guid: 20e941c422dc0db48bd9949d26c3c7da, type: 3}
+  - {fileID: 1289433313840683036, guid: de4be6beba601554d8cfbd1fe940f921, type: 3}
   _dirArrow: {fileID: 0}
 --- !u!114 &6468387945398862699
 MonoBehaviour:

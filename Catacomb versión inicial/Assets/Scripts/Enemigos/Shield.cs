@@ -71,7 +71,6 @@ public class Shield : MonoBehaviour
     private void ApplyCol(int state = 0)
     {
         _state = state;
-        Debug.Log(_state);
         AddCol(_numCols[_state]);
     }
 
