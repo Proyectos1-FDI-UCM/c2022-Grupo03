@@ -10,6 +10,9 @@ body {
     color: #ff9d2a;
     background-color: #222222;
 }
+header {
+    color: #ff9d2a;
+}
 
 
 
@@ -39,6 +42,10 @@ img.img-header {
 
 .media-item {
   margin: 1rem;
+}
+
+#row {
+    column-rule: 4px dotted gray;
 }
 
 
