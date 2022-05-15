@@ -10,9 +10,7 @@ body {
     color: #ff9d2a;
     background-color: #222222;
 }
-header {
-    color: #ff9d2a;
-}
+
 
 
 
@@ -21,7 +19,11 @@ header {
 -------------------------------------------------- */
 
 img.img-header {
-  max-height: 500px;
+   /* max-height: 500px; */
+    
+}
+header {
+    background-color: #ff9d2a;
 }
 
 
@@ -45,9 +47,17 @@ img.img-header {
 }
 
 .marketing-row{
-    column-rule: 4px dotted gray;
+    column-rule: 10px dotted gray;
 }
 
+.marketing h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 1rem 0;
+    color:navajowhite;
+    font-family: 'Comic Sans MS';
+
+}
 
 /* Featurettes
 ------------------------- */
