@@ -401,7 +401,7 @@ public class GameManager : MonoBehaviour
 
         if ((numW >= spawners.Count) && nEnemies == 0) nivelTerminado = true;
 
-        if ((_currentLevel != 3 && nivelTerminado) || Input.GetKeyDown(KeyCode.P))
+        if (_currentLevel != 3 && nivelTerminado)
         {
             currentWave = -1;
             numW = 0;
