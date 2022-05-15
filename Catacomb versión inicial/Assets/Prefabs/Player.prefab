@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6222b67fbefe5de4b96a3d127c71ee2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3.5
+  _speed: 3.7
 --- !u!114 &6468387945398862693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,16 +182,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainAttackDmg: 1
-  _afterDmgZoneMain: 0.2
+  _afterDmgZoneMain: 0.1
   _spinDamage: 2
-  _afterDmgZonesSpin: 0.5
-  _spinCooldown: 10
-  _dmgZoneDuration: 0.5
-  _rayDamage: 2
-  _rayLength: 10
-  _rayCooldown: 10
-  _rayPreparationTime: 0.5
-  _durationRay: 1
+  _afterDmgZonesSpin: 0.33
+  _spinCooldown: 7
+  _dmgZoneDuration: 0.35
+  _rayDamage: 1
+  _rayLength: 9
+  _rayCooldown: 12
+  _rayPreparationTime: 0.3
+  _durationRay: 0.28
   _offsets:
   - {x: 0, y: 1.25, z: 0}
   - {x: -1.25, y: 0, z: 0}

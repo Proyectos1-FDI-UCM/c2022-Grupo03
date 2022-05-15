@@ -29466,7 +29466,6 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 0.4}
   - {r: 0, g: 0, b: 1, a: 0.4}
   - {r: 1, g: 0, b: 0.6452723, a: 0.4}
-  nivelTerminado: 0
   debug: 0
 --- !u!4 &1065334020
 Transform:
@@ -34485,7 +34484,7 @@ MonoBehaviour:
   _oftenAttack: 3
   _spiderWebDamage: 1
   _speedReducedPlayer: 1.5
-  _durationSpeedReduced: 2
+  _durationSpeedReduced: 2.5
   _spiderWebBullet: {fileID: 8890617556646615505, guid: 07a34fe9bfa516e49a292d3ae6b3d349, type: 3}
   _shotPoint: {fileID: 534011670}
 --- !u!114 &1597269286
@@ -34523,7 +34522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeToStart: 5
   _durationFirstState: 3
-  _durationSecondState: 10
+  _durationSecondState: 8
   _legOffsets:
   - {x: 0, y: 0.15, z: 0}
   - {x: -0.05, y: 0.05, z: 0}

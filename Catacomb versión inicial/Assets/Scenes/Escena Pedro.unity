@@ -3771,7 +3771,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979648768}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 56f28177087ed9d468549a6c079c702d, type: 3}
@@ -3891,7 +3891,6 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 0.4}
   - {r: 0, g: 0, b: 1, a: 0.4}
   - {r: 1, g: 0, b: 0.6452723, a: 0.4}
-  nivelTerminado: 0
   debug: 0
 --- !u!4 &1979648771
 Transform:

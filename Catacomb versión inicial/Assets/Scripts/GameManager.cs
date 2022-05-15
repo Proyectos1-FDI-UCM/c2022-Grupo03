@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     private float waveDuration = 15;
     private float timePassed = 0;
     private int nEnemies = -1;
-    public bool nivelTerminado;
+    private bool nivelTerminado;
     //variable para que no se llame all método varias veces en el update
     private bool _delay;
     private int numW = 0;
