@@ -26,6 +26,8 @@ public class BossManager : MonoBehaviour
     private float _speed;
     [SerializeField]
     private float _movementDuration;
+    [SerializeField]
+    private Color _spiderColor;
     #endregion
 
     #region properties
@@ -117,7 +119,7 @@ public class BossManager : MonoBehaviour
         _transitionMade = false;
         // el jefe tiene que rotar en sentido contrario para volver a la posición inicial
         _rotationFactor = -_rotationFactor;
-        _spiderHeadSprite.color = Color.white;
+        _spiderHeadSprite.color = _spiderColor;
     }
 
     private void ZeroToSecond()
@@ -213,7 +215,7 @@ public class BossManager : MonoBehaviour
         {
             case -1:
                 // primero aparece y luego, se mueve
-                _spiderHeadSprite.color = Color.white;
+                _spiderHeadSprite.color = _spiderColor;
                 Debug.Log("estado -1");
                 if (SpiderMovement(-1))
                 {

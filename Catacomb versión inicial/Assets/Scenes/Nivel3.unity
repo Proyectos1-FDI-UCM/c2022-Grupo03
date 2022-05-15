@@ -34533,6 +34533,7 @@ MonoBehaviour:
   _rotationFactor: 80
   _speed: 3
   _movementDuration: 2
+  _spiderColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
   _legs:
   - {fileID: 1140888004800933438, guid: 2b33e1fe6465ab44a995fbf3d5ae6b63, type: 3}
   - {fileID: 1140888004800933438, guid: 2cd9a6aa362302c4fa3f2de29719d514, type: 3}
