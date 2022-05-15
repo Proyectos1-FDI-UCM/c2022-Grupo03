@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AttackMelee
-  m_Speed: 1
+  m_Speed: 0.25
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -59,7 +59,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -7411426535058493093}
-    m_Position: {x: 349.59943, y: 178.6304, z: 0}
+    m_Position: {x: 350, y: 180, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

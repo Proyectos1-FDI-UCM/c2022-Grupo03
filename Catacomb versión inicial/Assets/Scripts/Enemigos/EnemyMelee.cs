@@ -11,6 +11,7 @@ public class EnemyMelee : MonoBehaviour
     private bool ataca = false;
     private bool yellow = false; //booleano para ver si es amarillo
     private float _elapsedTime;
+    private float _elapsedTime2 = 0;
     [SerializeField]
     private float _attackDuration = 2f;
     [SerializeField]
@@ -101,28 +102,34 @@ public class EnemyMelee : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _elapsedTime2 += Time.deltaTime;
         //para ver hacia donde mira el enemigo y hacia que lado se instancia la zona de ataque
-        diferenciax = Math.Abs(transform.position.x) - Math.Abs(player.transform.position.x);
-        if (diferenciax < 0 && transform.position.x < 0 && player.transform.position.x < 0)
+        if (_elapsedTime2 > 0.5f)
         {
-            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
-            offset = new Vector3(-1f, 0f, 0f);
+            diferenciax = Math.Abs(transform.position.x) - Math.Abs(player.transform.position.x);
+            if (diferenciax < 0 && transform.position.x < 0 && player.transform.position.x < 0)
+            {
+                _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+                offset = new Vector3(-1f, 0f, 0f);
+            }
+            else if (diferenciax > 0 && transform.position.x < 0 && player.transform.position.x < 0)
+            {
+                _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+                offset = new Vector3(1f, 0f, 0f);
+            }
+            else if (diferenciax < 0 && transform.position.x > 0 && player.transform.position.x > 0)
+            {
+                _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+                offset = new Vector3(1f, 0f, 0f);
+            }
+            else if (diferenciax > 0 && transform.position.x > 0 && player.transform.position.x > 0)
+            {
+                _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+                offset = new Vector3(-1f, 0f, 0f);
+            }
+            _elapsedTime2 = 0;
         }
-        else if (diferenciax > 0 && transform.position.x < 0 && player.transform.position.x < 0)
-        {
-            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
-            offset = new Vector3(1f, 0f, 0f);
-        }
-        else if (diferenciax < 0 && transform.position.x > 0 && player.transform.position.x > 0)
-        {
-            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
-            offset = new Vector3(1f, 0f, 0f);
-        }
-        else if (diferenciax > 0 && transform.position.x > 0 && player.transform.position.x > 0)
-        {
-            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
-            offset = new Vector3(-1f, 0f, 0f);
-        }
+        
 
         playerDistance = GetComponent<EnemyMovement>().GetPlayerDistance();
         if (playerDistance <= range)

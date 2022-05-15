@@ -6,6 +6,7 @@ public class EnemyDamageZone : MonoBehaviour
 {
     #region parameters
     private bool _kamikaze = false;
+    private float _elapsedTime = 0;
     #endregion
 
     #region references
@@ -25,7 +26,7 @@ public class EnemyDamageZone : MonoBehaviour
             else
                 _playerLifeComponent.Damage(_enemyMeleeComponent.DañoAtaque());
         }
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -56,6 +57,11 @@ public class EnemyDamageZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        _elapsedTime += Time.deltaTime;
+        if(_elapsedTime > 0.5f)
+        {
+            Destroy(this.gameObject);
+            _elapsedTime = 0;
+        }
     }
 }
