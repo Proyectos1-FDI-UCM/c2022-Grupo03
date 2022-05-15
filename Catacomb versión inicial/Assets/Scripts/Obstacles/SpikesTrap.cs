@@ -38,9 +38,16 @@ public class SpikesTrap : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         PlayerLifeComponent playerLifeComponent = collider.GetComponent<PlayerLifeComponent>();
+        if (playerLifeComponent != null)
+        {
+            playerLifeComponent.Damage(spikesDamage);
+        }
         EnemyLifeComponent enemyLifeComponent = collider.GetComponent<EnemyLifeComponent>();
-        if (playerLifeComponent != null) playerLifeComponent.Damage(spikesDamage);
-        if (enemyLifeComponent != null) enemyLifeComponent.Damage(spikesDamage);
+        Shield enemyTankShield = collider.GetComponentInChildren<Shield>();
+        if (enemyLifeComponent != null && enemyTankShield == null)
+        {
+            enemyLifeComponent.Damage(spikesDamage);
+        }
     }
     #endregion
 

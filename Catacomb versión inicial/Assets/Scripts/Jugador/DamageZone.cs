@@ -65,7 +65,10 @@ public class DamageZone : MonoBehaviour
 
         // ajustar las diferentes cosas al color de la espada
         _mySpriteRenderer = GetComponent<SpriteRenderer>();
-        _mySpriteRenderer.color = GameManager.Instance.TranslucentColors[_indice];
+        if (_mySpriteRenderer != null)
+        {
+            _mySpriteRenderer.color = GameManager.Instance.TranslucentColors[_indice];
+        }
 
         _bossManagerObject = GameObject.Find("BossManager");
         if (_bossManagerObject)

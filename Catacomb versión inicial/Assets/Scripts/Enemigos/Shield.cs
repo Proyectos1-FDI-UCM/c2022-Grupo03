@@ -20,6 +20,7 @@ public class Shield : MonoBehaviour
     #endregion
 
     #region methods
+    // desordenar los colores entre todos los que se pueden seleccionar
     private void Desordenar(int[] v)
     {
         int n = v.Length;
@@ -54,6 +55,7 @@ public class Shield : MonoBehaviour
         }
     }
 
+    // cambiar el color del escudo
     public void ChangeShieldCol()
     {
         _state++;
@@ -63,6 +65,7 @@ public class Shield : MonoBehaviour
         }
         else
         {
+            // eliminar el color anterior del escudo y aplicar el nuevo
             GameObject.Destroy(_activeCol);
             ApplyCol(_state);
         }
@@ -71,7 +74,7 @@ public class Shield : MonoBehaviour
     private void ApplyCol(int state = 0)
     {
         _state = state;
-        AddCol(_numCols[_state]);
+        AddCol(_numCols[_state % _numCols.Length]);
     }
 
     private void RemoveShield()
@@ -83,14 +86,15 @@ public class Shield : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _numCols = new int[3];
+        _mySpriteRenderer = GetComponent<SpriteRenderer>();
+
+        _numCols = new int[GameManager.Instance.NumActiveCols];
         for (int i = 0; i < _numCols.Length; i++)
         {
             _numCols[i] = i;
         }
         Desordenar(_numCols);
 
-        _mySpriteRenderer = GetComponent<SpriteRenderer>();
         ApplyCol();
     }
 

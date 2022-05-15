@@ -133,11 +133,7 @@ public class PlayerAttackController : MonoBehaviour
     private void SpinZone()
     {
         _spinAttack = Instantiate(_damageZones[1], _myTransform.position, Quaternion.identity);
-        DamageZone[] spinZones = _spinAttack.GetComponentsInChildren<DamageZone>();
-        for (int i = 0; i < spinZones.Length; i++)
-        {
-            spinZones[i].SetDamage(_spinDamage);
-        }
+        _spinAttack.GetComponent<DamageZone>().SetDamage(_spinDamage);
         _spinCdOn = true;
         // el cd del ataque giratorio comienza cuando se han instanciado las zonas de daño
     }
@@ -229,7 +225,6 @@ public class PlayerAttackController : MonoBehaviour
         // el rayo de luz de luz se frena cuando choca con un obstáculo
         bool enemigoChocado = true;
         int i = 0;
-        Debug.Log(hitInfos.Length);
         while (i < hitInfos.Length && enemigoChocado)
         {
             Shield enemyTankShield = hitInfos[i].collider.GetComponent<Shield>();

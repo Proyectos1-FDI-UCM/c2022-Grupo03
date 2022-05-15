@@ -59,7 +59,6 @@ public class EnemyShooter : MonoBehaviour
     void Update()
     {
         playerDistance = GetComponentInParent<EnemyMovement>().GetPlayerDistance();
-        Debug.Log("distancia: " + playerDistance);
         if (playerDistance <= range)
         {
             _elapsedTime += Time.deltaTime;
