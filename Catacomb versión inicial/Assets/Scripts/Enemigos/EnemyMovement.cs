@@ -24,7 +24,6 @@ public class EnemyMovement : MonoBehaviour
 
     #region references
     private Transform _myTransform;
-    private bool _isReloading;
     private GameObject targetObject;
     private Transform targetTransform;
     private RaycastHit2D hit;
@@ -44,16 +43,13 @@ public class EnemyMovement : MonoBehaviour
     {
         _playerDirection = (targetTransform.position - this.transform.position).normalized;
     }
-
     private void SetEscapeDirection()
     {
         _movementDirection = (this.transform.position - targetTransform.position).normalized;
     }
-
     public void StopMovement() { rb.velocity = Vector3.zero; }
     public float GetRange() { return _range; }
     public float GetPlayerDistance() { return hit.distance; }
-
     #endregion
 
     // Start is called before the first frame update
@@ -103,7 +99,6 @@ public class EnemyMovement : MonoBehaviour
             _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
         }
 
-        //SetMovementDirection();
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection *  100.0f, Color.red, 1.0f);
         hit = FirstTargetHit();
@@ -122,8 +117,6 @@ public class EnemyMovement : MonoBehaviour
             Debug.DrawRay(transform.position, right.normalized * 100.0f, Color.yellow, 1.0f);
             leftRay = Physics2D.Raycast(this.transform.position, left.normalized, 100.0f, layers);
             rightRay = Physics2D.Raycast(this.transform.position, right.normalized, 100.0f, layers);
-            //Debug.Log(leftRay.distance);
-            //Debug.Log(rightRay.distance);
             if (leftRay.distance == 0) _movementDirection = left.normalized;
             else if (rightRay.distance == 0) _movementDirection = right.normalized;
             else if (leftRay.distance > rightRay.distance) _movementDirection = left.normalized;
@@ -135,7 +128,6 @@ public class EnemyMovement : MonoBehaviour
         if (!ranged && hit.distance < _range) _movementDirection = Vector3.zero;
 
         rb.velocity = (_speed * _movementDirection);
-        //rb.MovePosition(_speed * _movementDirection * Time.deltaTime);    
     }
 
     private RaycastHit2D FirstTargetHit()
@@ -143,10 +135,6 @@ public class EnemyMovement : MonoBehaviour
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection * 100.0f, Color.red, 1.0f);
         hitArray = Physics2D.RaycastAll(transform.position, temp.normalized, 100.0f, layers);
-        //foreach(RaycastHit2D ray in hitArray)
-        //{
-        //    Debug.Log(ray.collider.gameObject.name);
-        //}
         return hitArray[1];
     }
 

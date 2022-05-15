@@ -26,22 +26,38 @@ public class DamageZone : MonoBehaviour
     #region methods
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        // comprobar si contra lo que choca es un enemigo y su color
-        if (collider.GetComponent(_enemyColors[_indice]) != null)
+        Shield enemyTankShield = collider.GetComponent<Shield>();
+        EnemyLifeComponent enemyLifeComponent = collider.GetComponent<EnemyLifeComponent>();
+        Debug.Log(enemyTankShield);
+        Debug.Log(enemyLifeComponent);
+        if (enemyTankShield != null)
         {
-            // solo se puede dañar al jefe si se encuentra en el segundo estado
-            if (collider.name == "SpiderHead" && _bossManager.State == 2)
+            if (enemyTankShield.gameObject.GetComponent(_enemyColors[_indice]) != null)
             {
-                collider.GetComponent<EnemyLifeComponent>().Damage(_damage);
+                enemyTankShield.ChangeShieldCol();
             }
-            // dañar al resto de cosas
-            else if (collider.name != "SpiderHead")
+        }
+        // comprobar si contra lo que choca es un enemigo y su color
+        else if (enemyLifeComponent != null && collider.gameObject.GetComponentInChildren<Shield>() == null)
+        {
+            if (collider.GetComponent(_enemyColors[_indice]) != null)
             {
-                EnemyLifeComponent enemyLifeComponent = collider.GetComponent<EnemyLifeComponent>();
-                if (enemyLifeComponent != null)
+                // solo se puede dañar al jefe si se encuentra en el segundo estado
+                if (collider.name != "SpiderHead" || _bossManager.State == 2)
                 {
                     enemyLifeComponent.Damage(_damage);
                 }
+                /*
+                if (collider.name == "SpiderHead" && _bossManager.State == 2)
+                {
+                    enemyLifeComponent.Damage(_damage);
+                }
+                // dañar al resto de cosas
+                else if (collider.name != "SpiderHead")
+                {
+                    enemyLifeComponent.Damage(_damage);
+                }
+                */
             }
         }
     }

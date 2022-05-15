@@ -232,24 +232,42 @@ public class PlayerAttackController : MonoBehaviour
         // el rayo de luz de luz se frena cuando choca con un obstáculo
         bool enemigoChocado = true;
         int i = 0;
+        Debug.Log(hitInfos.Length);
         while (i < hitInfos.Length && enemigoChocado)
         {
-            // si choca con un enemigo, el rayo continúa
+            Shield enemyTankShield = hitInfos[i].collider.GetComponent<Shield>();
             EnemyLifeComponent enemyLifeComponent = hitInfos[i].collider.GetComponent<EnemyLifeComponent>();
-            if (enemyLifeComponent != null)
+            if (enemyTankShield != null)
             {
-                // si el color del enemigo es igual que el del rayo, el enemigo sufre daño
-                if (hitInfos[i].collider.GetComponent(_enemyColors[indice]) != null)
+                if (enemyTankShield.gameObject.GetComponent(_enemyColors[indice]) != null)
                 {
-                    // solo se puede dañar al jefe si se encuentra en el segundo estado
-                    if (hitInfos[i].collider.name == "SpiderHead" && _bossManager.State == 2)
+                    enemyTankShield.ChangeShieldCol();
+                }
+            }
+            // si choca con un enemigo, el rayo continúa
+            else if (enemyLifeComponent != null)
+            {
+                if (hitInfos[i].collider.GetComponentInChildren<Shield>() == null)
+                {
+                    // si el color del enemigo es igual que el del rayo, el enemigo sufre daño
+                    if (hitInfos[i].collider.GetComponent(_enemyColors[indice]) != null)
                     {
-                        hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
-                    }
-                    // dañar al resto de cosas
-                    else if (hitInfos[i].collider.name != "SpiderHead")
-                    {
-                        hitInfos[i].collider.GetComponent<EnemyLifeComponent>().Damage(_rayDamage);
+                        if (hitInfos[i].collider.name != "SpiderHead" || _bossManager.State == 2)
+                        {
+                            enemyLifeComponent.Damage(_rayDamage);
+                        }
+                        /*
+                        // solo se puede dañar al jefe si se encuentra en el segundo estado
+                        if (hitInfos[i].collider.name == "SpiderHead" && _bossManager.State == 2)
+                        {
+                            enemyLifeComponent.Damage(_rayDamage);
+                        }
+                        // dañar al resto de cosas
+                        else if (hitInfos[i].collider.name != "SpiderHead")
+                        {
+                            enemyLifeComponent.Damage(_rayDamage);
+                        }
+                        */
                     }
                 }
             }

@@ -6,31 +6,77 @@ public class Shield : MonoBehaviour
 {
     #region parameters
     [SerializeField]
-    private int _tankEnemyLife;
+    int _numStates = 3;
     #endregion
 
     #region properties
-    private bool _primerCol;
-    private bool _segundoCol;
+    int _state;
+    private int[] _numCols;
     #endregion
 
     #region references
-    private EnemyLifeComponent _myShieldLifeComponent;
-    private GameObject _myEnemy;
-    private Transform _myEnemyTransform;
-    private EnemyLifeComponent _myEnemyLifeComponent;
+    private SpriteRenderer _mySpriteRenderer;
+    Object _activeCol;
     #endregion
 
     #region methods
+    private void Desordenar(int[] v)
+    {
+        int n = v.Length;
+        for (int i = 0; i < n; i++)
+        {
+            int j = GameManager.Instance.NumRandom(i, n - 1);
+            int aux = v[i];
+            v[i] = v[j];
+            v[j] = aux;
+        }
+    }
+
+    private void AddCol(int numCol)
+    {
+        switch (numCol)
+        {
+            case 0:
+                _activeCol = gameObject.AddComponent<Red>();
+                break;
+            case 1:
+                _activeCol = gameObject.AddComponent<Yellow>();
+                break;
+            case 2:
+                _activeCol = gameObject.AddComponent<Green>();
+                break;
+            case 3:
+                _activeCol = gameObject.AddComponent<Blue>();
+                break;
+            case 4:
+                _activeCol = gameObject.AddComponent<Pink>();
+                break;
+        }
+    }
+
+    public void ChangeShieldCol()
+    {
+        _state++;
+        if (_state >= _numStates)
+        {
+            RemoveShield();
+        }
+        else
+        {
+            GameObject.Destroy(_activeCol);
+            ApplyCol(_state);
+        }
+    }
+
+    private void ApplyCol(int state = 0)
+    {
+        _state = state;
+        Debug.Log(_state);
+        AddCol(_numCols[_state]);
+    }
+
     private void RemoveShield()
     {
-        // el enemigo cuerpo a cuerpo pasa a tener vida y, por lo tanto, puede recibir daño
-        _myEnemyLifeComponent = _myEnemy.AddComponent<EnemyLifeComponent>();
-        _myEnemyLifeComponent.MaxLife = _tankEnemyLife;
-        // se rota al enemigo xq cuando se le destruye el escudo rota solo
-        float negXScale = -_myEnemyTransform.localScale.x;
-        _myEnemyTransform.localScale = new Vector3(negXScale, 1, 1);
-        // se destruye el escudo
         GameObject.Destroy(gameObject);
     }
     #endregion
@@ -38,39 +84,20 @@ public class Shield : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _myShieldLifeComponent = GetComponent<EnemyLifeComponent>();
-        _myEnemy = transform.parent.gameObject;
-        _myEnemyTransform = transform.parent;
-        _primerCol = false;
-        _segundoCol = false;
+        _numCols = new int[3];
+        for (int i = 0; i < _numCols.Length; i++)
+        {
+            _numCols[i] = i;
+        }
+        Desordenar(_numCols);
+
+        _mySpriteRenderer = GetComponent<SpriteRenderer>();
+        ApplyCol();
     }
 
     // Update is called once per frame
     void Update()
     {
-        int life = _myShieldLifeComponent.CurrentLife;
-        Debug.Log(life);
-        if (!_primerCol)
-        {
-            if (life == 3)
-            {
-                GameObject.Destroy(GetComponent<Red>());
-                gameObject.AddComponent<Yellow>();
-                _primerCol = true;
-            }
-        }
-        if (!_segundoCol)
-        {
-            if (life == 2)
-            {
-                GameObject.Destroy(GetComponent<Yellow>());
-                gameObject.AddComponent<Green>();
-                _segundoCol = true;
-            }
-        }
-        if (life <= 1)
-        {
-            RemoveShield();
-        }
+
     }
 }

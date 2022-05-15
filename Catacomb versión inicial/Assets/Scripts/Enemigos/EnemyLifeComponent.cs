@@ -27,7 +27,6 @@ public class EnemyLifeComponent : MonoBehaviour
     private Blue _myBlueComponent;
     private Transform _myTransform;
     private Message _myMessage;
-    private Shield _myShield;
     [SerializeField]
     private HpBarScript healthBar = null;
 
@@ -41,7 +40,7 @@ public class EnemyLifeComponent : MonoBehaviour
         if (!_isBlue || rndNum != 0)
         {
             _currentLife -= hitDamage;
-            if (_myShield == null && _myMessage != null)
+            if (_myMessage != null)
             {
                 _myMessage.SetMessage((-hitDamage).ToString());
             }
@@ -54,7 +53,7 @@ public class EnemyLifeComponent : MonoBehaviour
         {
             _myMessage.SetMessage("MISS!!");
         }
-        if (_myShield == null && _myMessage != null)
+        if (_myMessage != null)
         {
             _myMessage.ActivateMessage();
         }
@@ -78,7 +77,6 @@ public class EnemyLifeComponent : MonoBehaviour
         // inicializar referencias a otros componentes
         _myTransform = transform;
         _myMessage = GetComponentInChildren<Message>();
-        _myShield = GetComponent<Shield>();
 
         // componente rosa
         _myPinkComponent = GetComponent<Pink>();
