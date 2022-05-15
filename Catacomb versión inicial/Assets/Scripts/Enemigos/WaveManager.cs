@@ -19,10 +19,6 @@ public class WaveManager : MonoBehaviour
     private int[] wave3;   
     [SerializeField]
     private int[] wave4;    
-    //[SerializeField]
-    //private int[] wave5;    
-    //[SerializeField]
-    //private int[] wave6;
     [SerializeField]
     private Vector2 spawnAreaSize;
     private Vector2[] spawnPos;
@@ -41,8 +37,7 @@ public class WaveManager : MonoBehaviour
         waves[2] = wave2;
         waves[3] = wave3;
         waves[4] = wave4;
-        //waves[5] = wave5;
-        //waves[6] = wave6;
+
     }
     public bool Spawn()
     {
@@ -82,10 +77,5 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        //if (GameManager.Instance.State)
-        //{
-        //    Debug.Log("spawned");
-        //    Invoke(nameof(NextLevel), 0.0f);
-        //}
     }
 }

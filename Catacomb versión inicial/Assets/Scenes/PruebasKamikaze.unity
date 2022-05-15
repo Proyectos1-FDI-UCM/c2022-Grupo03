@@ -471,7 +471,6 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 0.4}
   - {r: 0, g: 0, b: 1, a: 0.4}
   - {r: 1, g: 0, b: 0.6452723, a: 0.4}
-  nivelTerminado: 0
   debug: 1
 --- !u!4 &92149252
 Transform:
@@ -16336,7 +16335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6468387945398862690, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: _maxLife
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6468387945398862690, guid: ed4c60fc25c7f3f4c82a80f28ea772b6, type: 3}
       propertyPath: healthBar
@@ -33714,6 +33713,7 @@ MonoBehaviour:
   _spinCooldownObject: {fileID: 591101386}
   _rayCooldownObject: {fileID: 1208346475}
   _enemiesLeftObject: {fileID: 1995394583}
+  _currentWaveObject: {fileID: 0}
   _pauseMenu: {fileID: 508306479}
   _level: {fileID: 1536966331}
   _playerLifeBar: {fileID: 1982223450}

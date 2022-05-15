@@ -5,8 +5,7 @@ using UnityEngine;
 public class Red : MonoBehaviour
 {
     #region parameters
-    [SerializeField]
-    private int _increasedDamage = 1;
+    private int _increasedDamage = 2;
     #endregion
 
     #region properties

@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                lvText = "Nivel terminado\n+1 vida";
+                lvText = "Nivel terminado\nvida restaurada";
                 _currentLevel++;
             }
         }
@@ -328,7 +328,6 @@ public class GameManager : MonoBehaviour
             if (!g.GetComponent<WaveManager>().Spawn())
             {
                 numW++;
-                Debug.Log("+numW: " + numW);
             }
         }
     }
@@ -389,7 +388,7 @@ public class GameManager : MonoBehaviour
         //_myUIManager.UpdateEnemiesLeft(_listOfEnemies.Count);
         _myUIManager.UpdateEnemiesLeft(nEnemies);
 
-        if ((WaveTimer() || nEnemies == 0) && (!_delay))
+        if ((!_delay) && (nEnemies == 0 || WaveTimer()))
         {
             _delay = true;
             currentWave++;
@@ -397,6 +396,10 @@ public class GameManager : MonoBehaviour
             if (debug) currentWave = 0;
             ActivateSpawners();
             timePassed = 0;
+        }
+        else if (numW >= spawners.Count)
+        {
+            _myUIManager.EnabledTimer(false);
         }
 
         if ((numW >= spawners.Count) && nEnemies == 0) nivelTerminado = true;
@@ -408,7 +411,7 @@ public class GameManager : MonoBehaviour
             nEnemies = -1;
 
             spawners.Clear();
-
+            
             NextLevel();
             
             currentWave = -1;
@@ -416,6 +419,8 @@ public class GameManager : MonoBehaviour
             nEnemies = -1;
 
             spawners.Clear();
+
+            _myUIManager.EnabledTimer(true);
 
             _delay = false;
 
