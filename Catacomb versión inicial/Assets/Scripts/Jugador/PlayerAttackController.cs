@@ -74,6 +74,7 @@ public class PlayerAttackController : MonoBehaviour
     private GameObject _bossManagerObject;
     private BossManager _bossManager;
     private Rigidbody2D _myRigidBody2D;
+    private SoundPlayerManager _soundPlayerManager;
     #endregion
 
     #region methods
@@ -128,6 +129,7 @@ public class PlayerAttackController : MonoBehaviour
             // animación del rayo
             _myAttackAnimation.Rotate(_spinMade);
             _myPlayerInputManager.enabled = false;
+            _soundPlayerManager.EligeAudioP(2, 0.03f);
         }
     }
     private void SpinZone()
@@ -321,6 +323,7 @@ public class PlayerAttackController : MonoBehaviour
         y_scale = _myTransform.localScale.y;
         z_scale = _myTransform.localScale.z;
         _myRigidBody2D = GetComponent<Rigidbody2D>();
+        _soundPlayerManager = GetComponent<SoundPlayerManager>();
     }
 
     // Update is called once per frame
@@ -337,6 +340,7 @@ public class PlayerAttackController : MonoBehaviour
             DestroyDmgZones();
             // las zonas de daño se destruyen después de que se hayan creado
             // y haya pasado un tiempo determinado
+            _soundPlayerManager.EligeAudioP(0,0.03f);
         }
 
         // tiempo de espera hasta que el rayo se lanza
@@ -345,6 +349,7 @@ public class PlayerAttackController : MonoBehaviour
             _myPlayerMovementController.SetMovementDirection(Vector3.zero);
             _rayWaiting = false;
             Invoke(nameof(LightRay), _rayPreparationTime);
+            _soundPlayerManager.EligeAudioP(3, 0.03f);
         }
 
         // tiempos de espera de las habilidades

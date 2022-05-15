@@ -23,8 +23,7 @@ public class PlayerLifeComponent : MonoBehaviour
     private DeathAnimation _deathAnimation;
     [SerializeField]
     private HpBarScript _healthBar;
-
-
+    private SoundPlayerManager _soundPlayerManager;
     #endregion
 
     #region methods
@@ -64,6 +63,7 @@ public class PlayerLifeComponent : MonoBehaviour
         _deathAnimation = GetComponent<DeathAnimation>();
         _healthBar.SetMaxHealth(_maxLife);
         _healthBar.SetHealth(_currentLife);
+        _soundPlayerManager = GetComponent<SoundPlayerManager>();
     }
 
     // Update is called once per frame
@@ -71,6 +71,7 @@ public class PlayerLifeComponent : MonoBehaviour
     {
         if (GameManager.Instance.CurrentState == GameState.gameOver)
         {
+            _soundPlayerManager.EligeAudioP(4,0.02f);
             _elapsedTime += Time.deltaTime;
             Debug.Log("time: " + _elapsedTime);
             if (_elapsedTime > _deathTime)

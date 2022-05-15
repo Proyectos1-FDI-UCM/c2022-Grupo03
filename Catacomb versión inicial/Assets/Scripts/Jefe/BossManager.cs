@@ -57,7 +57,7 @@ public class BossManager : MonoBehaviour
     private SpiderWebAttack _mySpiderWebAttack;
     [SerializeField]
     private GameObject _bossLifeBar;
-    private Collider2D[] _legsColliders;
+    private Collider2D[] _legsColliders;   
     #endregion
 
     #region methods
@@ -204,7 +204,7 @@ public class BossManager : MonoBehaviour
         _bossLifeBar.SetActive(false);
 
         _state = -2;
-        Invoke(nameof(StartBoss), _timeToStart);
+        Invoke(nameof(StartBoss), _timeToStart);        
     }
 
     // Update is called once per frame

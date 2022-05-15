@@ -44,6 +44,7 @@ public class EnemyMelee : MonoBehaviour
     private GameObject _enemyAttack;
     private Red _myRedComponent;
     private Yellow _myYellowComponent;
+    private SoundEnemysManager _soundEnemysManager;
     #endregion
 
     #region methods
@@ -96,6 +97,7 @@ public class EnemyMelee : MonoBehaviour
 
         _attackRate = GameManager.Instance.NumRandom(_minrate, _maxrate);
         range = GetComponent<EnemyMovement>().GetRange();
+        _soundEnemysManager = GetComponent<SoundEnemysManager>();
     }
 
     // Update is called once per frame
@@ -139,6 +141,7 @@ public class EnemyMelee : MonoBehaviour
                 ataca = true;
                 meleeAttack();
                 _elapsedTime = 0;
+                _soundEnemysManager.EligeAudioE(0,0.25f);
             }
         }
         else if (_elapsedTime > _duration)

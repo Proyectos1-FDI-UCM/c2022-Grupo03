@@ -14,7 +14,7 @@ public class LifeRecAnimation : MonoBehaviour
     #endregion
 
     #region references
-    private PlayerLifeComponent _myPlayerLife;
+    private SoundPlayerManager _soundPlayerManager;
     #endregion
 
     #region methods
@@ -22,13 +22,14 @@ public class LifeRecAnimation : MonoBehaviour
     {
         _myAnimator.ResetTrigger("Null");
         _myAnimator.SetTrigger("Life");
+        _soundPlayerManager.EligeAudioP(1,0.1f);
     }
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        _myPlayerLife = GetComponent<PlayerLifeComponent>();
+        _soundPlayerManager = GetComponent<SoundPlayerManager>();
     }
 
     // Update is called once per frame

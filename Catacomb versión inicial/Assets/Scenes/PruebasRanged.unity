@@ -16514,7 +16514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.382504
+      value: 5.823331
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16522,7 +16522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.71103
+      value: 3.4905
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalPosition.z
@@ -28698,7 +28698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.382504
+      value: 5.9595084
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28706,7 +28706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.71103
+      value: 3.4226
       objectReference: {fileID: 0}
     - target: {fileID: 6228482617704064229, guid: 4d03767a2e59e5e44ad4426f0b0feb29, type: 3}
       propertyPath: m_LocalPosition.z
@@ -33648,6 +33648,7 @@ MonoBehaviour:
   _spinCooldownObject: {fileID: 591101386}
   _rayCooldownObject: {fileID: 1208346475}
   _enemiesLeftObject: {fileID: 1995394583}
+  _currentWaveObject: {fileID: 0}
   _pauseMenu: {fileID: 508306479}
   _level: {fileID: 1536966331}
   _playerLifeBar: {fileID: 1982223450}
