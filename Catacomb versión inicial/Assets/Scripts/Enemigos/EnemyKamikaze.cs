@@ -10,7 +10,7 @@ public class EnemyKamikaze : MonoBehaviour
     #endregion
 
     #region properties
-    private int _damage = 1;
+    private int _damage;
     #endregion
 
     #region references
@@ -41,14 +41,16 @@ public class EnemyKamikaze : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _damage = 1;
         _myEnemyLifeComponent = GetComponent<EnemyLifeComponent>();
         _myTransform = transform;
         rotation = _myTransform.rotation;
         instPoint = transform.position;
         _enemyZone = Instantiate(_enemyDetectionZone, instPoint, rotation, _myTransform);
+        _myRedComponent = GetComponent<Red>();
         if (_myRedComponent != null)
         {
-            _damage += _myRedComponent.IncreasedDamage();
+            _damage = _myRedComponent.IncreasedDamage();
         }
     }
 

@@ -73,7 +73,6 @@ public class PlayerLifeComponent : MonoBehaviour
         {
             _soundPlayerManager.EligeAudioP(4,0.02f);
             _elapsedTime += Time.deltaTime;
-            Debug.Log("time: " + _elapsedTime);
             if (_elapsedTime > _deathTime)
             {
                 _elapsedTime = 0;

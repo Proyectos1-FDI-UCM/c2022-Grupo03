@@ -96,8 +96,8 @@ public class UI_Manager : MonoBehaviour
     {
         if (currentWave < 0)
             currentWave = 0;
-
-        _currentWaveText.text = "Oleada: " + currentWave;
+        if(_currentWaveText != null)
+            _currentWaveText.text = "Oleada: " + currentWave;
     }
 
     // menú de pausa
@@ -162,6 +162,10 @@ public class UI_Manager : MonoBehaviour
         if(_bossBar != null) _bossBar.SetActive(enabled);
     }
 
+    public void EnabledTimer(bool enabled)
+    {
+        _timer.SetActive(enabled);
+    }
 
     private void Awake()
     {
@@ -171,7 +175,10 @@ public class UI_Manager : MonoBehaviour
         _currentColorImage = _currentColorObject.GetComponent<Image>();
         _spinCooldownText = _spinCooldownObject.GetComponentInChildren<Text>();
         _rayCooldownText = _rayCooldownObject.GetComponentInChildren<Text>();
-        _currentWaveText = _currentWaveObject.GetComponentInChildren<Text>();
+        if (_currentWaveObject != null)
+        {
+            _currentWaveText = _currentWaveObject.GetComponentInChildren<Text>();
+        }  
         _levelText = _level.GetComponent<Text>();
     }
     #endregion

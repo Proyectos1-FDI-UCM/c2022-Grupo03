@@ -87,7 +87,7 @@ public class EnemyMelee : MonoBehaviour
         _myYellowComponent = GetComponent<Yellow>();
         if (_myRedComponent != null)
         {
-            _dañoTotal += _myRedComponent.IncreasedDamage();
+            _dañoTotal = _myRedComponent.IncreasedDamage();
         }
         if(_myYellowComponent!=null)
         {

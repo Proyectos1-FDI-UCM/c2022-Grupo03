@@ -47,7 +47,7 @@ public class EnemyShooter : MonoBehaviour
         Vector3 temp = (targetTransform.position - this.transform.position);
         if (_myRedComponent != null)
         {
-            damage += _myRedComponent.IncreasedDamage();
+            damage = _myRedComponent.IncreasedDamage();
         }
 
         _fireRate = GameManager.Instance.NumRandom(_minrate, _maxrate);

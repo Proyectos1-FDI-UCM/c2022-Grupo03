@@ -17,6 +17,7 @@ public class EnemyDamageZone : MonoBehaviour
     #region methods
     private void OnCollisionEnter2D(Collision2D collider)
     {
+        Debug.Log(_enemyKamikaze.DañoAtaque());
         // duck typing       
         PlayerLifeComponent _playerLifeComponent = collider.gameObject.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
@@ -26,10 +27,12 @@ public class EnemyDamageZone : MonoBehaviour
             else
                 _playerLifeComponent.Damage(_enemyMeleeComponent.DañoAtaque());
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        Debug.Log(_enemyKamikaze.DañoAtaque());
         // duck typing       
         PlayerLifeComponent _playerLifeComponent = collider.gameObject.GetComponent<PlayerLifeComponent>();
         if (_playerLifeComponent != null)
