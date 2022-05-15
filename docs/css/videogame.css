@@ -44,7 +44,7 @@ img.img-header {
   margin: 1rem;
 }
 
-#row {
+.marketing-row{
     column-rule: 4px dotted gray;
 }
 
