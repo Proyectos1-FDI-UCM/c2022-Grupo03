@@ -15,6 +15,7 @@ public class EnemyMovement : MonoBehaviour
     private int layers;
     private float diferenciax;
     private float x_scale, y_scale, z_scale;
+    private float _elapsedTime2 = 0;
     #endregion
 
     #region properties
@@ -81,24 +82,29 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        diferenciax = Math.Abs(transform.position.x) - Math.Abs(targetObject.transform.position.x);
-        if (diferenciax < 0 && transform.position.x < 0 && targetObject.transform.position.x < 0)
+        _elapsedTime2 += Time.deltaTime;
+        if(_elapsedTime2 > 0.2f)
         {
-            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+            _elapsedTime2 = 0;
+            diferenciax = Math.Abs(transform.position.x) - Math.Abs(targetObject.transform.position.x);
+            if (diferenciax < 0 && transform.position.x < 0 && targetObject.transform.position.x < 0)
+            {
+                _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+            }
+            else if (diferenciax > 0 && transform.position.x < 0 && targetObject.transform.position.x < 0)
+            {
+                _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+            }
+            else if (diferenciax < 0 && transform.position.x > 0 && targetObject.transform.position.x > 0)
+            {
+                _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
+            }
+            else if (diferenciax > 0 && transform.position.x > 0 && targetObject.transform.position.x > 0)
+            {
+                _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
+            }
         }
-        else if (diferenciax > 0 && transform.position.x < 0 && targetObject.transform.position.x < 0)
-        {
-            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
-        }
-        else if (diferenciax < 0 && transform.position.x > 0 && targetObject.transform.position.x > 0)
-        {
-            _myTransform.localScale = new Vector3(x_scale, y_scale, z_scale);
-        }
-        else if (diferenciax > 0 && transform.position.x > 0 && targetObject.transform.position.x > 0)
-        {
-            _myTransform.localScale = new Vector3(-x_scale, y_scale, z_scale);
-        }
-
+        
         Vector3 temp = (targetTransform.position - transform.position);
         Debug.DrawRay(transform.position, _playerDirection *  100.0f, Color.red, 1.0f);
         hit = FirstTargetHit();

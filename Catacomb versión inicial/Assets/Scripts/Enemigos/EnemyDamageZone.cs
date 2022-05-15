@@ -26,7 +26,6 @@ public class EnemyDamageZone : MonoBehaviour
             else
                 _playerLifeComponent.Damage(_enemyMeleeComponent.DañoAtaque());
         }
-        //Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -58,7 +57,7 @@ public class EnemyDamageZone : MonoBehaviour
     void Update()
     {
         _elapsedTime += Time.deltaTime;
-        if(_elapsedTime > 0.5f)
+        if(_elapsedTime > 0.3f)
         {
             Destroy(this.gameObject);
             _elapsedTime = 0;

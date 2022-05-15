@@ -20,6 +20,8 @@ public class EnemyLifeComponent : MonoBehaviour
 
     private bool _isBlue = false; // determina si un enemigo es azul
     private float _elapsedTime = 0;
+    private float _elapsedTime2 = 0;
+    private bool _curado = false;
     #endregion
 
     #region references
@@ -29,7 +31,8 @@ public class EnemyLifeComponent : MonoBehaviour
     private Message _myMessage;
     [SerializeField]
     private HpBarScript healthBar = null;
-
+    [SerializeField]
+    private Animator _myAnimator;
     #endregion
 
     #region methods
@@ -65,6 +68,12 @@ public class EnemyLifeComponent : MonoBehaviour
         GameManager.Instance.OnEnemyDies(this);
         GameManager.Instance.EnemyDestroyed();
         GameObject.Destroy(gameObject);
+    }
+
+    public void HealAniEnemy()
+    {
+        _myAnimator.ResetTrigger("Null");
+        _myAnimator.SetTrigger("Life");
     }
     #endregion
 
@@ -104,11 +113,22 @@ public class EnemyLifeComponent : MonoBehaviour
     {
         // los enemigos azules recuperan vida cada cierto tiempo
         _elapsedTime += Time.deltaTime;
+        _elapsedTime2 += Time.deltaTime;
         // se ha puesto de forma que no pueda recuperar vida si ya la tiene al máximo
         if (_isBlue && _elapsedTime > _desiredTimeToRecovery && _currentLife < _maxLife)
         {
             _currentLife += _myBlueComponent.RecoveryPoints();
+            HealAniEnemy();
             _elapsedTime = 0;
+            _curado = true;
+            _elapsedTime2 = 0;
+        }
+        if(_elapsedTime2 > 0.6f && _curado)
+        {
+            _myAnimator.ResetTrigger("Life");
+            _myAnimator.SetTrigger("Null");
+            _elapsedTime2 = 0;
+            _curado = false;
         }
     }
 }

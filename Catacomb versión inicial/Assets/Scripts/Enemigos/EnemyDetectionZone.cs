@@ -18,10 +18,6 @@ public class EnemyDetectionZone : MonoBehaviour
     private float _tiempoexplosion = 0.4f;
     #endregion
 
-    #region properties
-
-    #endregion
-
     #region methods
     private void OnTriggerEnter2D(Collider2D collider)
     {

@@ -27,15 +27,4 @@ public class Heal : MonoBehaviour
             lifeRecAnimation.HealAni();
         }
     }
-
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.GetComponent<PlayerLifeComponent>().Heal())
-        {
-            Destroy(this);
-            Debug.Log(collision.gameObject.GetComponent<PlayerLifeComponent>().Heal());
-        }
-    }
-    */
 }
